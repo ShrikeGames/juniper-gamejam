@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://dyexwnptcme40"]
+
+[ext_resource type="Script" uid="uid://dlq8mc3wfytoy" path="res://assets/scripts/camera_3d.gd" id="1_j62u1"]
+[ext_resource type="Environment" uid="uid://bc2gd46jqouln" path="res://assets/envs/above_water.tres" id="2_dis88"]
+[ext_resource type="Texture2D" uid="uid://c8mhu14h64sca" path="res://assets/art/textures/512x512 Grid Grey.png" id="2_j62u1"]
+[ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_cb5na"]
+[ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="5_j62u1"]
+[ext_resource type="PackedScene" uid="uid://ba88sbfy5r31c" path="res://assets/scenes/top.tscn" id="7_3w2km"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5aext"]
+albedo_texture = ExtResource("2_j62u1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_cb5na"]
+size = Vector3(1, 0.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w2km"]
+albedo_texture = ExtResource("2_j62u1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5aext"]
+size = Vector3(0.3, 0.3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfsp4"]
+albedo_texture = ExtResource("2_j62u1")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cb5na"]
+top_radius = 0.3
+bottom_radius = 0.4
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw37s"]
+albedo_texture = ExtResource("2_j62u1")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j62u1"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2t1h"]
+albedo_texture = ExtResource("2_j62u1")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5aext"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phsto"]
+albedo_texture = ExtResource("2_j62u1")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pkhv0"]
+bottom_radius = 0.3
+height = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_3w2km"]
+material = ExtResource("3_cb5na")
+radius = 0.25
+height = 0.001
+
+[node name="Game" type="Node3D" unique_id=888901533]
+
+[node name="Top" parent="." unique_id=24248696 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node") instance=ExtResource("7_3w2km")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4883177, 1.1723986, -0.81443906)
+angular_damp = 25.0
+target_node = NodePath("../Target")
+target_above_node = NodePath("../Above")
+look_at_node = NodePath("../LookAtNode")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("look_at_node", "target_node", "launcher_crank", "top_holder_spot", "launcher")]
+transform = Transform3D(1, 0, 0, 0, 0.7626796, 0.6467765, 0, -0.6467765, 0.7626796, 0.012513161, 3.971325, 3.741416)
+current = true
+fov = 45.0
+script = ExtResource("1_j62u1")
+look_at_node = NodePath("../Top")
+target_node = NodePath("../Target")
+launcher_crank = NodePath("Launcher/Crank")
+top_holder_spot = NodePath("Launcher/Crank/CrankTopSpot")
+launcher = NodePath("Launcher")
+
+[node name="Launcher" type="Node3D" parent="Camera3D" unique_id=873180769]
+transform = Transform3D(1, 1.7763568e-15, 5.3290705e-15, 2.0919266e-15, 0.7626796, -0.6467765, -5.213279e-15, 0.6467765, 0.7626796, 0.075407624, -0.1863656, -2.302701)
+
+[node name="base" type="MeshInstance3D" parent="Camera3D/Launcher" unique_id=1485020542]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_5aext")
+mesh = SubResource("BoxMesh_cb5na")
+
+[node name="handle" type="MeshInstance3D" parent="Camera3D/Launcher" unique_id=1447595526]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 1.498188)
+material_override = SubResource("StandardMaterial3D_3w2km")
+mesh = SubResource("BoxMesh_5aext")
+
+[node name="Crank" type="Node3D" parent="Camera3D/Launcher" unique_id=206828763]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0.26264572, 0)
+
+[node name="CrankBase" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=348060734]
+material_override = SubResource("StandardMaterial3D_wfsp4")
+mesh = SubResource("CylinderMesh_cb5na")
+
+[node name="CrankRod" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=614496126]
+transform = Transform3D(1, -1.7763568e-14, 1.7763565e-15, -1.7763568e-15, -4.371139e-08, 1, -1.7763568e-14, -1, -4.371139e-08, 0, 0, -0.5715828)
+material_override = SubResource("StandardMaterial3D_pw37s")
+mesh = SubResource("CylinderMesh_j62u1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=403237538]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, -1.1461143)
+material_override = SubResource("StandardMaterial3D_k2t1h")
+mesh = SubResource("SphereMesh_5aext")
+
+[node name="CrankTopHolder" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=841376442]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.66980267, 0)
+material_override = SubResource("StandardMaterial3D_phsto")
+mesh = SubResource("CylinderMesh_pkhv0")
+
+[node name="CrankTopSpot" type="Node3D" parent="Camera3D/Launcher/Crank" unique_id=881233610]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.97638226, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=746990791]
+environment = ExtResource("2_dis88")
+
+[node name="Target" type="Node3D" parent="." unique_id=1922927115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27855334, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target" unique_id=37964744]
+mesh = SubResource("SphereMesh_3w2km")
+
+[node name="arena" parent="." unique_id=294430325 instance=ExtResource("5_j62u1")]
+transform = Transform3D(8, 0, 0, 0, 9, 0, 0, 0, 8, 0, 8.55764, 0)
+
+[node name="Above" type="Node3D" parent="." unique_id=1295650627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6723814, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Above" unique_id=541467525]
+visible = false
+mesh = SubResource("SphereMesh_3w2km")
+
+[node name="LookAtNode" type="Node3D" parent="." unique_id=1706934120]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LookAtNode" unique_id=867861068]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_3w2km")

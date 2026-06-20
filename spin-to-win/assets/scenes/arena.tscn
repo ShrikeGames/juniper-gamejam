@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://2iwbnqm04227"]
+
+[ext_resource type="PackedScene" uid="uid://bt7mr1i5be16g" path="res://assets/models/arena.blend" id="1_icold"]
+[ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="2_uk72o"]
+
+[node name="arena" unique_id=294430325 instance=ExtResource("1_icold")]
+
+[node name="arena" parent="." index="2" unique_id=1909042791]
+material_override = ExtResource("2_uk72o")
+
+[node name="StaticBody3D" parent="arena" index="0" unique_id=1498823027]
+collision_layer = 3
+collision_mask = 3
