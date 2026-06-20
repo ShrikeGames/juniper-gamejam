@@ -3,7 +3,6 @@ Game for the very serious juniper dev game jam https://itch.io/jam/theveryseriou
 
 Live Game Dev Stream Playlist: https://www.youtube.com/playlist?list=PL1WRu1sntH9hZpimUcBGUtlens3eoKi7m
 
-
 Game Plan:
 
 1. Like Beyblade or Spinning Top Battle you're fighting in an arena with spinning tops
@@ -28,4 +27,6 @@ Day 1:
 - Managed to get the spinning top physics to be decent
 - Placeholder launcher mechanics in place, just hold LMB to crank and then release for now
 - Figured out how to import blender models WITH collision shapes, works for anything static
+
+https://github.com/user-attachments/assets/965ac243-b08f-4bd6-a8dc-afd8b121f17c
 
