@@ -1,6 +1,9 @@
 # juniper-gamejam
 Game for the very serious juniper dev game jam https://itch.io/jam/theveryseriousjuniperdevgamejam
 
+Live Game Dev Stream Playlist: https://www.youtube.com/playlist?list=PL1WRu1sntH9hZpimUcBGUtlens3eoKi7m
+
+
 Game Plan:
 
 1. Like Beyblade or Spinning Top Battle you're fighting in an arena with spinning tops
