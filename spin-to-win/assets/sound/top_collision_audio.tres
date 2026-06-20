@@ -1,0 +1,54 @@
+[gd_resource type="AudioStreamInteractive" format=3 uid="uid://c34rjxeikai6m"]
+
+[ext_resource type="AudioStream" uid="uid://t48qyoeutqaf" path="res://assets/sound/sfx/editted/clang1.wav" id="1_lqfdq"]
+[ext_resource type="AudioStream" uid="uid://dm3hatq2vuacp" path="res://assets/sound/sfx/editted/clang2.wav" id="2_lstui"]
+[ext_resource type="AudioStream" uid="uid://b8i218jpne6j5" path="res://assets/sound/sfx/editted/clang3.wav" id="3_l4p7h"]
+[ext_resource type="AudioStream" uid="uid://hhqnthpblge6" path="res://assets/sound/sfx/editted/clang4.wav" id="4_d2j2e"]
+[ext_resource type="AudioStream" uid="uid://cdsalr2n0rnnw" path="res://assets/sound/sfx/editted/clang5.wav" id="5_kqwyb"]
+[ext_resource type="AudioStream" uid="uid://1tborilg4er7" path="res://assets/sound/sfx/editted/clang6.wav" id="6_eraw1"]
+[ext_resource type="AudioStream" uid="uid://dil60c77l88bq" path="res://assets/sound/sfx/editted/clang7.wav" id="7_b30sb"]
+[ext_resource type="AudioStream" uid="uid://crtiakm05bk0n" path="res://assets/sound/sfx/editted/clang8.wav" id="8_g3mf4"]
+[ext_resource type="AudioStream" uid="uid://ckrl12moa2y77" path="res://assets/sound/sfx/editted/clang9.wav" id="9_7v8od"]
+[ext_resource type="AudioStream" uid="uid://dyfdeqho4oxao" path="res://assets/sound/sfx/editted/silence.mp3" id="10_7luk4"]
+
+[resource]
+clip_count = 10
+clip_0/name = &"Clang 1"
+clip_0/stream = ExtResource("1_lqfdq")
+clip_0/auto_advance = 0
+clip_1/name = &"Clang 2"
+clip_1/stream = ExtResource("2_lstui")
+clip_1/auto_advance = 0
+clip_2/name = &"Clang 3"
+clip_2/stream = ExtResource("3_l4p7h")
+clip_2/auto_advance = 0
+clip_3/name = &"Clang 4"
+clip_3/stream = ExtResource("4_d2j2e")
+clip_3/auto_advance = 0
+clip_4/name = &"Clang 5"
+clip_4/stream = ExtResource("5_kqwyb")
+clip_4/auto_advance = 0
+clip_5/name = &"Clang 6"
+clip_5/stream = ExtResource("6_eraw1")
+clip_5/auto_advance = 0
+clip_6/name = &"Clang 7"
+clip_6/stream = ExtResource("7_b30sb")
+clip_6/auto_advance = 0
+clip_7/name = &"Clang 8"
+clip_7/stream = ExtResource("8_g3mf4")
+clip_7/auto_advance = 0
+clip_8/name = &"Clang 9"
+clip_8/stream = ExtResource("9_7v8od")
+clip_8/auto_advance = 0
+clip_9/name = &"Silence"
+clip_9/stream = ExtResource("10_7luk4")
+clip_9/auto_advance = 0
+initial_clip = 9
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 1
+}
+}

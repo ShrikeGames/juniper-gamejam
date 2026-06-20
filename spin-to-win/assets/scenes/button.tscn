@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://d2qmb5bxomcvb"]
+
+[ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="1_odqew"]
+[ext_resource type="Script" uid="uid://cndmwdjnt0l85" path="res://assets/scripts/button.gd" id="1_v0b7e"]
+
+[node name="Button" type="Button" unique_id=2005046683]
+theme = ExtResource("1_odqew")
+text = "Start Game"
+script = ExtResource("1_v0b7e")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

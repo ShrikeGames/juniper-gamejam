@@ -30,3 +30,7 @@ Day 1:
 
 https://github.com/user-attachments/assets/965ac243-b08f-4bd6-a8dc-afd8b121f17c
 
+
+Day 2:
+
+- 

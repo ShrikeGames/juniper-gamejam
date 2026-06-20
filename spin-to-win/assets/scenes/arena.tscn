@@ -14,6 +14,7 @@ visible = false
 visible = false
 
 [node name="arena" parent="." index="2" unique_id=1926282929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97100437, 0)
 material_override = ExtResource("2_uk72o")
 
 [node name="StaticBody3D" parent="arena" index="0" unique_id=499478837]

@@ -1,3 +1,205 @@
 [gd_scene format=3 uid="uid://doe1q33hhf1mu"]
 
-[node name="MainMenu" type="Node2D" unique_id=459393673]
+[ext_resource type="PackedScene" uid="uid://d2qmb5bxomcvb" path="res://assets/scenes/button.tscn" id="1_uu6ob"]
+[ext_resource type="Script" uid="uid://swak82nb8jer" path="res://assets/scripts/main_menu.gd" id="1_v1ppo"]
+[ext_resource type="Texture2D" uid="uid://c5pu5s2a32fyu" path="res://assets/logos/game_logo.png" id="2_f2xsc"]
+[ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="3_obrqb"]
+[ext_resource type="Texture2D" uid="uid://douwld03bbcaa" path="res://assets/logos/Shrike_878x878.png" id="4_57ux2"]
+[ext_resource type="AudioStream" uid="uid://cfpf4bofydyoc" path="res://assets/sound/music/Dog Shop Aaron_music_YT.mp3" id="6_v71do"]
+
+[node name="MainMenu" type="Node2D" unique_id=459393673 node_paths=PackedStringArray("master_volume_slider", "music_volume_slider", "sfx_volume_slider", "voices_volume_slider", "ambient_volume_slider")]
+script = ExtResource("1_v1ppo")
+master_volume_slider = NodePath("SettingsContainer/MasterVolumeContainer/MasterVolumeSlider")
+music_volume_slider = NodePath("SettingsContainer/MusicVolumeContainer/MusicVolumeSlider")
+sfx_volume_slider = NodePath("SettingsContainer/SFXVolumeContainer/SFXVolumeSlider")
+voices_volume_slider = NodePath("SettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider")
+ambient_volume_slider = NodePath("SettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1403690871]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 1282.0
+offset_bottom = 222.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GameLogo" type="Sprite2D" parent="VBoxContainer" unique_id=298603538]
+position = Vector2(640, 152)
+texture = ExtResource("2_f2xsc")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=905420964]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = 343.0
+offset_right = 471.0
+offset_bottom = 719.0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NewGameButton" parent="ButtonContainer" unique_id=2005046683 instance=ExtResource("1_uu6ob")]
+layout_mode = 2
+text = "New Game"
+scene_to_change_to = "res://assets/scenes/game.tscn"
+
+[node name="ContinueButton" parent="ButtonContainer" unique_id=993433727 instance=ExtResource("1_uu6ob")]
+layout_mode = 2
+text = "Continue"
+scene_to_change_to = "res://assets/scenes/game.tscn"
+
+[node name="SettingsButton" parent="ButtonContainer" unique_id=84627548 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
+layout_mode = 2
+text = "Settings"
+object_to_show = NodePath("../../SettingsContainer")
+objects_to_hide = [NodePath("../../CreditsContainer")]
+
+[node name="CreditsButton" parent="ButtonContainer" unique_id=1456066440 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
+layout_mode = 2
+text = "Credits"
+object_to_show = NodePath("../../CreditsContainer")
+objects_to_hide = [NodePath("../../SettingsContainer")]
+
+[node name="SettingsContainer" type="VBoxContainer" parent="." unique_id=1714699435]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 584.0
+offset_top = 342.0
+offset_right = 1240.0
+offset_bottom = 720.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_obrqb")
+
+[node name="VolumeLabel" type="Label" parent="SettingsContainer" unique_id=1018775799]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volume Controls"
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1823101033]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="SettingsContainer/MasterVolumeContainer" unique_id=501990096]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="SettingsContainer/MasterVolumeContainer" unique_id=1424629946]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=859124886]
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="Label" parent="SettingsContainer/MusicVolumeContainer" unique_id=598525978]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="SettingsContainer/MusicVolumeContainer" unique_id=1335145822]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="SFXVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=2063232213]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="SettingsContainer/SFXVolumeContainer" unique_id=692595568]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sound Effects Volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="SettingsContainer/SFXVolumeContainer" unique_id=1387687190]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="VoicesVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1148676554]
+layout_mode = 2
+
+[node name="VoicesVolumeLabel" type="Label" parent="SettingsContainer/VoicesVolumeContainer" unique_id=478295553]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Voices Volume"
+
+[node name="VoicesVolumeSlider" type="HSlider" parent="SettingsContainer/VoicesVolumeContainer" unique_id=402606401]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="AmbientVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1401794144]
+layout_mode = 2
+
+[node name="AmbientVolumeLabel" type="Label" parent="SettingsContainer/AmbientVolumeContainer" unique_id=1021549224]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ambient volume"
+
+[node name="AmbientVolumeSlider" type="HSlider" parent="SettingsContainer/AmbientVolumeContainer" unique_id=294385612]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="CreditsContainer" type="VBoxContainer" parent="." unique_id=1843927791]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 628.0
+offset_top = 344.0
+offset_right = 1285.0
+offset_bottom = 722.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_obrqb")
+
+[node name="VolumeLabel" type="Label" parent="CreditsContainer" unique_id=686280733]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Credits"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditsContainer" unique_id=165748532]
+layout_mode = 2
+bbcode_enabled = true
+text = "Programming/Design/Art: 
+Shrike @ShrikeGames
+
+SFX: https://pixabay.com
+
+Music: Aaron Music YT"
+fit_content = true
+
+[node name="Shrike878x878" type="Sprite2D" parent="CreditsContainer" unique_id=1286655632]
+position = Vector2(599, 108)
+scale = Vector2(0.12471523, 0.12471523)
+texture = ExtResource("4_57ux2")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1138587312]
+stream = ExtResource("6_v71do")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[connection signal="value_changed" from="SettingsContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsContainer/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsContainer/SFXVolumeContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider" to="." method="_on_voices_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider" to="." method="_on_ambient_volume_slider_value_changed"]

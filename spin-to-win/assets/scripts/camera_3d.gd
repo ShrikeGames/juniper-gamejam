@@ -8,6 +8,8 @@ class_name PlayerCamera
 @export var launcher_crank:Node3D
 @export var top_holder_spot:Node3D
 @export var launcher:Node3D
+@export var crank_audio_stream_player:AudioStreamPlayer
+
 var rotate_crank:bool = false
 var is_launched:bool = false
 # 0 top left, 1 top right, 2 bottom right, 3 bottom left
@@ -27,15 +29,19 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	#if look_at_node and is_launched:
-	#	self.look_at(look_at_node.global_position)
+	if look_at_node and is_launched:
+		self.look_at(look_at_node.global_position)
 	if rotate_crank or not look_at_node.launched:
 		look_at_node.global_position = top_holder_spot.global_position
 		look_at_node.linear_velocity = Vector3.ZERO
 		look_at_node.angular_velocity = Vector3.ZERO
 	if rotate_crank:
+		crank_audio_stream_player.pitch_scale = randf_range(0.5, 1.5)
+		crank_audio_stream_player.play()
 		var distance_bonus:float = min(5.0, max(0.0, mouse_distance_traveled * 0.001))
 		launcher_crank.rotate(Vector3.UP, -distance_bonus*0.1)
+	else:
+		crank_audio_stream_player.stop()
 		
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

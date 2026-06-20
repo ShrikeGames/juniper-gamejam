@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://c2llyb0biwk2l"]
+
+[ext_resource type="Texture2D" uid="uid://c5pu5s2a32fyu" path="res://assets/logos/game_logo.png" id="2_1los2"]
+[ext_resource type="PackedScene" uid="uid://d2qmb5bxomcvb" path="res://assets/scenes/button.tscn" id="3_d1ubk"]
+[ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="4_vuf34"]
+[ext_resource type="AudioStream" uid="uid://cfpf4bofydyoc" path="res://assets/sound/music/Dog Shop Aaron_music_YT.mp3" id="6_2lxdy"]
+
+[node name="StoreMenu" type="Node2D" unique_id=459393673]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1403690871]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 1282.0
+offset_bottom = 222.0
+grow_horizontal = 2
+
+[node name="GameLogo" type="Sprite2D" parent="VBoxContainer" unique_id=298603538]
+position = Vector2(640, 152)
+texture = ExtResource("2_1los2")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=905420964]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = 343.0
+offset_right = 471.0
+offset_bottom = 719.0
+grow_vertical = 0
+
+[node name="NewGameButton" parent="ButtonContainer" unique_id=2005046683 instance=ExtResource("3_d1ubk")]
+layout_mode = 2
+text = "Next Fight"
+scene_to_change_to = "res://assets/scenes/game.tscn"
+
+[node name="ContinueButton" parent="ButtonContainer" unique_id=993433727 instance=ExtResource("3_d1ubk")]
+layout_mode = 2
+text = "Back To Menu"
+scene_to_change_to = "res://assets/scenes/main_menu.tscn"
+
+[node name="SettingsContainer" type="VBoxContainer" parent="." unique_id=1714699435]
+visible = false
+offset_left = 597.0
+offset_top = 342.0
+offset_right = 1253.0
+offset_bottom = 720.0
+theme = ExtResource("4_vuf34")
+
+[node name="CreditsContainer" type="GridContainer" parent="." unique_id=1406121710]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 626.0
+offset_top = 340.0
+offset_right = 1282.0
+offset_bottom = 718.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_vuf34")
+columns = 2
+
+[node name="ShopLabel" type="Label" parent="CreditsContainer" unique_id=686280733]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shop"
+
+[node name="ShopLabel2" type="Label" parent="CreditsContainer" unique_id=617631842]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CreditsContainer" unique_id=1658836909]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="Button2" type="Button" parent="CreditsContainer" unique_id=1172831432]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="Button3" type="Button" parent="CreditsContainer" unique_id=2142092071]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="Button4" type="Button" parent="CreditsContainer" unique_id=257015546]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="Button5" type="Button" parent="CreditsContainer" unique_id=1395028154]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="Button6" type="Button" parent="CreditsContainer" unique_id=816920684]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="Button7" type="Button" parent="CreditsContainer" unique_id=2076453397]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_vuf34")
+text = "Some upgrade"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1138587312]
+stream = ExtResource("6_2lxdy")
+autoplay = true
+bus = &"Music"
+parameters/looping = true

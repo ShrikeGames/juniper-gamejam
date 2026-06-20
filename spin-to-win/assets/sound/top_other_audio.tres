@@ -1,0 +1,27 @@
+[gd_resource type="AudioStreamInteractive" format=3 uid="uid://c6wggfi3pcupp"]
+
+[ext_resource type="AudioStream" uid="uid://dyfdeqho4oxao" path="res://assets/sound/sfx/editted/silence.mp3" id="1_n45v1"]
+[ext_resource type="AudioStream" uid="uid://cyu7852wo5hwp" path="res://assets/sound/sfx/editted/on_ground.wav" id="2_nymg2"]
+[ext_resource type="AudioStream" uid="uid://sfh56uotgv83" path="res://assets/sound/sfx/editted/on_ground_2.wav" id="3_nymg2"]
+
+[resource]
+clip_count = 3
+clip_0/name = &"Silence"
+clip_0/stream = ExtResource("1_n45v1")
+clip_0/auto_advance = 0
+clip_1/name = &"On Ground 1"
+clip_1/stream = ExtResource("2_nymg2")
+clip_1/auto_advance = 1
+clip_1/next_clip = 2
+clip_2/name = &"On Ground 2"
+clip_2/stream = ExtResource("3_nymg2")
+clip_2/auto_advance = 1
+clip_2/next_clip = 1
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 1
+}
+}
