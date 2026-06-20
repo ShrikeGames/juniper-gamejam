@@ -13,6 +13,7 @@ config_version=5
 config/name="Micro Top Battles"
 run/main_scene="uid://dyexwnptcme40"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/image="uid://di0jtsb0ug2do"
 config/icon="res://icon.svg"
 
 [display]

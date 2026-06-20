@@ -11,40 +11,63 @@ var center_point:Vector3 = Vector3.ZERO
 var time:float = 0.0
 @export var spin_speed:float = 6.0
 @export var right_speed:float = 12.0
-@export var move_speed: float = 10.0
-var impulse_speed: float = 5.0
+@export var move_speed: float = 15.0
+@export var impulse_speed: float = 15.0
 @export var launched:bool = false
-@export var stamina_drain:float = 0.25
+@export var stamina_drain:float = 0.1
+@export var force_multiplier:float = 0.3
+@export var colour:Color
+@export var launcher:Node3D
+var _last_delta:float
 
 func _ready() -> void:
-	pass
+	var material = StandardMaterial3D.new()
+	material.albedo_color = colour
+	self.model.material_override = material
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if not launched or spin_speed <= 0:
+		return
 	var contact_count = state.get_contact_count()
 	for i in contact_count:
 		var contact_pos:Vector3 = state.get_contact_collider_position(i)
+		var collider_object = state.get_contact_collider_object(i)
 		self.sparks_particle_emitter.global_position = contact_pos
-		self.sparks_particle_emitter.amount = max(0, int(spin_speed)*10.0)
-		print("Collision at: ", contact_pos)
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if not launched:
-		return
-	time += delta
-	spin_speed = max(0.0, spin_speed-stamina_drain * delta)
-	move_speed = max(0.0, move_speed-stamina_drain * delta)
-	right_speed = max(0.0, right_speed-stamina_drain * delta)
+		self.sparks_particle_emitter.amount = max(1, int(spin_speed)*10.0)
+		if is_instance_of(collider_object, Top):
+			var speed_force:Vector3 = collider_object.linear_velocity.normalized()
+			#var spin_force:Vector3 = Vector3(collider_object.spin_speed,0,collider_object.spin_speed).normalized()
+			var total_force:Vector3 = (speed_force).normalized() * collider_object.force_multiplier
+			self.reduce_stamina(self._last_delta, total_force.length_squared())
+			collider_object.reduce_stamina(self._last_delta, total_force.length_squared())
+			self.apply_central_impulse(-total_force)
+			collider_object.apply_central_impulse(total_force)
+		elif contact_pos.y > self.global_position.y - 0.25:
+			self.reduce_stamina(self._last_delta)
+			
+func reduce_stamina(delta: float, drain_amount:float = stamina_drain):
+	spin_speed = max(0.0, spin_speed-drain_amount * delta)
+	move_speed = max(0.0, move_speed-drain_amount * delta)
+	right_speed = max(0.0, right_speed-drain_amount * delta)
 	if spin_speed <= 0:
 		move_speed = 0.0
+		impulse_speed = 0.0
 		right_speed = 0.0
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	self._last_delta = delta
+	if not launched:
+		self.global_position = launcher.global_position
+		return
+	time += delta
+	reduce_stamina(delta)
 	if self.get_colliding_bodies().size() > 0 and spin_speed > 0.0:
 		self.trail_particle_emitter.emitting = true
 		self.sparks_particle_emitter.emitting = true
 	else:
 		self.trail_particle_emitter.emitting = false
 		self.sparks_particle_emitter.emitting = false
-		self.sparks_particle_emitter.position = Vector3(0,0,0)
 		
 	#if self.linear_velocity.normalized().length_squared() > 0.01:
 		#self.trail_particle_emitter.look_at(self.global_position - self.linear_velocity.normalized(), Vector3.UP)
@@ -73,6 +96,8 @@ func move_to_center():
 	self.apply_central_force(move_direction * move_speed)
 	
 func impulse_to_target():
+	if spin_speed <= 0:
+		return
 	var move_direction:Vector3 = (self.target_node.global_position - self.global_position).normalized()
 	move_direction.y = 0
 	self.apply_central_impulse(move_direction * impulse_speed)
@@ -83,7 +108,7 @@ func move_in_current_direction():
 	self.apply_central_force(move_direction * move_speed)
 	
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not launched:
 		return
 	if spin_speed <= 0:

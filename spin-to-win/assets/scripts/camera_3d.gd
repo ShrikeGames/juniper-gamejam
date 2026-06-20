@@ -16,6 +16,7 @@ var last_mouse_position:Vector2
 var mouse_distance_traveled:float = 0.0
 var last_mouse_circle_state:int = -1
 var mouse_states_visited:Array = []
+@export var computer_tops:Array[Node3D] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,8 +27,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if look_at_node and is_launched:
-		self.look_at(look_at_node.global_position)
+	#if look_at_node and is_launched:
+	#	self.look_at(look_at_node.global_position)
 	if rotate_crank or not look_at_node.launched:
 		look_at_node.global_position = top_holder_spot.global_position
 		look_at_node.linear_velocity = Vector3.ZERO
@@ -67,10 +68,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				look_at_node.move_speed += distance_bonus
 				look_at_node.right_speed += distance_bonus
 				look_at_node.spin_speed += distance_bonus
-				
 				launcher.visible = false
 				is_launched = true
 				mouse_distance_traveled = 0.0
+				for computer in computer_tops:
+					computer.launched = true
+				
 				
 	elif event is InputEventMouseMotion and rotate_crank:
 		if last_mouse_position or last_mouse_position == Vector2.ZERO and last_mouse_circle_state >= 0:
