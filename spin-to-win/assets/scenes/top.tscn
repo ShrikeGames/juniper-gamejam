@@ -15,11 +15,68 @@ material = ExtResource("3_71mm4")
 bottom_radius = 0.0
 height = 0.5
 
-[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model")]
+[sub_resource type="Curve" id="Curve_71mm4"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 1.011236), 0.0, 0.0, 0, 0, Vector2(0.5, 0.6741574), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_k16d3"]
+curve = SubResource("Curve_71mm4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_71mm4"]
+gravity = Vector3(0, -8, 0)
+scale_over_velocity_curve = SubResource("CurveTexture_k16d3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_71mm4"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.07450981)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k16d3"]
+material = SubResource("StandardMaterial3D_71mm4")
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 8
+
+[sub_resource type="Curve" id="Curve_k16d3"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0.0067567676, 2.2921348), 0.0, 0.0, 0, 0, Vector2(0.92567575, 0.23595524), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0yua5"]
+curve = SubResource("Curve_k16d3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6a44c"]
+direction = Vector3(0, 1, 0)
+spread = 70.0
+initial_velocity_min = 0.099999994
+initial_velocity_max = 7.0
+scale_over_velocity_max = 2.0
+scale_over_velocity_curve = SubResource("CurveTexture_0yua5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4roix"]
+transparency = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_color = Color(0.7607843, 0.75686276, 0, 0.2901961)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ew4y2"]
+material = SubResource("StandardMaterial3D_4roix")
+radius = 0.05
+height = 0.1
+
+[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter")]
 continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 32
 angular_damp = 50.0
 script = ExtResource("2_k16d3")
 model = NodePath("MeshInstance3D")
+trail_particle_emitter = NodePath("TrailParticleEmitter")
+sparks_particle_emitter = NodePath("SparksParticleEmitter")
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=1659996157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24541521, -0.0045847893)
@@ -30,3 +87,24 @@ debug_color = Color(0.91611165, 0.16652784, 0.58785826, 0.41960785)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24541521, 0.0045847893)
 material_override = SubResource("StandardMaterial3D_cb5na")
 mesh = SubResource("CylinderMesh_5gf0t")
+
+[node name="TrailParticleEmitter" type="GPUParticles3D" parent="." unique_id=127143557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0003810376, 0)
+layers = 16
+emitting = false
+amount = 60
+lifetime = 0.17
+use_fixed_seed = true
+seed = 4005301538
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_71mm4")
+draw_pass_1 = SubResource("SphereMesh_k16d3")
+
+[node name="SparksParticleEmitter" type="GPUParticles3D" parent="." unique_id=619772546]
+layers = 32
+emitting = false
+amount = 30
+lifetime = 0.08
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_6a44c")
+draw_pass_1 = SubResource("SphereMesh_ew4y2")

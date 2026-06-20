@@ -5,6 +5,12 @@
 
 [node name="arena" unique_id=1948873252 instance=ExtResource("1_icold")]
 
+[node name="Light" parent="." index="0" unique_id=1243467465]
+visible = false
+
+[node name="Camera" parent="." index="1" unique_id=475643584]
+visible = false
+
 [node name="arena" parent="." index="2" unique_id=1926282929]
 material_override = ExtResource("2_uk72o")
 

@@ -2,6 +2,8 @@ extends RigidBody3D
 class_name Top
 
 @export var model:MeshInstance3D
+@export var trail_particle_emitter:GPUParticles3D
+@export var sparks_particle_emitter:GPUParticles3D
 @export var target_node:Node3D
 var center_point:Vector3 = Vector3.ZERO
 @export var target_above_node:Node3D
@@ -11,12 +13,20 @@ var time:float = 0.0
 @export var right_speed:float = 12.0
 @export var move_speed: float = 10.0
 var impulse_speed: float = 5.0
-var launched:bool = false
+@export var launched:bool = false
 @export var stamina_drain:float = 0.25
 
 func _ready() -> void:
 	pass
 
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	var contact_count = state.get_contact_count()
+	for i in contact_count:
+		var contact_pos:Vector3 = state.get_contact_collider_position(i)
+		self.sparks_particle_emitter.global_position = contact_pos
+		self.sparks_particle_emitter.amount = max(0, int(spin_speed)*10.0)
+		print("Collision at: ", contact_pos)
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not launched:
@@ -28,6 +38,17 @@ func _process(delta: float) -> void:
 	if spin_speed <= 0:
 		move_speed = 0.0
 		right_speed = 0.0
+	if self.get_colliding_bodies().size() > 0 and spin_speed > 0.0:
+		self.trail_particle_emitter.emitting = true
+		self.sparks_particle_emitter.emitting = true
+	else:
+		self.trail_particle_emitter.emitting = false
+		self.sparks_particle_emitter.emitting = false
+		self.sparks_particle_emitter.position = Vector3(0,0,0)
+		
+	#if self.linear_velocity.normalized().length_squared() > 0.01:
+		#self.trail_particle_emitter.look_at(self.global_position - self.linear_velocity.normalized(), Vector3.UP)
+		#self.trail_particle_emitter.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
 	
 func spin_top():
 	self.model.global_rotate(self.basis.y, wrapf(spin_speed, 0.0, (2*PI)))
