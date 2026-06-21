@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://5k32adr3nenm"]
+
+[ext_resource type="Texture2D" uid="uid://c8mhu14h64sca" path="res://assets/art/textures/512x512 Grid Grey.png" id="1_18del"]
+[ext_resource type="Script" uid="uid://8modipadex6d" path="res://assets/scripts/launcher.gd" id="1_olrva"]
+[ext_resource type="AudioStream" uid="uid://bx0g57cep5402" path="res://assets/sound/sfx/editted/crank.mp3" id="2_olrva"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5aext"]
+albedo_texture = ExtResource("1_18del")
+
+[sub_resource type="BoxMesh" id="BoxMesh_cb5na"]
+size = Vector3(1, 0.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w2km"]
+albedo_texture = ExtResource("1_18del")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5aext"]
+size = Vector3(0.3, 0.3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfsp4"]
+albedo_texture = ExtResource("1_18del")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cb5na"]
+top_radius = 0.3
+bottom_radius = 0.4
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw37s"]
+albedo_texture = ExtResource("1_18del")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j62u1"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2t1h"]
+albedo_texture = ExtResource("1_18del")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5aext"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phsto"]
+albedo_texture = ExtResource("1_18del")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pkhv0"]
+bottom_radius = 0.3
+height = 0.5
+
+[node name="Launcher" type="Node3D" unique_id=1235659431]
+transform = Transform3D(1, 1.7763568e-15, 5.3290705e-15, 2.0919266e-15, 0.7626796, -0.6467765, -5.213279e-15, 0.6467765, 0.7626796, 0, 0, 0)
+script = ExtResource("1_olrva")
+
+[node name="base" type="MeshInstance3D" parent="." unique_id=46871876]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_5aext")
+mesh = SubResource("BoxMesh_cb5na")
+
+[node name="handle" type="MeshInstance3D" parent="." unique_id=1344317614]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 1.498188)
+material_override = SubResource("StandardMaterial3D_3w2km")
+mesh = SubResource("BoxMesh_5aext")
+
+[node name="Crank" type="Node3D" parent="." unique_id=933835188]
+transform = Transform3D(-4.371139e-08, -1.7763567e-15, -1, -1.7763567e-15, 1, -1.7763567e-15, 1, 1.7763567e-15, -4.371139e-08, 0, 0.26264572, 0)
+
+[node name="CrankBase" type="MeshInstance3D" parent="Crank" unique_id=193845248]
+material_override = SubResource("StandardMaterial3D_wfsp4")
+mesh = SubResource("CylinderMesh_cb5na")
+
+[node name="CrankRod" type="MeshInstance3D" parent="Crank" unique_id=576529834]
+transform = Transform3D(1, -1.7763568e-14, 1.7763565e-15, -1.7763568e-15, -4.371139e-08, 1, -1.7763568e-14, -1, -4.371139e-08, 0, 0, -0.5715828)
+material_override = SubResource("StandardMaterial3D_pw37s")
+mesh = SubResource("CylinderMesh_j62u1")
+
+[node name="CrankNub" type="MeshInstance3D" parent="Crank" unique_id=1080843473]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, -1.1461143)
+material_override = SubResource("StandardMaterial3D_k2t1h")
+mesh = SubResource("SphereMesh_5aext")
+
+[node name="CrankTopHolder" type="MeshInstance3D" parent="Crank" unique_id=1057780301]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.66980267, 0)
+material_override = SubResource("StandardMaterial3D_phsto")
+mesh = SubResource("CylinderMesh_pkhv0")
+
+[node name="CrankTopSpot" type="Node3D" parent="Crank" unique_id=1801029633]
+transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.97638226, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1673986165]
+stream = ExtResource("2_olrva")
+volume_db = -20.0
+bus = &"SFX"
+parameters/looping = true

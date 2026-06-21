@@ -1,14 +1,13 @@
 extends Node3D
 class_name PlayerCamera
 
-@export var look_at_node: Top
+@export var player_top: Top
 @export var target_node: Node3D
 @export var ground_mask: int = 2
 @export var max_ray_distance: float = 1000.0
-@export var launcher_crank:Node3D
-@export var top_holder_spot:Node3D
-@export var launcher:Node3D
+@export var launcher:Launcher
 @export var crank_audio_stream_player:AudioStreamPlayer
+@export var cpu_container:Node3D
 
 var rotate_crank:bool = false
 var is_launched:bool = false
@@ -18,8 +17,7 @@ var last_mouse_position:Vector2
 var mouse_distance_traveled:float = 0.0
 var last_mouse_circle_state:int = -1
 var mouse_states_visited:Array = []
-@export var computer_tops:Array[Node3D] = []
-
+var cpu_crank_speed:float = 0.1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	rotate_crank = false
@@ -28,18 +26,22 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if look_at_node and is_launched:
-		self.look_at(look_at_node.global_position)
-	if rotate_crank or not look_at_node.launched:
-		look_at_node.global_position = top_holder_spot.global_position
-		look_at_node.linear_velocity = Vector3.ZERO
-		look_at_node.angular_velocity = Vector3.ZERO
+func _process(delta: float) -> void:
+	if player_top and is_launched:
+		self.look_at(player_top.global_position)
+	if rotate_crank or not player_top.launched:
+		player_top.global_position = launcher.crank_top_spot.global_position
+		player_top.linear_velocity = Vector3.ZERO
+		player_top.angular_velocity = Vector3.ZERO
 	if rotate_crank:
 		crank_audio_stream_player.pitch_scale = randf_range(0.5, 1.5)
 		crank_audio_stream_player.play()
 		var distance_bonus:float = min(5.0, max(0.0, mouse_distance_traveled * 0.001))
-		launcher_crank.rotate(Vector3.UP, -distance_bonus*0.1)
+		launcher.crank.rotate(Vector3.UP, -distance_bonus*0.1)
+		for cpu_launcher in cpu_container.get_children():
+			if is_instance_of(cpu_launcher, Launcher):
+				cpu_launcher.crank.rotate(Vector3.UP, -cpu_crank_speed)
+		cpu_crank_speed += randf_range(0.1, 0.2) * delta
 	else:
 		crank_audio_stream_player.stop()
 		
@@ -59,7 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var hit := space_state.intersect_ray(query)
 			if hit and hit.has("position"):
 				target_node.global_position = hit["position"]
-				self.look_at_node.impulse_to_target()
+				self.player_top.impulse_to_target()
 		else:
 			# hold LMB and spin mouse to spin the crank
 			if event.is_action_pressed("LMB") and event.pressed:
@@ -69,17 +71,20 @@ func _unhandled_input(event: InputEvent) -> void:
 				# release LMB to release the top
 				# apply force to top based on power
 				rotate_crank = false
-				look_at_node.launched = true
+				player_top.launched = true
 				var distance_bonus:float = min(5.0, max(0.0, mouse_distance_traveled * 0.001))
-				look_at_node.move_speed += distance_bonus
-				look_at_node.right_speed += distance_bonus
-				look_at_node.spin_speed += distance_bonus
+				player_top.move_speed += distance_bonus
+				player_top.right_speed += distance_bonus
+				player_top.spin_speed += distance_bonus
 				launcher.visible = false
 				is_launched = true
 				mouse_distance_traveled = 0.0
-				for computer in computer_tops:
-					computer.launched = true
-				
+				for cpu in cpu_container.get_children():
+					if is_instance_of(cpu, Top):
+						cpu.launched = true
+					if is_instance_of(cpu, Launcher):
+						cpu.visible = false
+					
 				
 	elif event is InputEventMouseMotion and rotate_crank:
 		if last_mouse_position or last_mouse_position == Vector2.ZERO and last_mouse_circle_state >= 0:

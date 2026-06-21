@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bapvjavrybfo8" path="res://assets/scripts/top.gd" id="2_k16d3"]
 [ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_71mm4"]
 [ext_resource type="PackedScene" uid="uid://bpx0veg5tykmj" path="res://assets/scenes/test_top.tscn" id="3_k16d3"]
+[ext_resource type="Texture2D" uid="uid://c8mhu14h64sca" path="res://assets/art/textures/512x512 Grid Grey.png" id="4_4roix"]
 [ext_resource type="AudioStream" uid="uid://c34rjxeikai6m" path="res://assets/sound/top_collision_audio.tres" id="4_6a44c"]
 [ext_resource type="AudioStream" uid="uid://c6wggfi3pcupp" path="res://assets/sound/top_other_audio.tres" id="5_0yua5"]
 
@@ -20,6 +21,9 @@ albedo_color = Color(0.002970678, 0.38062754, 0.58756095, 1)
 material = ExtResource("3_71mm4")
 bottom_radius = 0.0
 height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ew4y2"]
+albedo_texture = ExtResource("4_4roix")
 
 [sub_resource type="Curve" id="Curve_71mm4"]
 _limits = [0.0, 3.0, 0.0, 1.0]
@@ -47,17 +51,17 @@ rings = 8
 
 [sub_resource type="Curve" id="Curve_k16d3"]
 _limits = [0.0, 3.0, 0.0, 1.0]
-_data = [Vector2(0.0067567676, 2.2921348), 0.0, 0.0, 0, 0, Vector2(0.92567575, 0.23595524), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0.0067567676, 2.2921348), 0.0, 0.0, 0, 0, Vector2(0.31366464, 1.5950313), 0.0, 0.0, 0, 0, Vector2(0.98757774, 0.31118035), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_0yua5"]
 curve = SubResource("Curve_k16d3")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6a44c"]
 direction = Vector3(0, 1, 0)
-spread = 70.0
+spread = 90.0
 initial_velocity_min = 0.099999994
-initial_velocity_max = 7.0
+initial_velocity_max = 9.0
 scale_over_velocity_max = 2.0
 scale_over_velocity_curve = SubResource("CurveTexture_0yua5")
 
@@ -67,7 +71,9 @@ shading_mode = 0
 disable_ambient_light = true
 disable_fog = true
 disable_specular_occlusion = true
-albedo_color = Color(0.7607843, 0.75686276, 0, 0.2901961)
+albedo_color = Color(0.7607843, 0.75686276, 0, 0.5254902)
+grow = true
+grow_amount = 0.05
 
 [sub_resource type="SphereMesh" id="SphereMesh_ew4y2"]
 material = SubResource("StandardMaterial3D_4roix")
@@ -105,6 +111,9 @@ mesh = SubResource("CylinderMesh_5gf0t")
 [node name="test_top2" parent="Mesh" unique_id=715597117 instance=ExtResource("3_k16d3")]
 transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0.331724, 0)
 
+[node name="test_top" parent="Mesh/test_top2" index="0" unique_id=740292163]
+material_override = SubResource("StandardMaterial3D_ew4y2")
+
 [node name="TrailParticleEmitter" type="GPUParticles3D" parent="." unique_id=127143557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0003810376, 0)
 layers = 16
@@ -121,7 +130,7 @@ draw_pass_1 = SubResource("SphereMesh_k16d3")
 layers = 32
 emitting = false
 amount = 30
-lifetime = 0.08
+lifetime = 0.3
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_6a44c")
 draw_pass_1 = SubResource("SphereMesh_ew4y2")

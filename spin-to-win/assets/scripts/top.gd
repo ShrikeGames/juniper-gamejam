@@ -9,14 +9,14 @@ var center_point:Vector3 = Vector3.ZERO
 @export var target_above_node:Node3D
 @export var look_at_node:Node3D
 var time:float = 0.0
-@export var spin_speed:float = 6.0
+@export var spin_speed:float = 12.0
 @export var right_speed:float = 15.0
 @export var move_speed: float = 15.0
 @export var center_speed: float = 10.0
 @export var impulse_speed: float = 15.0
 @export var launched:bool = false
-@export var stamina_drain:float = 0.1
-@export var force_multiplier:float = 0.3
+@export var stamina_drain:float = 0.05
+@export var force_multiplier:float = 2.0
 @export var colour:Color
 @export var launcher:Node3D
 
@@ -50,25 +50,28 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		self.sparks_particle_emitter.global_position = contact_pos
 		self.sparks_particle_emitter.amount = max(1, int(spin_speed)*10.0)
 		if is_instance_of(collider_object, Top):
-			var speed_force:Vector3 = collider_object.linear_velocity.normalized()
-			#var spin_force:Vector3 = Vector3(collider_object.spin_speed,0,collider_object.spin_speed).normalized()
-			var total_force:Vector3 = (speed_force).normalized() * collider_object.force_multiplier
-			self.reduce_stamina(self._last_delta, total_force.length_squared())
+			var speed_force:Vector3 = self.basis.z.normalized()
+			var total_force:Vector3 = speed_force * self.force_multiplier
+			#self.reduce_stamina(self._last_delta, total_force.length_squared())
 			collider_object.reduce_stamina(self._last_delta, total_force.length_squared())
-			self.apply_central_impulse(-total_force)
+			#self.apply_central_impulse(-total_force)
 			collider_object.apply_central_impulse(total_force)
+			self.apply_central_impulse(-total_force)
 			var random_clank_id:int = randi_range(1,9)
 			var clip_name:String = "Clang %d"%random_clank_id
 			play_collision_audio_clip(clip_name)
+			return
 		elif contact_pos.y > self.global_position.y - 0.25:
 			self.reduce_stamina(self._last_delta, stamina_drain * 0.25)
 			#var random_clank_id:int = randi_range(1,9)
 			#var clip_name:String = "Clang %d"%random_clank_id
 			#play_collision_audio_clip(clip_name)
+			return
 		else:
 			var random_clank_id:int = randi_range(1,2)
 			var clip_name:String = "On Ground %d"%random_clank_id
 			play_other_audio_clip(clip_name)
+			return
 	
 func play_collision_audio_clip(clip_name:String):
 	#print("Play clip %s"%[clip_name])
@@ -85,11 +88,13 @@ func play_other_audio_clip(clip_name:String):
 func reduce_stamina(delta: float, drain_amount:float = stamina_drain):
 	spin_speed = max(0.0, spin_speed-drain_amount * delta)
 	move_speed = max(0.0, move_speed-drain_amount * delta)
-	right_speed = max(0.0, right_speed-drain_amount * delta)
+	#right_speed = max(5.0, right_speed-drain_amount * delta)
 	if spin_speed <= 0:
 		move_speed = 0.0
 		impulse_speed = 0.0
 		right_speed = 0.0
+		trail_particle_emitter.emitting = false
+		sparks_particle_emitter.emitting = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -97,7 +102,7 @@ func _process(delta: float) -> void:
 		return
 	self._last_delta = delta
 	if not launched:
-		self.global_position = launcher.global_position
+		self.global_position = launcher.crank_top_spot.global_position
 		return
 	time += delta
 	reduce_stamina(delta)
@@ -141,8 +146,10 @@ func move_to_center():
 func impulse_to_target():
 	if spin_speed <= 0:
 		return
+	
 	var move_direction:Vector3 = (self.target_node.global_position - self.global_position).normalized()
 	move_direction.y = 0
+	self.linear_velocity = Vector3.ZERO
 	self.apply_central_impulse(move_direction * impulse_speed)
 	
 	

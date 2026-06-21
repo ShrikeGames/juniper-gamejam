@@ -3,64 +3,25 @@
 [ext_resource type="Script" uid="uid://dlq8mc3wfytoy" path="res://assets/scripts/camera_3d.gd" id="1_j62u1"]
 [ext_resource type="Script" uid="uid://b8g7qb6fg7qlt" path="res://assets/scripts/game.gd" id="1_pw37s"]
 [ext_resource type="Environment" uid="uid://bc2gd46jqouln" path="res://assets/envs/above_water.tres" id="2_dis88"]
-[ext_resource type="Texture2D" uid="uid://c8mhu14h64sca" path="res://assets/art/textures/512x512 Grid Grey.png" id="2_j62u1"]
 [ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_cb5na"]
-[ext_resource type="AudioStream" uid="uid://bx0g57cep5402" path="res://assets/sound/sfx/editted/crank.mp3" id="4_wfsp4"]
+[ext_resource type="PackedScene" uid="uid://5k32adr3nenm" path="res://assets/scenes/launcher.tscn" id="4_pw37s"]
 [ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="5_j62u1"]
 [ext_resource type="PackedScene" uid="uid://ba88sbfy5r31c" path="res://assets/scenes/top.tscn" id="7_3w2km"]
 [ext_resource type="AudioStream" uid="uid://drvw1xqu5hm0u" path="res://assets/sound/music/Cat-Shop Aaron_music_YT.mp3" id="7_wfsp4"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5aext"]
-albedo_texture = ExtResource("2_j62u1")
-
-[sub_resource type="BoxMesh" id="BoxMesh_cb5na"]
-size = Vector3(1, 0.4, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w2km"]
-albedo_texture = ExtResource("2_j62u1")
-
-[sub_resource type="BoxMesh" id="BoxMesh_5aext"]
-size = Vector3(0.3, 0.3, 2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfsp4"]
-albedo_texture = ExtResource("2_j62u1")
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_cb5na"]
-top_radius = 0.3
-bottom_radius = 0.4
-height = 0.2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw37s"]
-albedo_texture = ExtResource("2_j62u1")
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_j62u1"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2t1h"]
-albedo_texture = ExtResource("2_j62u1")
-
-[sub_resource type="SphereMesh" id="SphereMesh_5aext"]
-radius = 0.15
-height = 0.3
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phsto"]
-albedo_texture = ExtResource("2_j62u1")
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_pkhv0"]
-bottom_radius = 0.3
-height = 0.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_3w2km"]
 material = ExtResource("3_cb5na")
 radius = 0.25
 height = 0.001
 
-[node name="Game" type="Node3D" unique_id=888901533 node_paths=PackedStringArray("tops")]
+[node name="Game" type="Node3D" unique_id=888901533 node_paths=PackedStringArray("tops", "cpu_container", "target_node", "target_above_node", "look_at_node")]
 script = ExtResource("1_pw37s")
-tops = [NodePath("Top"), NodePath("Top2"), NodePath("Top3"), NodePath("Top4")]
+tops = [NodePath("Top")]
 scene_to_change_to = "res://assets/scenes/store_menu.tscn"
+cpu_container = NodePath("CPUs")
+target_node = NodePath("Target")
+target_above_node = NodePath("Above")
+look_at_node = NodePath("LookAtNode")
 
 [node name="Top" parent="." unique_id=24248696 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node", "launcher") instance=ExtResource("7_3w2km")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.046786547, 3.989884, 5.0150094)
@@ -69,64 +30,26 @@ angular_damp = 25.0
 target_node = NodePath("../Target")
 target_above_node = NodePath("../Above")
 look_at_node = NodePath("../LookAtNode")
-launcher = NodePath("../Camera3D/Launcher/Crank/CrankTopSpot")
+spin_speed = 20.0
+right_speed = 20.0
+move_speed = 20.0
+center_speed = 20.0
+impulse_speed = 20.0
+launcher = NodePath("../Launcher")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("look_at_node", "target_node", "launcher_crank", "top_holder_spot", "launcher", "crank_audio_stream_player", "computer_tops")]
+[node name="Launcher" parent="." unique_id=1235659431 instance=ExtResource("4_pw37s")]
+transform = Transform3D(1, 1.7763568e-15, 5.3290705e-15, -1.7763568e-15, 1, 0, -5.3290705e-15, 0, 1, 0.087920785, 4.9114428, 5.010152)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("player_top", "target_node", "launcher", "crank_audio_stream_player", "cpu_container")]
 transform = Transform3D(1, 0, 0, 0, 0.7626796, 0.6467765, 0, -0.6467765, 0.7626796, 0.012513161, 8.542912, 8.397658)
 current = true
 fov = 45.0
 script = ExtResource("1_j62u1")
-look_at_node = NodePath("../Top")
+player_top = NodePath("../Top")
 target_node = NodePath("../Target")
-launcher_crank = NodePath("Launcher/Crank")
-top_holder_spot = NodePath("Launcher/Crank/CrankTopSpot")
-launcher = NodePath("Launcher")
-crank_audio_stream_player = NodePath("Launcher/AudioStreamPlayer")
-computer_tops = [NodePath("../Top2"), NodePath("../Top3"), NodePath("../Top4")]
-
-[node name="Launcher" type="Node3D" parent="Camera3D" unique_id=873180769]
-transform = Transform3D(1, 1.7763568e-15, 5.3290705e-15, 2.0919266e-15, 0.7626796, -0.6467765, -5.213279e-15, 0.6467765, 0.7626796, 0.075407624, -0.5786874, -4.932331)
-
-[node name="base" type="MeshInstance3D" parent="Camera3D/Launcher" unique_id=1485020542]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_5aext")
-mesh = SubResource("BoxMesh_cb5na")
-
-[node name="handle" type="MeshInstance3D" parent="Camera3D/Launcher" unique_id=1447595526]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 1.498188)
-material_override = SubResource("StandardMaterial3D_3w2km")
-mesh = SubResource("BoxMesh_5aext")
-
-[node name="Crank" type="Node3D" parent="Camera3D/Launcher" unique_id=206828763]
-transform = Transform3D(-4.371139e-08, -1.7763567e-15, -1, -1.7763567e-15, 1, -1.7763567e-15, 1, 1.7763567e-15, -4.371139e-08, 0, 0.26264572, 0)
-
-[node name="CrankBase" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=348060734]
-material_override = SubResource("StandardMaterial3D_wfsp4")
-mesh = SubResource("CylinderMesh_cb5na")
-
-[node name="CrankRod" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=614496126]
-transform = Transform3D(1, -1.7763568e-14, 1.7763565e-15, -1.7763568e-15, -4.371139e-08, 1, -1.7763568e-14, -1, -4.371139e-08, 0, 0, -0.5715828)
-material_override = SubResource("StandardMaterial3D_pw37s")
-mesh = SubResource("CylinderMesh_j62u1")
-
-[node name="CrankNub" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=403237538]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, -1.1461143)
-material_override = SubResource("StandardMaterial3D_k2t1h")
-mesh = SubResource("SphereMesh_5aext")
-
-[node name="CrankTopHolder" type="MeshInstance3D" parent="Camera3D/Launcher/Crank" unique_id=841376442]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.66980267, 0)
-material_override = SubResource("StandardMaterial3D_phsto")
-mesh = SubResource("CylinderMesh_pkhv0")
-
-[node name="CrankTopSpot" type="Node3D" parent="Camera3D/Launcher/Crank" unique_id=881233610]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.97638226, 0)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera3D/Launcher" unique_id=740294129]
-stream = ExtResource("4_wfsp4")
-volume_db = -20.0
-bus = &"SFX"
-parameters/looping = true
+launcher = NodePath("../Launcher")
+crank_audio_stream_player = NodePath("../Launcher/AudioStreamPlayer")
+cpu_container = NodePath("../CPUs")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=746990791]
 environment = ExtResource("2_dis88")
@@ -158,159 +81,17 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 visible = false
 mesh = SubResource("SphereMesh_3w2km")
 
-[node name="Launcher2" type="Node3D" parent="." unique_id=395767464]
-transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, 1.1190127, 3.9341087, -4.3441124)
-
-[node name="base" type="MeshInstance3D" parent="Launcher2" unique_id=1934842695]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_5aext")
-mesh = SubResource("BoxMesh_cb5na")
-
-[node name="handle" type="MeshInstance3D" parent="Launcher2" unique_id=468390525]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 1.498188)
-material_override = SubResource("StandardMaterial3D_3w2km")
-mesh = SubResource("BoxMesh_5aext")
-
-[node name="Crank" type="Node3D" parent="Launcher2" unique_id=1838762902]
-transform = Transform3D(-4.371139e-08, -1.7763567e-15, -1, -1.7763567e-15, 1, -1.7763567e-15, 1, 1.7763567e-15, -4.371139e-08, 0, 0.26264572, 0)
-
-[node name="CrankBase" type="MeshInstance3D" parent="Launcher2/Crank" unique_id=870913402]
-material_override = SubResource("StandardMaterial3D_wfsp4")
-mesh = SubResource("CylinderMesh_cb5na")
-
-[node name="CrankRod" type="MeshInstance3D" parent="Launcher2/Crank" unique_id=624851822]
-transform = Transform3D(1, -1.7763568e-14, 1.7763565e-15, -1.7763568e-15, -4.371139e-08, 1, -1.7763568e-14, -1, -4.371139e-08, 0, 0, -0.5715828)
-material_override = SubResource("StandardMaterial3D_pw37s")
-mesh = SubResource("CylinderMesh_j62u1")
-
-[node name="CrankNub" type="MeshInstance3D" parent="Launcher2/Crank" unique_id=1596218586]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, -1.1461143)
-material_override = SubResource("StandardMaterial3D_k2t1h")
-mesh = SubResource("SphereMesh_5aext")
-
-[node name="CrankTopHolder" type="MeshInstance3D" parent="Launcher2/Crank" unique_id=1118113211]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.66980267, 0)
-material_override = SubResource("StandardMaterial3D_phsto")
-mesh = SubResource("CylinderMesh_pkhv0")
-
-[node name="CrankTopSpot" type="Node3D" parent="Launcher2/Crank" unique_id=288066845]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.97638226, 0)
-
-[node name="Top2" parent="." unique_id=1009319338 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node", "launcher") instance=ExtResource("7_3w2km")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 1.1873356, 3.2570972, -4.218237)
-angular_damp = 25.0
-target_node = NodePath("../Target")
-target_above_node = NodePath("../Above")
-look_at_node = NodePath("../LookAtNode")
-spin_speed = 10.0
-right_speed = 20.0
-move_speed = 10.0
-colour = Color(0.06759738, 0.33249888, 0.65317035, 1)
-launcher = NodePath("../Launcher2/Crank/CrankTopSpot")
-
-[node name="Launcher3" type="Node3D" parent="." unique_id=535396833]
-transform = Transform3D(-0.04215464, 0, 0.99911106, 0, 1, 0, -0.99911106, 0, -0.04215464, 4.316762, 4.511679, 1.4500598)
-
-[node name="base" type="MeshInstance3D" parent="Launcher3" unique_id=1463102059]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_5aext")
-mesh = SubResource("BoxMesh_cb5na")
-
-[node name="handle" type="MeshInstance3D" parent="Launcher3" unique_id=149861446]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 1.498188)
-material_override = SubResource("StandardMaterial3D_3w2km")
-mesh = SubResource("BoxMesh_5aext")
-
-[node name="Crank" type="Node3D" parent="Launcher3" unique_id=1223289635]
-transform = Transform3D(-4.371139e-08, -1.7763567e-15, -1, -1.7763567e-15, 1, -1.7763567e-15, 1, 1.7763567e-15, -4.371139e-08, 0, 0.26264572, 0)
-
-[node name="CrankBase" type="MeshInstance3D" parent="Launcher3/Crank" unique_id=1737669008]
-material_override = SubResource("StandardMaterial3D_wfsp4")
-mesh = SubResource("CylinderMesh_cb5na")
-
-[node name="CrankRod" type="MeshInstance3D" parent="Launcher3/Crank" unique_id=1350871592]
-transform = Transform3D(1, -1.7763568e-14, 1.7763565e-15, -1.7763568e-15, -4.371139e-08, 1, -1.7763568e-14, -1, -4.371139e-08, 0, 0, -0.5715828)
-material_override = SubResource("StandardMaterial3D_pw37s")
-mesh = SubResource("CylinderMesh_j62u1")
-
-[node name="CrankNub" type="MeshInstance3D" parent="Launcher3/Crank" unique_id=1708807787]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, -1.1461143)
-material_override = SubResource("StandardMaterial3D_k2t1h")
-mesh = SubResource("SphereMesh_5aext")
-
-[node name="CrankTopHolder" type="MeshInstance3D" parent="Launcher3/Crank" unique_id=378564335]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.66980267, 0)
-material_override = SubResource("StandardMaterial3D_phsto")
-mesh = SubResource("CylinderMesh_pkhv0")
-
-[node name="CrankTopSpot" type="Node3D" parent="Launcher3/Crank" unique_id=1482677879]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.97638226, 0)
-
-[node name="Top3" parent="." unique_id=81534320 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node", "launcher") instance=ExtResource("7_3w2km")]
-transform = Transform3D(0.68495417, 0, 0.7285862, 0, 1, 0, -0.7285862, 0, 0.68495417, 4.353935, 3.6920657, 1.3729501)
-angular_damp = 25.0
-target_node = NodePath("../Target")
-target_above_node = NodePath("../Above")
-look_at_node = NodePath("../LookAtNode")
-spin_speed = 18.0
-right_speed = 18.0
-move_speed = 8.0
-colour = Color(0.364819, 0.34688133, 0.19900194, 1)
-launcher = NodePath("../Launcher3/Crank/CrankTopSpot")
-
-[node name="Launcher4" type="Node3D" parent="." unique_id=1417546581]
-transform = Transform3D(0.03912026, 0, -0.9992345, 0, 1, 0, 0.9992345, 0, 0.03912026, -4.312051, 3.8626719, 1.0046228)
-
-[node name="base" type="MeshInstance3D" parent="Launcher4" unique_id=2108415736]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_5aext")
-mesh = SubResource("BoxMesh_cb5na")
-
-[node name="handle" type="MeshInstance3D" parent="Launcher4" unique_id=1057918845]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 1.498188)
-material_override = SubResource("StandardMaterial3D_3w2km")
-mesh = SubResource("BoxMesh_5aext")
-
-[node name="Crank" type="Node3D" parent="Launcher4" unique_id=1204650729]
-transform = Transform3D(-4.371139e-08, -1.7763567e-15, -1, -1.7763567e-15, 1, -1.7763567e-15, 1, 1.7763567e-15, -4.371139e-08, 0, 0.26264572, 0)
-
-[node name="CrankBase" type="MeshInstance3D" parent="Launcher4/Crank" unique_id=2097901678]
-material_override = SubResource("StandardMaterial3D_wfsp4")
-mesh = SubResource("CylinderMesh_cb5na")
-
-[node name="CrankRod" type="MeshInstance3D" parent="Launcher4/Crank" unique_id=313843472]
-transform = Transform3D(1, -1.7763568e-14, 1.7763565e-15, -1.7763568e-15, -4.371139e-08, 1, -1.7763568e-14, -1, -4.371139e-08, 0, 0, -0.5715828)
-material_override = SubResource("StandardMaterial3D_pw37s")
-mesh = SubResource("CylinderMesh_j62u1")
-
-[node name="CrankNub" type="MeshInstance3D" parent="Launcher4/Crank" unique_id=1168533966]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, 0, -1.1461143)
-material_override = SubResource("StandardMaterial3D_k2t1h")
-mesh = SubResource("SphereMesh_5aext")
-
-[node name="CrankTopHolder" type="MeshInstance3D" parent="Launcher4/Crank" unique_id=1093475359]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.66980267, 0)
-material_override = SubResource("StandardMaterial3D_phsto")
-mesh = SubResource("CylinderMesh_pkhv0")
-
-[node name="CrankTopSpot" type="Node3D" parent="Launcher4/Crank" unique_id=578155044]
-transform = Transform3D(1, 0, 0, -7.6e-44, 1, 0, 0, 0, 1, 0, -0.97638226, 0)
-
-[node name="Top4" parent="." unique_id=1973255906 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node", "launcher") instance=ExtResource("7_3w2km")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, -4.3482265, 3.2570972, 1.0115833)
-angular_damp = 25.0
-target_node = NodePath("../Target")
-target_above_node = NodePath("../Above")
-look_at_node = NodePath("../LookAtNode")
-spin_speed = 10.0
-right_speed = 13.0
-move_speed = 20.0
-center_speed = 16.0
-colour = Color(0.5061701, 0.27409416, 0.07300442, 1)
-launcher = NodePath("../Launcher4/Crank/CrankTopSpot")
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1052778374]
 stream = ExtResource("7_wfsp4")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
+
+[node name="CPUs" type="Node3D" parent="." unique_id=1512426646]
+
+[node name="arena2" parent="." unique_id=1948873252 instance=ExtResource("5_j62u1")]
+transform = Transform3D(-2.12, -1.509958e-07, 0, 3.2011107e-07, -1, 0, 0, 0, 2.12, 0, 0.437876, 0)
+spin = true
+rotation_speed = 2.0
+
+[editable path="Launcher"]
