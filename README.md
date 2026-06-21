@@ -33,4 +33,17 @@ https://github.com/user-attachments/assets/965ac243-b08f-4bd6-a8dc-afd8b121f17c
 
 Day 2:
 
-- 
+- Added menus (placeholder)
+- Added volume controls (working)
+- Added save/load of volume control settings
+- Added Randomly generated CPUs to fight against
+- CPUs are colour coded based on their highest stat
+- Added particle effects for moving on the ground and sparks for hitting things (including the ground)
+- Added spinning portion to center of arena
+- CPU launchers are now placed randomly and their cranks spin when you are cranking yours
+- CPUs launch at the same time as you
+- Added sound effects to gameplay (not UI)
+- Added Music (Aaron is going to make new music but using his music from past gamejam for now)
+- Added more shaped portion to the top of the spinning tops using blender to test the process for customization later
+- Various physics adjustments
+
