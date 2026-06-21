@@ -110,4 +110,18 @@ func _unhandled_input(event: InputEvent) -> void:
 				return
 		last_mouse_circle_state = mouse_circle_state
 		last_mouse_position = event.global_position
-		
+	else:
+		if is_launched and not event.is_action_pressed("LMB"):
+			var cam := get_viewport().get_camera_3d()
+			if cam == null or target_node == null:
+				return
+			var mouse_pos: Vector2 = event.position
+			var from: Vector3 = cam.project_ray_origin(mouse_pos)
+			var dir: Vector3 = cam.project_ray_normal(mouse_pos)
+			var to: Vector3 = from + dir * max_ray_distance
+			var space_state := get_world_3d().direct_space_state
+			var query := PhysicsRayQueryParameters3D.create(from, to)
+			query.collision_mask = ground_mask
+			var hit := space_state.intersect_ray(query)
+			if hit and hit.has("position"):
+				self.player_top.target_node.global_position = hit["position"]
