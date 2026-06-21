@@ -22,6 +22,7 @@ var time:float = 0.0
 
 @export var collision_audio_player:AudioStreamPlayer3D
 @export var other_audio_player:AudioStreamPlayer3D
+@export var ai_controlled:bool = false
 
 var _last_delta:float
 
@@ -141,7 +142,8 @@ func force_lookat_top():
 func move_to_center():
 	var move_direction:Vector3 = (center_point - self.global_position).normalized()
 	#move_direction.y = 0
-	self.apply_central_force(move_direction * center_speed)
+	#self.apply_central_force(move_direction * center_speed)
+	self.apply_central_impulse(move_direction * impulse_speed)
 	
 func impulse_to_target():
 	if spin_speed <= 0:
@@ -166,5 +168,6 @@ func _physics_process(_delta: float) -> void:
 	spin_top()
 	#force_upright_top()
 	force_lookat_top()
-	move_to_center()
+	if ai_controlled and (randf_range(0,5000) <= center_speed or abs(global_position.distance_to(center_point)) >= 4.0):
+		move_to_center()
 	move_in_current_direction()

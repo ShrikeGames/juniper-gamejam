@@ -45,6 +45,7 @@ func _ready() -> void:
 		cpu_top.move_speed = randf_range(10.0, 25.0)
 		cpu_top.spin_speed = randf_range(15.0, 25.0)
 		cpu_top.right_speed = randf_range(10.0, 25.0)
+		cpu_top.ai_controlled = true
 		cpu_top.mass = randf_range(0.75, 1.5)
 		if cpu_top.move_speed > cpu_top.spin_speed and cpu_top.move_speed > cpu_top.right_speed:
 			# red speed
