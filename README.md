@@ -47,3 +47,4 @@ Day 2:
 - Added more shaped portion to the top of the spinning tops using blender to test the process for customization later
 - Various physics adjustments
 
+https://github.com/user-attachments/assets/803b758c-50e3-4b32-800c-d4079eac833c
