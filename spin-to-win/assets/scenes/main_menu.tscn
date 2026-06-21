@@ -2,10 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://d2qmb5bxomcvb" path="res://assets/scenes/button.tscn" id="1_uu6ob"]
 [ext_resource type="Script" uid="uid://swak82nb8jer" path="res://assets/scripts/main_menu.gd" id="1_v1ppo"]
-[ext_resource type="Texture2D" uid="uid://c5pu5s2a32fyu" path="res://assets/logos/game_logo.png" id="2_f2xsc"]
+[ext_resource type="Script" uid="uid://dy2qmum68brx4" path="res://assets/scripts/logo.gd" id="3_66en2"]
 [ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="3_obrqb"]
 [ext_resource type="Texture2D" uid="uid://douwld03bbcaa" path="res://assets/logos/Shrike_878x878.png" id="4_57ux2"]
-[ext_resource type="AudioStream" uid="uid://cfpf4bofydyoc" path="res://assets/sound/music/Dog Shop Aaron_music_YT.mp3" id="6_v71do"]
+[ext_resource type="Texture2D" uid="uid://bdg4w2rke7itm" path="res://assets/art/ui/logo.png" id="7_66en2"]
+[ext_resource type="Texture2D" uid="uid://bg1llyqfrbi73" path="res://assets/logos/Aaron_Music_logo_v1.png" id="7_xmmar"]
+[ext_resource type="AudioStream" uid="uid://bboh65jm17a23" path="res://assets/sound/music/Sundays Shadess Aaron_music_YT.mp3" id="8_66en2"]
 
 [node name="MainMenu" type="Node2D" unique_id=459393673 node_paths=PackedStringArray("master_volume_slider", "music_volume_slider", "sfx_volume_slider", "voices_volume_slider", "ambient_volume_slider")]
 script = ExtResource("1_v1ppo")
@@ -25,31 +27,33 @@ grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GameLogo" type="Sprite2D" parent="VBoxContainer" unique_id=298603538]
-position = Vector2(640, 152)
-texture = ExtResource("2_f2xsc")
+[node name="Logo" type="Sprite2D" parent="VBoxContainer" unique_id=1462522927]
+position = Vector2(643, 135)
+texture = ExtResource("7_66en2")
+script = ExtResource("3_66en2")
 
 [node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=905420964]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 26.0
-offset_top = 343.0
+offset_top = 469.0
 offset_right = 471.0
 offset_bottom = 719.0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="NewGameButton" parent="ButtonContainer" unique_id=2005046683 instance=ExtResource("1_uu6ob")]
-layout_mode = 2
-text = "New Game"
-scene_to_change_to = "res://assets/scenes/game.tscn"
-
 [node name="ContinueButton" parent="ButtonContainer" unique_id=993433727 instance=ExtResource("1_uu6ob")]
 layout_mode = 2
 text = "Continue"
 scene_to_change_to = "res://assets/scenes/game.tscn"
+
+[node name="NewGameButton" parent="ButtonContainer" unique_id=2005046683 instance=ExtResource("1_uu6ob")]
+layout_mode = 2
+text = "New Game"
+scene_to_change_to = "res://assets/scenes/game.tscn"
+wipe_save = true
 
 [node name="SettingsButton" parent="ButtonContainer" unique_id=84627548 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
 layout_mode = 2
@@ -64,7 +68,6 @@ object_to_show = NodePath("../../CreditsContainer")
 objects_to_hide = [NodePath("../../SettingsContainer")]
 
 [node name="SettingsContainer" type="VBoxContainer" parent="." unique_id=1714699435]
-visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -147,7 +150,7 @@ layout_mode = 2
 [node name="AmbientVolumeLabel" type="Label" parent="SettingsContainer/AmbientVolumeContainer" unique_id=1021549224]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Ambient volume"
+text = "User Interface Volume"
 
 [node name="AmbientVolumeSlider" type="HSlider" parent="SettingsContainer/AmbientVolumeContainer" unique_id=294385612]
 layout_mode = 2
@@ -156,6 +159,7 @@ size_flags_vertical = 4
 value = 50.0
 
 [node name="CreditsContainer" type="VBoxContainer" parent="." unique_id=1843927791]
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -188,12 +192,18 @@ Music: Aaron Music YT"
 fit_content = true
 
 [node name="Shrike878x878" type="Sprite2D" parent="CreditsContainer" unique_id=1286655632]
-position = Vector2(599, 108)
+position = Vector2(454, 104)
 scale = Vector2(0.12471523, 0.12471523)
 texture = ExtResource("4_57ux2")
 
+[node name="AaronMusicLogoV1" type="Sprite2D" parent="CreditsContainer" unique_id=1879212376]
+position = Vector2(408.00012, 307.00006)
+scale = Vector2(0.28957394, 0.28957394)
+texture = ExtResource("7_xmmar")
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1138587312]
-stream = ExtResource("6_v71do")
+stream = ExtResource("8_66en2")
+volume_db = -15.0
 autoplay = true
 bus = &"Music"
 parameters/looping = true

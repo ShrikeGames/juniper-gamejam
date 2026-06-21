@@ -2,10 +2,41 @@
 
 [ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="1_odqew"]
 [ext_resource type="Script" uid="uid://cndmwdjnt0l85" path="res://assets/scripts/button.gd" id="1_v0b7e"]
+[ext_resource type="AudioStream" uid="uid://butsiirshh1fj" path="res://assets/sound/sfx/editted/ui_click_soft.wav" id="3_uep1g"]
+[ext_resource type="AudioStream" uid="uid://dy6j4biv1hu6j" path="res://assets/sound/sfx/editted/ui_click_deep.wav" id="4_es5he"]
+[ext_resource type="AudioStream" uid="uid://dyfdeqho4oxao" path="res://assets/sound/sfx/editted/silence.mp3" id="5_47nsy"]
 
-[node name="Button" type="Button" unique_id=2005046683]
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_d46lp"]
+clip_count = 3
+clip_0/name = &"Hover"
+clip_0/stream = ExtResource("3_uep1g")
+clip_0/auto_advance = 0
+clip_1/name = &"Click"
+clip_1/stream = ExtResource("4_es5he")
+clip_1/auto_advance = 0
+clip_2/name = &"Silence"
+clip_2/stream = ExtResource("5_47nsy")
+clip_2/auto_advance = 0
+initial_clip = 2
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 0,
+"to_time": 1
+}
+}
+
+[node name="Button" type="Button" unique_id=2005046683 node_paths=PackedStringArray("audio_stream_player")]
 theme = ExtResource("1_odqew")
 text = "Start Game"
 script = ExtResource("1_v0b7e")
+audio_stream_player = NodePath("ButtonAudioStreamPlayer")
 
+[node name="ButtonAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1552940740]
+stream = SubResource("AudioStreamInteractive_d46lp")
+bus = &"Ambient"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="ready" from="." to="." method="_on_ready"]

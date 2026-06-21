@@ -4,12 +4,119 @@
 [ext_resource type="Script" uid="uid://b8g7qb6fg7qlt" path="res://assets/scripts/game.gd" id="1_pw37s"]
 [ext_resource type="Environment" uid="uid://bc2gd46jqouln" path="res://assets/envs/above_water.tres" id="2_dis88"]
 [ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_cb5na"]
-[ext_resource type="PackedScene" uid="uid://5k32adr3nenm" path="res://assets/scenes/launcher.tscn" id="4_pw37s"]
-[ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="5_j62u1"]
-[ext_resource type="PackedScene" uid="uid://ba88sbfy5r31c" path="res://assets/scenes/top.tscn" id="7_3w2km"]
-[ext_resource type="AudioStream" uid="uid://drvw1xqu5hm0u" path="res://assets/sound/music/Cat-Shop Aaron_music_YT.mp3" id="7_wfsp4"]
+[ext_resource type="AudioStream" uid="uid://bboh65jm17a23" path="res://assets/sound/music/Sundays Shadess Aaron_music_YT.mp3" id="8_k2t1h"]
+[ext_resource type="Texture2D" uid="uid://sj02br3jq7s6" path="res://assets/art/ui/knockout_text.png" id="8_kc0sw"]
+[ext_resource type="Script" uid="uid://be7vs2nfn1qa1" path="res://assets/scripts/wobble.gd" id="9_5jdip"]
+[ext_resource type="Texture2D" uid="uid://bo8otl43k8p5i" path="res://assets/art/ui/ringout_text.png" id="9_fqk1v"]
 [ext_resource type="Script" uid="uid://cpdtld5kf3l7f" path="res://assets/scripts/Table.gd" id="9_k2t1h"]
 [ext_resource type="Texture2D" uid="uid://fxj1eemmtdda" path="res://assets/textures/wood.jpg" id="9_pw37s"]
+[ext_resource type="Texture2D" uid="uid://c0ikj22ipd1fm" path="res://assets/art/ui/game_over.png" id="11_5jdip"]
+[ext_resource type="Texture2D" uid="uid://dnvdtyd6c0d33" path="res://assets/art/ui/countdown_text1.png" id="11_i358u"]
+[ext_resource type="Texture2D" uid="uid://csx41yecfyn7t" path="res://assets/art/ui/you_win.png" id="12_3cnnv"]
+[ext_resource type="Texture2D" uid="uid://cdiukfyu50w1w" path="res://assets/art/ui/countdown_text2.png" id="12_s2rys"]
+[ext_resource type="Texture2D" uid="uid://bs8w6sxmt1o0l" path="res://assets/art/ui/countdown_text3.png" id="13_fc420"]
+[ext_resource type="AudioStream" uid="uid://bx0g57cep5402" path="res://assets/sound/sfx/editted/crank.mp3" id="18_5jdip"]
+[ext_resource type="AudioStream" uid="uid://46rj31m234cm" path="res://assets/sound/voice/announcer_interactive_player.tres" id="19_3cnnv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kc0sw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_i358u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s2rys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_fc420")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5jdip"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_kc0sw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_kc0sw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_kc0sw")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3cnnv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_fqk1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_fqk1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_fqk1v")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_au80e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_5jdip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_5jdip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_5jdip")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_52jqy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_3cnnv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_3cnnv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_3cnnv")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
 
 [sub_resource type="SphereMesh" id="SphereMesh_3w2km"]
 material = ExtResource("3_cb5na")
@@ -27,45 +134,73 @@ size = Vector3(60, 5, 60)
 [sub_resource type="BoxShape3D" id="BoxShape3D_pkhv0"]
 size = Vector3(60, 5, 60)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_k2t1h"]
-height = 11.562988
-radius = 8.0
-
-[node name="Game" type="Node3D" unique_id=888901533 node_paths=PackedStringArray("tops", "cpu_container", "target_node", "target_above_node", "look_at_node")]
+[node name="Game" type="Node3D" unique_id=888901533 node_paths=PackedStringArray("camera", "arena_container", "player_container", "cpu_container", "target_node", "target_above_node", "look_at_node", "knockout_sprite_animation", "ringout_sprite_animation", "gameover_sprite_animation", "youwin_sprite_animation", "announcer_audio_stream_player")]
 script = ExtResource("1_pw37s")
-tops = [NodePath("Top")]
+camera = NodePath("Camera3D")
 scene_to_change_to = "res://assets/scenes/store_menu.tscn"
+gameover_scene_to_change_to = "res://assets/scenes/main_menu.tscn"
+arena_container = NodePath("Arena")
+player_container = NodePath("Player")
 cpu_container = NodePath("CPUs")
 target_node = NodePath("Target")
 target_above_node = NodePath("Above")
 look_at_node = NodePath("LookAtNode")
+knockout_sprite_animation = NodePath("Camera3D/CanvasLayer/AspectRatioContainer/knockout_sprite_animation")
+ringout_sprite_animation = NodePath("Camera3D/CanvasLayer/AspectRatioContainer/ringout_sprite_animation")
+gameover_sprite_animation = NodePath("Camera3D/CanvasLayer/AspectRatioContainer/gameover_sprite_animation")
+youwin_sprite_animation = NodePath("Camera3D/CanvasLayer/AspectRatioContainer/youwin_sprite_animation")
+announcer_audio_stream_player = NodePath("AnnouncerStreamPlayer")
 
-[node name="Top" parent="." unique_id=24248696 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node", "launcher") instance=ExtResource("7_3w2km")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.046786547, 3.989884, 5.0150094)
-gravity_scale = 2.0
-angular_damp = 25.0
-target_node = NodePath("../Target")
-target_above_node = NodePath("../Above")
-look_at_node = NodePath("../LookAtNode")
-spin_speed = 20.0
-move_speed = 20.0
-center_speed = 20.0
-impulse_speed = 20.0
-launcher = NodePath("../Launcher")
-
-[node name="Launcher" parent="." unique_id=1235659431 instance=ExtResource("4_pw37s")]
-transform = Transform3D(1, 1.7763568e-15, 5.3290705e-15, -1.7763568e-15, 1, 0, -5.3290705e-15, 0, 1, 0.087920785, 4.9114428, 5.010152)
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("player_top", "target_node", "launcher", "crank_audio_stream_player", "cpu_container")]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("target_node", "crank_audio_stream_player", "cpu_container", "countdown_animation")]
 transform = Transform3D(1, 0, 0, 0, 0.7626796, 0.6467765, 0, -0.6467765, 0.7626796, 0.012513161, 8.542912, 8.397658)
 current = true
 fov = 45.0
 script = ExtResource("1_j62u1")
-player_top = NodePath("../Top")
 target_node = NodePath("../Target")
-launcher = NodePath("../Launcher")
-crank_audio_stream_player = NodePath("../Launcher/AudioStreamPlayer")
+crank_audio_stream_player = NodePath("../CrankStreamPlayer")
 cpu_container = NodePath("../CPUs")
+countdown_animation = NodePath("CanvasLayer/AspectRatioContainer/countdown_sprite_animation")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D" unique_id=1763064899]
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Camera3D/CanvasLayer" unique_id=820029255]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="countdown_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=1034218727]
+position = Vector2(640, 360)
+sprite_frames = SubResource("SpriteFrames_kc0sw")
+script = ExtResource("9_5jdip")
+
+[node name="knockout_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=1591857218]
+visible = false
+position = Vector2(641, 360)
+rotation = 0.0009474821
+sprite_frames = SubResource("SpriteFrames_5jdip")
+frame = 1
+frame_progress = 0.0011538612
+script = ExtResource("9_5jdip")
+
+[node name="ringout_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=1782039395]
+visible = false
+position = Vector2(641, 360)
+sprite_frames = SubResource("SpriteFrames_3cnnv")
+script = ExtResource("9_5jdip")
+
+[node name="gameover_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=2045403418]
+visible = false
+position = Vector2(640, 362)
+sprite_frames = SubResource("SpriteFrames_au80e")
+script = ExtResource("9_5jdip")
+
+[node name="youwin_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=1359585934]
+visible = false
+position = Vector2(645, 363)
+sprite_frames = SubResource("SpriteFrames_52jqy")
+script = ExtResource("9_5jdip")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=746990791]
 environment = ExtResource("2_dis88")
@@ -79,9 +214,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27855334, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Target" unique_id=37964744]
 mesh = SubResource("SphereMesh_3w2km")
-
-[node name="arena" parent="." unique_id=294430325 instance=ExtResource("5_j62u1")]
-transform = Transform3D(8, 0, 0, 0, 10, 0, 0, 0, 8, 0, 0, 0)
 
 [node name="Above" type="Node3D" parent="." unique_id=1295650627]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5719013, 0)
@@ -98,17 +230,15 @@ visible = false
 mesh = SubResource("SphereMesh_3w2km")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1052778374]
-stream = ExtResource("7_wfsp4")
+stream = ExtResource("8_k2t1h")
+volume_db = -15.0
 autoplay = true
 bus = &"Music"
 parameters/looping = true
 
-[node name="CPUs" type="Node3D" parent="." unique_id=1512426646]
+[node name="Player" type="Node3D" parent="." unique_id=1555477228]
 
-[node name="arena2" parent="." unique_id=1948873252 instance=ExtResource("5_j62u1")]
-transform = Transform3D(-2.12, -1.509958e-07, 0, 3.2011107e-07, -1, 0, 0, 0, 2.12, 0, 0.437876, 0)
-spin = true
-rotation_speed = 2.0
+[node name="CPUs" type="Node3D" parent="." unique_id=1512426646]
 
 [node name="Table" type="StaticBody3D" parent="." unique_id=1871080938]
 collision_layer = 11
@@ -123,10 +253,21 @@ mesh = SubResource("BoxMesh_phsto")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
 shape = SubResource("BoxShape3D_pkhv0")
 
-[node name="ArenaArea" type="Area3D" parent="." unique_id=1722591955]
+[node name="AnnouncerStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=74429325]
+stream = ExtResource("19_3cnnv")
+autoplay = true
+bus = &"Voices"
 
-[node name="ArenaAreaCollider" type="CollisionShape3D" parent="ArenaArea" unique_id=2114406556]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78149414, 0)
-shape = SubResource("CylinderShape3D_k2t1h")
+[node name="CrankStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1041858995]
+stream = ExtResource("18_5jdip")
+volume_db = -15.0
+autoplay = true
+bus = &"SFX"
 
-[editable path="Launcher"]
+[node name="Arena" type="Node3D" parent="." unique_id=1415437464]
+
+[connection signal="animation_finished" from="Camera3D/CanvasLayer/AspectRatioContainer/countdown_sprite_animation" to="." method="_on_countdown_sprite_animation_animation_finished"]
+[connection signal="animation_finished" from="Camera3D/CanvasLayer/AspectRatioContainer/knockout_sprite_animation" to="." method="_on_knockout_sprite_animation_animation_finished"]
+[connection signal="animation_finished" from="Camera3D/CanvasLayer/AspectRatioContainer/ringout_sprite_animation" to="." method="_on_ringout_sprite_animation_animation_finished"]
+[connection signal="animation_finished" from="Camera3D/CanvasLayer/AspectRatioContainer/gameover_sprite_animation" to="." method="_on_gameover_sprite_animation_animation_finished"]
+[connection signal="animation_finished" from="Camera3D/CanvasLayer/AspectRatioContainer/youwin_sprite_animation" to="." method="_on_youwin_sprite_animation_animation_finished"]

@@ -15,14 +15,17 @@ var time:float = 0.0
 @export var center_speed: float = 10.0
 @export var impulse_speed: float = 10.0
 @export var launched:bool = false
-@export var stamina_drain:float = 0.25
-@export var force_multiplier:float = 18.0
+@export var stamina_drain:float = 0.6
+@export var force_multiplier:float = 5.0
 @export var colour:Color
 @export var launcher:Node3D
+var announcer_audio_stream_player:AudioStreamPlayer
 
 @export var collision_audio_player:AudioStreamPlayer3D
 @export var other_audio_player:AudioStreamPlayer3D
 @export var ai_controlled:bool = false
+var knockout_sprite_animation:AnimatedSprite2D
+var ringout_sprite_animation:AnimatedSprite2D
 
 var personal_above_point:Vector3
 var last_top_hit:Top
@@ -64,10 +67,13 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		lin_vel.y = 0
 		personal_above_point = self.global_position + (collision_normal.normalized() * 4.0)
 		# hitting the table outside of the arena insta-kills you
-		# TODO show an OUT OF BOUNDS announcement when this happens
-		# TODO consider a mode where this is allowed instead
 		if is_instance_of(collider_object, Table):
 			self.spin_speed = 0
+			self.ringout_sprite_animation.frame = 0
+			self.ringout_sprite_animation.visible = true
+			self.ringout_sprite_animation.play()
+			var playback = self.announcer_audio_stream_player.get_stream_playback() as AudioStreamPlaybackInteractive
+			playback.switch_to_clip_by_name("Ringout")
 			return
 		elif is_instance_of(collider_object, StaticBody3D):
 			self.rocket_dash_available = true
@@ -76,10 +82,12 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			var speed_force:Vector3 = self.linear_velocity.normalized()
 			var total_force:Vector3 = speed_force * self.force_multiplier
 			#self.reduce_stamina(self._last_delta, total_force.length_squared())
-			collider_object.reduce_stamina(self._last_delta, min(self.stamina_drain, self.linear_velocity.length_squared() * 0.1))
+			if collider_object.spin_speed > 0:
+				collider_object.reduce_stamina(self._last_delta, min(self.stamina_drain, self.linear_velocity.length_squared() * 0.1))
 			#self.apply_central_impulse(-total_force)
 			collider_object.apply_central_impulse(total_force)
 			self.apply_central_impulse(-total_force)
+			self.linear_velocity *= 0.5
 			var random_clank_id:int = randi_range(1,9)
 			var clip_name:String = "Clang %d"%random_clank_id
 			play_collision_audio_clip(clip_name)
@@ -120,6 +128,11 @@ func reduce_stamina(delta: float, drain_amount:float = stamina_drain):
 		trail_particle_emitter.emitting = false
 		sparks_particle_emitter.emitting = false
 		rocket_dash_available = false
+		self.knockout_sprite_animation.frame = 0
+		self.knockout_sprite_animation.visible = true
+		self.knockout_sprite_animation.play()
+		var playback = self.announcer_audio_stream_player.get_stream_playback() as AudioStreamPlaybackInteractive
+		playback.switch_to_clip_by_name("Knockout")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -138,6 +151,12 @@ func _process(delta: float) -> void:
 	reduce_stamina(delta)
 	if self.global_position.y < -10:
 		self.spin_speed = 0.0
+		self.ringout_sprite_animation.frame = 0
+		self.ringout_sprite_animation.visible = true
+		self.ringout_sprite_animation.play()
+		var playback = self.announcer_audio_stream_player.get_stream_playback() as AudioStreamPlaybackInteractive
+		playback.switch_to_clip_by_name("Ringout")
+		return
 	
 	if self.get_colliding_bodies().size() > 0 and spin_speed > 0.0:
 		self.trail_particle_emitter.emitting = true
@@ -154,7 +173,7 @@ func _process(delta: float) -> void:
 		#self.trail_particle_emitter.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
 	
 func spin_top():
-	self.model.global_rotate(self.basis.y, wrapf(spin_speed * 0.1, 0.0, (2*PI)))
+	self.model.global_rotate(self.basis.y, wrapf(min(0.5, spin_speed), 0.0, (2*PI)))
 	
 	
 func force_upright_top():
@@ -179,6 +198,7 @@ func rocket_dash(distance_from_center:float):
 	var move_direction:Vector3 = (self.center_point - self.global_position).normalized()
 	if distance_from_center <= 6.0 and last_top_hit and last_top_hit.spin_speed > 0:
 		move_direction = (self.last_top_hit.global_position - self.global_position).normalized()
+	move_direction.y = 0
 	#move_direction.y = 0
 	#self.apply_central_force(move_direction * center_speed)
 	self.apply_central_impulse(move_direction * impulse_speed)
@@ -189,8 +209,8 @@ func impulse_to_target():
 		return
 	
 	var move_direction:Vector3 = (self.target_node.global_position - self.global_position).normalized()
-	move_direction.y = 0
 	self.linear_velocity = Vector3.ZERO
+	
 	self.apply_central_impulse(move_direction * impulse_speed)
 	
 	
@@ -201,6 +221,8 @@ func move_in_current_direction():
 	if not self.ai_controlled and self.spin_speed > 0 and self.rocket_dash_available:
 		move_direction = (self.target_node.global_position - self.global_position).normalized()
 	
+	if self.ai_controlled:
+		return
 	self.apply_central_force(move_direction * move_speed)
 	
 

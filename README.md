@@ -52,12 +52,13 @@ https://github.com/user-attachments/assets/803b758c-50e3-4b32-800c-d4079eac833c
 
 Day 3 TODOs:
 
-- Change store into roguelike 3 options of next type of battle
-- Battle options are a combination of type (duel, 4 player FFA, or 2v2 teams?) + arena + reward
-- Rewards have a benefit, drawback, and visual difference (change one of your top's parts? colour?)
-- Have count down that starts when you begin cranking the launcher at start of battle, auto have everyone launch when it completes
-- READY? SET? SPIN! (voice lines during count down)
-- Implement the UI sound effects
-- Round counter that increases and ramps difficulty of CPUs as you complete battles
-- Add player stats, progress, etc to the save file
-- Make "new game" wipe the old save file and continue just plays the loaded save
+- [Done] Change store into roguelike 3 options of next type of battle
+- [Done] Battle options are a combination of type (duel, 4 player FFA, or 2v2 teams?) + arena + reward
+- [Done] Rewards have a benefit, drawback, and visual difference (change one of your top's parts? colour?)
+- [Done] Have count down that starts when you begin cranking the launcher at start of battle, auto have everyone launch when it completes
+- [Done] READY? SET? SPIN! (voice lines during count down)
+- [Done] Implement the UI sound effects
+- [Done] Round counter that increases and ramps difficulty of CPUs as you complete battles
+- [Done] Add player stats, progress, etc to the save file
+- [Done] Make "new game" wipe the old save file and continue just plays the loaded save
+- ULT BUTTON WITH ANNOUNCER

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bboh65jm17a23"
+path="res://.godot/imported/Sundays Shadess Aaron_music_YT.mp3-9f8d5d03d4fb5278708631b40ccdfc3c.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/music/Sundays Shadess Aaron_music_YT.mp3"
+dest_files=["res://.godot/imported/Sundays Shadess Aaron_music_YT.mp3-9f8d5d03d4fb5278708631b40ccdfc3c.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

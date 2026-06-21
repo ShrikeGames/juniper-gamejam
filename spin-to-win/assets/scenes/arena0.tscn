@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c6yd7dmfdf1gy"]
+
+[ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="1_780ow"]
+
+[node name="Arena1" type="Node3D" unique_id=1527995222]
+
+[node name="arena" parent="." unique_id=1948873252 instance=ExtResource("1_780ow")]
+transform = Transform3D(8, 0, 0, 0, 10, 0, 0, 0, 8, 0, 0, 0)
+
+[node name="arena2" parent="." unique_id=1907027199 instance=ExtResource("1_780ow")]
+transform = Transform3D(2.12, 7.629394e-08, 0, -5.054473e-07, 0.32, 0, 0, 0, 2.12, 0, 0.10179615, 0)
+spin = true
+rotation_speed = 2.0

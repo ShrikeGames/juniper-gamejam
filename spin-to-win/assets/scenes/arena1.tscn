@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cu6tmlcd74jh4"]
+
+[ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="1_7k40b"]
+
+[node name="Arena1" type="Node3D" unique_id=1527995222]
+
+[node name="arena" parent="." unique_id=1948873252 instance=ExtResource("1_7k40b")]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, 0, 0, 0)
+spin = true
+rotation_speed = -2.0
+
+[node name="arena2" parent="." unique_id=1907027199 instance=ExtResource("1_7k40b")]
+transform = Transform3D(2.12, 2.3841855e-08, 0, -5.054473e-07, 0.1, 0, 0, 0, 2.12, 0, 0.019157767, 0)
+spin = true
+rotation_speed = 10.0
+
+[node name="arena3" parent="." unique_id=856864779 instance=ExtResource("1_7k40b")]
+transform = Transform3D(2.1129322, 0.008159088, 0, -0.17297262, 0.0996666, 0, 0, 0, 2.12, -4.04291, 0.15233815, 0)
+spin = true
+rotation_speed = 2.0
+
+[node name="arena4" parent="." unique_id=266794434 instance=ExtResource("1_7k40b")]
+transform = Transform3D(2.1128716, -0.008193852, 0, 0.17370968, 0.09966376, 0, 0, 0, 2.12, 4.043, 0.152, 0)
+spin = true
+rotation_speed = -2.0
+
+[node name="arena5" parent="." unique_id=828386016 instance=ExtResource("1_7k40b")]
+transform = Transform3D(-9.235921e-08, -3.566451e-10, -2.1200001, -0.17297263, 0.09966662, 0, 2.1129322, 0.008159088, -9.266814e-08, 4.5237834e-05, 0.15233815, -4.0429554)
+spin = true
+rotation_speed = 2.0
+
+[node name="arena6" parent="." unique_id=1377029769 instance=ExtResource("1_7k40b")]
+transform = Transform3D(-9.235655e-08, 3.5816466e-10, -2.12, 0.17370966, 0.09966375, 0, 2.1128714, -0.008193851, -9.266813e-08, 4.488439e-05, 0.152, 4.0429554)
+spin = true
+rotation_speed = -2.0
