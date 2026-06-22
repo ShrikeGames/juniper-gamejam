@@ -1,8 +1,10 @@
 extends Node3D
 class_name Arena
 
+@export var camera_spawn_point:Node3D
 @export var spin:bool = false
 @export var rotation_speed:float = 0.5
+@export var center_point:Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

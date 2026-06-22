@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://ba88sbfy5r31c"]
 
+[ext_resource type="Texture2D" uid="uid://dtvae37fhdmrr" path="res://assets/textures/grey_wood.jpg" id="2_4roix"]
 [ext_resource type="Script" uid="uid://bapvjavrybfo8" path="res://assets/scripts/top.gd" id="2_k16d3"]
-[ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_71mm4"]
 [ext_resource type="PackedScene" uid="uid://bpx0veg5tykmj" path="res://assets/scenes/test_top.tscn" id="3_k16d3"]
-[ext_resource type="Texture2D" uid="uid://c8mhu14h64sca" path="res://assets/art/textures/512x512 Grid Grey.png" id="4_4roix"]
 [ext_resource type="AudioStream" uid="uid://c34rjxeikai6m" path="res://assets/sound/top_collision_audio.tres" id="4_6a44c"]
 [ext_resource type="AudioStream" uid="uid://c6wggfi3pcupp" path="res://assets/sound/top_other_audio.tres" id="5_0yua5"]
+[ext_resource type="Material" uid="uid://bvo2e74gnwxr" path="res://assets/materials/outline_material.tres" id="5_4roix"]
+[ext_resource type="Texture2D" uid="uid://ckdx82w1k86nf" path="res://assets/art/tops/stamina_ring_empty.png" id="8_ew4y2"]
+[ext_resource type="Texture2D" uid="uid://d3nv8p2iflwj" path="res://assets/art/tops/stamina_ring_filled.png" id="9_lteu0"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wfsp4"]
 points = PackedVector3Array(0.5, 0.25, 0, 0.483, 0.25, 0.1294, 0.433, 0.25, 0.25, 0.3536, 0.25, 0.3536, 0.25, 0.25, 0.433, 0.1294, 0.25, 0.483, 0, 0.25, 0.5, -0.1294, 0.25, 0.483, -0.25, 0.25, 0.433, -0.3536, 0.25, 0.3536, -0.433, 0.25, 0.25, -0.483, 0.25, 0.1294, -0.5, 0.25, 0, -0.483, 0.25, -0.1294, -0.433, 0.25, -0.25, -0.3536, 0.25, -0.3536, -0.25, 0.25, -0.433, -0.1294, 0.25, -0.483, 0, 0.25, -0.5, 0.1294, 0.25, -0.483, 0.25, 0.25, -0.433, 0.3536, 0.25, -0.3536, 0.433, 0.25, -0.25, 0.483, 0.25, -0.1294, 0.5, 0.25, 0, 0, -0.25, 0)
@@ -14,16 +16,32 @@ points = PackedVector3Array(0.5, 0.25, 0, 0.483, 0.25, 0.1294, 0.433, 0.25, 0.25
 height = 0.1
 radius = 0.56347656
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s34vl"]
-albedo_color = Color(0.002970678, 0.38062754, 0.58756095, 1)
-
 [sub_resource type="CylinderMesh" id="CylinderMesh_5gf0t"]
-material = ExtResource("3_71mm4")
 bottom_radius = 0.0
 height = 0.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ew4y2"]
-albedo_texture = ExtResource("4_4roix")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1krb"]
+albedo_texture = ExtResource("2_4roix")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6a44c"]
+albedo_color = Color(0.04755766, 0.047557645, 0.047557645, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4roix"]
+material = SubResource("StandardMaterial3D_6a44c")
+top_radius = 0.08
+bottom_radius = 0.1
+height = 0.05
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ew4y2"]
+resource_local_to_scene = true
+material = ExtResource("5_4roix")
+bottom_radius = 0.0
+height = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lteu0"]
+resource_local_to_scene = true
+material = ExtResource("5_4roix")
+height = 0.1
 
 [sub_resource type="Curve" id="Curve_71mm4"]
 _limits = [0.0, 3.0, 0.0, 1.0]
@@ -80,16 +98,21 @@ material = SubResource("StandardMaterial3D_4roix")
 radius = 0.05
 height = 0.1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6a44c"]
-albedo_color = Color(0.04755766, 0.047557645, 0.047557645, 1)
+[sub_resource type="ViewportTexture" id="ViewportTexture_4roix"]
+viewport_path = NodePath("StaminaViewPort")
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_4roix"]
-material = SubResource("StandardMaterial3D_6a44c")
-top_radius = 0.08
-bottom_radius = 0.1
-height = 0.05
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ew4y2"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_4roix")
+disable_receive_shadows = true
 
-[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "collision_audio_player", "other_audio_player")]
+[sub_resource type="PlaneMesh" id="PlaneMesh_lteu0"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ew4y2")
+size = Vector2(1, 1)
+
+[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "outline_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar")]
 mass = 1.25
 continuous_cd = true
 contact_monitor = true
@@ -100,8 +123,10 @@ model = NodePath("Mesh")
 trail_particle_emitter = NodePath("TrailParticleEmitter")
 sparks_particle_emitter = NodePath("SparksParticleEmitter")
 colour = Color(0.5686275, 0, 0.54901963, 1)
+outline_mesh = NodePath("OutlineMesh")
 collision_audio_player = NodePath("CollisionAudioPlayer")
 other_audio_player = NodePath("OtherSoundAudioPlayer")
+stamina_progress_bar = NodePath("StaminaViewPort/CanvasLayer/StaminaProgressBar")
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=1659996157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
@@ -114,7 +139,7 @@ shape = SubResource("CylinderShape3D_o8pdw")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=2039993325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-material_override = SubResource("StandardMaterial3D_s34vl")
+layers = 3
 mesh = SubResource("CylinderMesh_5gf0t")
 
 [node name="test_top2" parent="Mesh" unique_id=715597117 instance=ExtResource("3_k16d3")]
@@ -122,7 +147,20 @@ transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0.331724, 0)
 
 [node name="test_top" parent="Mesh/test_top2" index="0" unique_id=740292163]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.01558727, 0)
-material_override = SubResource("StandardMaterial3D_ew4y2")
+material_override = SubResource("StandardMaterial3D_a1krb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh/test_top2" unique_id=1035463731]
+transform = Transform3D(0.6666667, 0, 0, 0, 1, 0, 0, 0, 0.6666667, 0, 0.021910131, 0)
+mesh = SubResource("CylinderMesh_4roix")
+
+[node name="OutlineMesh" type="MeshInstance3D" parent="." unique_id=2014912795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30807525, 0)
+visible = false
+mesh = SubResource("CylinderMesh_ew4y2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OutlineMesh" unique_id=988279428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23552608, 0)
+mesh = SubResource("CylinderMesh_lteu0")
 
 [node name="TrailParticleEmitter" type="GPUParticles3D" parent="." unique_id=127143557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0003810376, 0)
@@ -154,8 +192,24 @@ bus = &"SFX"
 stream = ExtResource("5_0yua5")
 bus = &"SFX"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1035463731]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6036341, 0)
-mesh = SubResource("CylinderMesh_4roix")
+[node name="StaminaMesh" type="MeshInstance3D" parent="." unique_id=693338683]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.023384094, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_lteu0")
+
+[node name="StaminaViewPort" type="SubViewport" parent="." unique_id=268525569]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(300, 300)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="StaminaViewPort" unique_id=1779841218]
+
+[node name="StaminaProgressBar" type="TextureProgressBar" parent="StaminaViewPort/CanvasLayer" unique_id=1278089839]
+offset_right = 40.0
+offset_bottom = 40.0
+value = 26.0
+fill_mode = 4
+texture_under = ExtResource("8_ew4y2")
+texture_progress = ExtResource("9_lteu0")
 
 [editable path="Mesh/test_top2"]

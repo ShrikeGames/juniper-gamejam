@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c6yd7dmfdf1gy"]
 
 [ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="1_780ow"]
+[ext_resource type="Script" uid="uid://b0a4cmkj07nhg" path="res://assets/scripts/arena.gd" id="1_cd22w"]
 [ext_resource type="Texture2D" uid="uid://w323igwjqxdr" path="res://assets/art/textures/256x256 Grid.png" id="2_or5rl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cd22w"]
@@ -9,7 +10,15 @@ albedo_texture = ExtResource("2_or5rl")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4n68"]
 albedo_texture = ExtResource("2_or5rl")
 
-[node name="Arena1" type="Node3D" unique_id=1527995222]
+[node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
+script = ExtResource("1_cd22w")
+camera_spawn_point = NodePath("CameraSpawnPoint")
+center_point = NodePath("CenterPointAI")
+
+[node name="CameraSpawnPoint" type="Node3D" parent="." unique_id=551213256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 6)
+
+[node name="CenterPointAI" type="Node3D" parent="." unique_id=242580345]
 
 [node name="arena" parent="." unique_id=1948873252 instance=ExtResource("1_780ow")]
 transform = Transform3D(9, 0, 0, 0, 11.25, 0, 0, 0, 9, 0, 0, 0)

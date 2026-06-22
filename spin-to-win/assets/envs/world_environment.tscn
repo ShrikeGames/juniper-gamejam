@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cubi76y3kh4c8"]
+
+[ext_resource type="Environment" uid="uid://bc2gd46jqouln" path="res://assets/envs/above_water.tres" id="1_klo2t"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" unique_id=677115686]
+environment = ExtResource("1_klo2t")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1885816028]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 12.369422, 0)
+shadow_enabled = true

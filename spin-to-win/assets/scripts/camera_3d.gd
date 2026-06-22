@@ -37,7 +37,8 @@ func _process(delta: float) -> void:
 		cpu_crank_speed += randf_range(0.1, 0.2) * delta
 	else:
 		crank_audio_stream_player.stop()
-		
+	
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and rotate_crank:
 		if last_mouse_position or last_mouse_position == Vector2.ZERO and last_mouse_circle_state >= 0:

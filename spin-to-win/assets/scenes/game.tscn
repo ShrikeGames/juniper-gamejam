@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dlq8mc3wfytoy" path="res://assets/scripts/camera_3d.gd" id="1_j62u1"]
 [ext_resource type="Script" uid="uid://b8g7qb6fg7qlt" path="res://assets/scripts/game.gd" id="1_pw37s"]
-[ext_resource type="Environment" uid="uid://bc2gd46jqouln" path="res://assets/envs/above_water.tres" id="2_dis88"]
 [ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_cb5na"]
 [ext_resource type="AudioStream" uid="uid://bboh65jm17a23" path="res://assets/sound/music/Sundays Shadess Aaron_music_YT.mp3" id="8_k2t1h"]
 [ext_resource type="Texture2D" uid="uid://sj02br3jq7s6" path="res://assets/art/ui/knockout_text.png" id="8_kc0sw"]
@@ -11,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cpdtld5kf3l7f" path="res://assets/scripts/Table.gd" id="9_k2t1h"]
 [ext_resource type="Texture2D" uid="uid://fxj1eemmtdda" path="res://assets/textures/wood.jpg" id="9_pw37s"]
 [ext_resource type="Texture2D" uid="uid://c0ikj22ipd1fm" path="res://assets/art/ui/game_over.png" id="11_5jdip"]
+[ext_resource type="PackedScene" uid="uid://cubi76y3kh4c8" path="res://assets/envs/world_environment.tscn" id="11_fqk1v"]
 [ext_resource type="Texture2D" uid="uid://dnvdtyd6c0d33" path="res://assets/art/ui/countdown_text1.png" id="11_i358u"]
 [ext_resource type="Texture2D" uid="uid://csx41yecfyn7t" path="res://assets/art/ui/you_win.png" id="12_3cnnv"]
 [ext_resource type="Texture2D" uid="uid://cdiukfyu50w1w" path="res://assets/art/ui/countdown_text2.png" id="12_s2rys"]
@@ -134,7 +134,7 @@ size = Vector3(60, 5, 60)
 [sub_resource type="BoxShape3D" id="BoxShape3D_pkhv0"]
 size = Vector3(60, 5, 60)
 
-[node name="Game" type="Node3D" unique_id=888901533 node_paths=PackedStringArray("camera", "arena_container", "player_container", "cpu_container", "target_node", "target_above_node", "look_at_node", "knockout_sprite_animation", "ringout_sprite_animation", "gameover_sprite_animation", "youwin_sprite_animation", "announcer_audio_stream_player")]
+[node name="Game" type="Node3D" unique_id=888901533 node_paths=PackedStringArray("camera", "arena_container", "player_container", "cpu_container", "top_panels_container", "target_node", "target_above_node", "look_at_node", "knockout_sprite_animation", "ringout_sprite_animation", "gameover_sprite_animation", "youwin_sprite_animation", "announcer_audio_stream_player")]
 script = ExtResource("1_pw37s")
 camera = NodePath("Camera3D")
 scene_to_change_to = "res://assets/scenes/store_menu.tscn"
@@ -142,6 +142,7 @@ gameover_scene_to_change_to = "res://assets/scenes/main_menu.tscn"
 arena_container = NodePath("Arena")
 player_container = NodePath("Player")
 cpu_container = NodePath("CPUs")
+top_panels_container = NodePath("Camera3D/CanvasLayer/TopPanelCards")
 target_node = NodePath("Target")
 target_above_node = NodePath("Above")
 look_at_node = NodePath("LookAtNode")
@@ -152,9 +153,8 @@ youwin_sprite_animation = NodePath("Camera3D/CanvasLayer/AspectRatioContainer/yo
 announcer_audio_stream_player = NodePath("AnnouncerStreamPlayer")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("target_node", "crank_audio_stream_player", "cpu_container", "countdown_animation")]
-transform = Transform3D(1, 0, 0, 0, 0.7626796, 0.6467765, 0, -0.6467765, 0.7626796, 0.012513161, 8.542912, 8.397658)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 8, 6)
 current = true
-fov = 45.0
 script = ExtResource("1_j62u1")
 target_node = NodePath("../Target")
 crank_audio_stream_player = NodePath("../CrankStreamPlayer")
@@ -177,8 +177,9 @@ script = ExtResource("9_5jdip")
 
 [node name="knockout_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=1591857218]
 visible = false
-position = Vector2(641, 360)
+position = Vector2(320, 180)
 rotation = 0.0009474821
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_5jdip")
 frame = 1
 frame_progress = 0.0011538612
@@ -186,7 +187,8 @@ script = ExtResource("9_5jdip")
 
 [node name="ringout_sprite_animation" type="AnimatedSprite2D" parent="Camera3D/CanvasLayer/AspectRatioContainer" unique_id=1782039395]
 visible = false
-position = Vector2(641, 360)
+position = Vector2(320, 180)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_3cnnv")
 script = ExtResource("9_5jdip")
 
@@ -202,12 +204,15 @@ position = Vector2(645, 363)
 sprite_frames = SubResource("SpriteFrames_52jqy")
 script = ExtResource("9_5jdip")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=746990791]
-environment = ExtResource("2_dis88")
+[node name="TopPanelCards" type="GridContainer" parent="Camera3D/CanvasLayer" unique_id=21467992]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 572.0
+grow_horizontal = 0
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=142913250]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 12.369422, 0)
-shadow_enabled = true
+[node name="WorldEnvironment" parent="." unique_id=677115686 instance=ExtResource("11_fqk1v")]
 
 [node name="Target" type="Node3D" parent="." unique_id=1922927115]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27855334, 0)

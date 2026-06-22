@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Micro Top Battles"
+config/name="Spinning Top Battles"
+config/description="READY? SET! SPIN TO WIN!"
 run/main_scene="uid://doe1q33hhf1mu"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/image="uid://di0jtsb0ug2do"
