@@ -1,13 +1,29 @@
 [gd_scene format=3 uid="uid://c6yd7dmfdf1gy"]
 
 [ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="1_780ow"]
+[ext_resource type="Texture2D" uid="uid://w323igwjqxdr" path="res://assets/art/textures/256x256 Grid.png" id="2_or5rl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cd22w"]
+albedo_texture = ExtResource("2_or5rl")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4n68"]
+albedo_texture = ExtResource("2_or5rl")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222]
 
 [node name="arena" parent="." unique_id=1948873252 instance=ExtResource("1_780ow")]
-transform = Transform3D(8, 0, 0, 0, 10, 0, 0, 0, 8, 0, 0, 0)
+transform = Transform3D(9, 0, 0, 0, 11.25, 0, 0, 0, 9, 0, 0, 0)
+
+[node name="arena" parent="arena" index="2" unique_id=1926282929]
+material_override = SubResource("StandardMaterial3D_cd22w")
 
 [node name="arena2" parent="." unique_id=1907027199 instance=ExtResource("1_780ow")]
 transform = Transform3D(2.12, 7.629394e-08, 0, -5.054473e-07, 0.32, 0, 0, 0, 2.12, 0, 0.10179615, 0)
 spin = true
 rotation_speed = 2.0
+
+[node name="arena" parent="arena2" index="2" unique_id=1926282929]
+material_override = SubResource("StandardMaterial3D_v4n68")
+
+[editable path="arena"]
+[editable path="arena2"]

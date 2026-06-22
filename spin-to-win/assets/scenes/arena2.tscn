@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://7lr8qqx56sa7"]
+
+[ext_resource type="PackedScene" uid="uid://cgcif0enoevac" path="res://assets/models/arena2.blend" id="1_3gqe6"]
+[ext_resource type="Texture2D" uid="uid://dtvae37fhdmrr" path="res://assets/textures/grey_wood.jpg" id="2_3gqe6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rjhe"]
+albedo_texture = ExtResource("2_3gqe6")
+
+[node name="Arena1" type="Node3D" unique_id=1527995222]
+
+[node name="arena2" parent="." unique_id=1685224397 instance=ExtResource("1_3gqe6")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+
+[node name="arena2" parent="arena2" index="0" unique_id=385699480]
+material_override = SubResource("StandardMaterial3D_3rjhe")
+
+[node name="StaticBody3D" parent="arena2/arena2" index="0" unique_id=942649663]
+collision_layer = 3
+collision_mask = 3
+
+[editable path="arena2"]

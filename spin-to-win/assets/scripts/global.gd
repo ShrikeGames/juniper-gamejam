@@ -3,8 +3,8 @@ extends Node
 class_name GlobalState
 
 var settings_config_location: String = "user://user_settings_v1.json"
-var arena_names:Array[String] = ["Very Serious Bowl Arena", "Very Serious Spinning Plates Arena"]
-var arena_resources:Array[Resource] = [load("res://assets/scenes/arena0.tscn"), load("res://assets/scenes/arena1.tscn")]
+var arena_names:Array[String] = ["Very Serious Bowl Arena", "Underpass Arena", "Orange Squeezer Arena", "Halo Arena", "Hedge Slopes Arena"]
+var arena_resources:Array[Resource] = [load("res://assets/scenes/arena0.tscn"), load("res://assets/scenes/arena1.tscn"), load("res://assets/scenes/arena2.tscn"), load("res://assets/scenes/arena3.tscn"), load("res://assets/scenes/arena4.tscn")]
 var default_game_state: Dictionary = {
 	"settings": {
 		"volume": {
