@@ -2,12 +2,85 @@
 
 [ext_resource type="PackedScene" uid="uid://d2qmb5bxomcvb" path="res://assets/scenes/button.tscn" id="1_uu6ob"]
 [ext_resource type="Script" uid="uid://swak82nb8jer" path="res://assets/scripts/main_menu.gd" id="1_v1ppo"]
+[ext_resource type="PackedScene" uid="uid://dhy724m8fj61r" path="res://assets/scenes/background.tscn" id="2_ej4af"]
 [ext_resource type="Script" uid="uid://dy2qmum68brx4" path="res://assets/scripts/logo.gd" id="3_66en2"]
 [ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="3_obrqb"]
 [ext_resource type="Texture2D" uid="uid://douwld03bbcaa" path="res://assets/logos/Shrike_878x878.png" id="4_57ux2"]
 [ext_resource type="Texture2D" uid="uid://bdg4w2rke7itm" path="res://assets/art/ui/logo.png" id="7_66en2"]
 [ext_resource type="Texture2D" uid="uid://bg1llyqfrbi73" path="res://assets/logos/Aaron_Music_logo_v1.png" id="7_xmmar"]
 [ext_resource type="AudioStream" uid="uid://bboh65jm17a23" path="res://assets/sound/music/Sundays Shadess Aaron_music_YT.mp3" id="8_66en2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66en2"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.012317265, 0.12904203, 0.03355608, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ej4af"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0.40455496, 1.0588765e-06, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp4c4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.23268795, 0.87520033, 0.23450652, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uek13"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.2084989, 0.020938056, 0.048383974, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fntub"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.4231865, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4hf8p"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.9469215, 0.39578182, 0.34468135, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="MainMenu" type="Node2D" unique_id=459393673 node_paths=PackedStringArray("master_volume_slider", "music_volume_slider", "sfx_volume_slider", "voices_volume_slider", "ambient_volume_slider")]
 script = ExtResource("1_v1ppo")
@@ -16,6 +89,8 @@ music_volume_slider = NodePath("SettingsContainer/MusicVolumeContainer/MusicVolu
 sfx_volume_slider = NodePath("SettingsContainer/SFXVolumeContainer/SFXVolumeSlider")
 voices_volume_slider = NodePath("SettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider")
 ambient_volume_slider = NodePath("SettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider")
+
+[node name="Background" parent="." unique_id=2052113114 instance=ExtResource("2_ej4af")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1403690871]
 anchors_preset = 5
@@ -46,11 +121,19 @@ size_flags_vertical = 3
 
 [node name="ContinueButton" parent="ButtonContainer" unique_id=993433727 instance=ExtResource("1_uu6ob")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_66en2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ej4af")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tp4c4")
+disabled = true
 text = "Continue"
 scene_to_change_to = "res://assets/scenes/game.tscn"
+requires_save = true
 
 [node name="NewGameButton" parent="ButtonContainer" unique_id=2005046683 instance=ExtResource("1_uu6ob")]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_uek13")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fntub")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4hf8p")
 text = "New Game"
 scene_to_change_to = "res://assets/scenes/game.tscn"
 wipe_save = true
@@ -73,9 +156,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 584.0
-offset_top = 342.0
-offset_right = 1240.0
+offset_left = 491.0
+offset_top = 406.0
+offset_right = 1261.0
 offset_bottom = 720.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -86,10 +169,12 @@ theme = ExtResource("3_obrqb")
 [node name="VolumeLabel" type="Label" parent="SettingsContainer" unique_id=1018775799]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("3_obrqb")
 text = "Volume Controls"
 
 [node name="MasterVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1823101033]
 layout_mode = 2
+theme = ExtResource("3_obrqb")
 
 [node name="MasterVolumeLabel" type="Label" parent="SettingsContainer/MasterVolumeContainer" unique_id=501990096]
 layout_mode = 2
@@ -104,6 +189,7 @@ value = 100.0
 
 [node name="MusicVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=859124886]
 layout_mode = 2
+theme = ExtResource("3_obrqb")
 
 [node name="MusicVolumeLabel" type="Label" parent="SettingsContainer/MusicVolumeContainer" unique_id=598525978]
 layout_mode = 2

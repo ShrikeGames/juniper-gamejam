@@ -18,7 +18,7 @@ var default_game_state: Dictionary = {
 	},
 	"next_match": {
 		"num_cpus": 3,
-		"arena_id": 3,
+		"arena_id": 0,
 		"rewards": {
 			"increase": {
 				"name": "impulse_speed",
@@ -71,6 +71,9 @@ func save_settings():
 	file_access.store_line(json_string)
 	file_access.close()
 	
+	
+
+
 # Subscribers to ShrikeGames YT that don't have their subs hidden
 var top_names:Array[String] = [
 "miru",

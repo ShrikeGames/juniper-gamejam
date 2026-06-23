@@ -27,6 +27,7 @@ var announcer_audio_stream_player:AudioStreamPlayer
 @export var other_audio_player:AudioStreamPlayer3D
 @export var ai_controlled:bool = false
 @export var stamina_progress_bar:TextureProgressBar
+@export var tops:Array[Top] = []
 
 var knockout_sprite_animation:AnimatedSprite2D
 var ringout_sprite_animation:AnimatedSprite2D
@@ -41,11 +42,16 @@ var current_stats:Dictionary
 
 var stamina:float = 3.0
 var max_stamina:float = 3.0
+var on_ground:bool = false
+
+var iframe_timer_sec:float = 0
+var max_iframes_sec:float = 0.15
 
 func _ready() -> void:
 	personal_above_point = self.target_above_node.global_position
 	rocket_dash_available = true
 	reset_dash_timer = 0
+	on_ground = false
 	
 	var material = StandardMaterial3D.new()
 	material.albedo_color = colour
@@ -70,12 +76,13 @@ func update_based_on_stats(stats:Dictionary):
 	# "Special": 2, # +rocket dash, +force, +ult, +blue
 	# "Ult": 0, # id for ultimate ability
 	self.move_speed += stats["Dexterity"] * human_bonus
-	self.spin_speed += stats["Dexterity"] * 3.0 * human_bonus
-	self.mass -= stats["Dexterity"] * 0.1 * human_bonus
+	self.spin_speed += stats["Dexterity"] * 2.0 * human_bonus
+	self.mass -= stats["Dexterity"] * 0.01
 	self.colour.g = (stats["Dexterity"]-1) * 0.2 * human_bonus
 	
 	self.force_multiplier += stats["Power"] * human_bonus
-	self.mass += stats["Power"] * 0.1 * human_bonus
+	self.mass += stats["Power"] * 0.1
+	self.move_speed += stats["Power"] * 0.5 * human_bonus
 	self.right_speed += stats["Power"] * 3.0 * human_bonus
 	self.colour.r = (stats["Power"]-1) * 0.2 * human_bonus
 	
@@ -84,28 +91,30 @@ func update_based_on_stats(stats:Dictionary):
 	# TODO, ult power
 	self.colour.b = (stats["Special"]-1) * 0.2 * human_bonus
 	
-	self.max_stamina = ((stats["Dexterity"]*2.0) + stats["Power"] + (stats["Special"]*0.5)) * 10.0  * human_bonus
+	self.max_stamina = ((stats["Dexterity"]*2.0) + stats["Power"] + (stats["Special"]*0.5)) * 3.0  * human_bonus
 	self.stamina = self.max_stamina
 	self.stamina_progress_bar.max_value = self.max_stamina
 	self.stamina_progress_bar.value = self.stamina
 	
-	print(stats, ": ", self.colour)
+	# print(stats, ": ", self.colour)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if not launched or is_dead():
 		return
 	var contact_count = state.get_contact_count()
+	on_ground = false
 	for i in contact_count:
 		var contact_pos:Vector3 = state.get_contact_collider_position(i)
 		var collider_object = state.get_contact_collider_object(i)
+		
 		self.sparks_particle_emitter.global_position = contact_pos
 		self.sparks_particle_emitter.amount = max(1, int(spin_speed)*10.0)
 		var collision_normal:Vector3 = state.get_contact_local_normal(i)
-		personal_above_point = self.global_position + (collision_normal.normalized() * 4.0)
+		personal_above_point = self.global_position + ((collision_normal.normalized()) + (self.linear_velocity.normalized()*0.5)).normalized() * 2.0
 		# hitting the table outside of the arena insta-kills you
 		if is_instance_of(collider_object, Table):
-			self.spin_speed = 0
+			self.stamina = 0
 			if ai_controlled:
 				self.ringout_sprite_animation.frame = 0
 				self.ringout_sprite_animation.visible = true
@@ -120,32 +129,37 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			var speed_force:Vector3 = self.linear_velocity.normalized()
 			var angular_force:Vector3 = self.angular_velocity.normalized()
 			
-			var total_force:Vector3 = (speed_force + angular_force).normalized() * self.force_multiplier
-			var stamina_drain:float = max(1, self.current_stats["Power"] - collider_object.current_stats["Power"])
-			if not collider_object.is_dead():
+			var total_force:Vector3 = (speed_force + angular_force).normalized() * self.force_multiplier * 2.0
+			#total_force.y = 0
+			var stamina_drain:float = max(1, (self.current_stats["Power"] * 1.2) - collider_object.current_stats["Power"])
+			
+			if not collider_object.is_dead() and collider_object.iframe_timer_sec < 0:
 				collider_object.reduce_stamina(stamina_drain)
-			collider_object.apply_central_impulse(total_force)
-			self.apply_central_impulse(-total_force)
+				collider_object.apply_central_impulse(total_force)
+				var opposite_force:Vector3 = -total_force
+				opposite_force.y = 0
+				self.apply_central_impulse(opposite_force)
 			
 			var random_clank_id:int = randi_range(1,9)
 			var clip_name:String = "Clang %d"%random_clank_id
 			play_collision_audio_clip(clip_name)
 			last_top_hit = collider_object
-			return
+			collider_object.iframe_timer_sec = collider_object.max_iframes_sec
+			
 		if contact_pos.y <= self.global_position.y - 0.25:
 			var random_clank_id:int = randi_range(1,2)
 			var clip_name:String = "On Ground %d"%random_clank_id
 			play_other_audio_clip(clip_name)
 			var stamina_drain:float = 0.1
 			self.reduce_stamina(stamina_drain)
-			return
+			on_ground = true
 		else:
 			var stamina_drain:float = 0.01
 			self.reduce_stamina(stamina_drain)
 			var random_clank_id:int = randi_range(1,9)
 			var clip_name:String = "Clang %d"%random_clank_id
 			play_collision_audio_clip(clip_name)
-			return
+			on_ground = true
 
 func play_collision_audio_clip(clip_name:String):
 	#print("Play clip %s"%[clip_name])
@@ -189,14 +203,17 @@ func _process(delta: float) -> void:
 		self.global_position = launcher.crank_top_spot.global_position
 		return
 	time += delta
+	iframe_timer_sec -= delta
+	
 	reset_dash_timer -= delta
 	if reset_dash_timer <= 0:
 		reset_dash_timer = 5.0
+		last_top_hit = tops[0]
 		self.rocket_dash_available = true
 	
 	reduce_stamina(0.1*delta)
 	if self.global_position.y < -10:
-		self.spin_speed = 0.0
+		self.stamina = 0.0
 		if ai_controlled:
 			self.ringout_sprite_animation.frame = 0
 			self.ringout_sprite_animation.visible = true
@@ -213,11 +230,6 @@ func _process(delta: float) -> void:
 		self.trail_particle_emitter.emitting = false
 		self.sparks_particle_emitter.emitting = false
 		
-		#personal_above_point = self.target_above_node.global_position
-		
-	#if self.linear_velocity.normalized().length_squared() > 0.01:
-		#self.trail_particle_emitter.look_at(self.global_position - self.linear_velocity.normalized(), Vector3.UP)
-		#self.trail_particle_emitter.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
 	
 func spin_top():
 	self.model.global_rotate(self.basis.y, wrapf(min(1.0, spin_speed), 0.0, (2*PI)))
@@ -228,23 +240,27 @@ func force_upright_top():
 	if correction.length_squared() >= 0.01:
 		self.apply_torque(correction * right_speed)
 	
-func force_lookat_top():
+func force_lookat_top(delta: float):
 	if self.get_colliding_bodies().size() <= 0 or is_dead():
 		return
-	if self.global_position.y < self.personal_above_point.y:
-		self.look_at_node.look_at_from_position(self.global_position, self.personal_above_point)
-		self.look_at_node.rotate_object_local(Vector3(1, 0, 0), -PI / 2.0)
-	
+	#if self.global_position.y < self.personal_above_point.y:
+		#var up_direction:Vector3 = Vector3.UP
+		#self.look_at_node.look_at_from_position(self.global_position, self.personal_above_point, up_direction)
+		#self.look_at_node.rotate_object_local(Vector3(1, 0, 0), -PI / 2.0)
+	#
+	self.look_at_node.look_at_from_position(self.global_position, self.personal_above_point)
+	self.look_at_node.rotate_object_local(Vector3(1, 0, 0), -PI / 2.0)
 	var correction:Vector3 = self.global_basis.y.cross(look_at_node.basis.y).normalized()
-	if correction.length_squared() >= 0.01:
-		self.apply_torque(correction * right_speed *2.0)
+	if abs(correction.length()) >= 0.1:
+		self.apply_torque_impulse(correction * right_speed)
 	
 func rocket_dash(distance_from_center:float):
 	if not self.rocket_dash_available:
 		return
 	var move_direction:Vector3 = (self.center_point - self.global_position).normalized()
-	if distance_from_center <= 6.0 and last_top_hit and not last_top_hit.is_dead():
+	if last_top_hit and not last_top_hit.is_dead():
 		move_direction = (self.last_top_hit.global_position - self.global_position).normalized()
+		
 	move_direction.y = 0
 	#move_direction.y = 0
 	#self.apply_central_force(move_direction * center_speed)
@@ -256,35 +272,36 @@ func impulse_to_target():
 		return
 	
 	var move_direction:Vector3 = (self.target_node.global_position - self.global_position).normalized()
+	move_direction.y = 0
 	self.linear_velocity = Vector3.ZERO
 	
 	self.apply_central_impulse(move_direction * impulse_speed)
 	
 	
-func move_in_current_direction():
+func move_in_current_direction(delta):
+	if ai_controlled and not on_ground:
+		return
 	var move_direction:Vector3 = self.linear_velocity.normalized()
 	if self.ai_controlled and last_top_hit and not last_top_hit.is_dead() and self.rocket_dash_available:
 		move_direction = (self.last_top_hit.global_position - self.global_position).normalized()
 	if not self.ai_controlled and not self.is_dead() and self.rocket_dash_available:
 		move_direction = (self.target_node.global_position - self.global_position).normalized()
 	
-	if self.ai_controlled:
-		return
-	self.apply_central_force(move_direction * move_speed)
+	self.apply_central_force(move_direction * move_speed * 60.0 * delta)
 	
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not launched:
 		return
 	if is_dead():
 		return
 	spin_top()
 	#force_upright_top()
-	force_lookat_top()
-	move_in_current_direction()
+	force_lookat_top(delta)
+	move_in_current_direction(delta)
 	var distance_from_center:float = abs(self.global_position.distance_to(self.center_point))
 	if ai_controlled:
-		if distance_from_center >= 6.0 or randf_range(0, 1000) <= self.center_speed * distance_from_center:
+		if randf_range(0, 5000) <= self.center_speed * self.current_stats["Special"]:
 			rocket_dash(distance_from_center)
 	check_if_hidden()
 	

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dhy724m8fj61r"]
+
+[ext_resource type="Texture2D" uid="uid://co24unnr4uv14" path="res://assets/art/ui/background.jpg" id="1_wfag3"]
+
+[node name="Background" type="AspectRatioContainer" unique_id=2052113114]
+offset_top = -1.0
+offset_right = 1282.0
+offset_bottom = 720.0
+ratio = 1.6
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1369768242]
+position = Vector2(671, 350)
+texture = ExtResource("1_wfag3")

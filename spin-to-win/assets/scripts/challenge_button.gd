@@ -1,10 +1,10 @@
-extends Button
+extends TextureButton
 class_name ChallengeButton
 @export var scene_to_change_to:String
 @export var object_to_show:Container
 @export var objects_to_hide:Array[Container]
 @export var audio_stream_player:AudioStreamPlayer
-
+@export var richtext:RichTextLabel
 var num_cpus:int
 var arena_id:int
 var rewards_text:String
@@ -41,7 +41,28 @@ func _ready() -> void:
 		"name": decrease_stat,
 		"value": negative_diff
 	}
-	rewards_text = "%s +%d\n%s -%d"%[increase_stat, positive_diff, decrease_stat, negative_diff]
+	var increase_colour:String = "red"
+	if increase_stat == "Dexterity":
+		increase_colour = "green"
+	elif increase_stat == "Power":
+		increase_colour = "red"
+	elif increase_stat == "Special":
+		increase_colour = "blue"
+	else:
+		increase_colour = "orange"
+	var decrease_colour:String = "red"
+	if decrease_stat == "Dexterity":
+		decrease_colour = "green"
+	elif decrease_stat == "Power":
+		decrease_colour = "red"
+	elif decrease_stat == "Special":
+		decrease_colour = "blue"
+	else:
+		decrease_colour = "orange"
+	
+	var positive_stars:String = calculate_stars_string(positive_diff)
+	var negative_stars:String = calculate_stars_string(negative_diff)
+	rewards_text = "[color=%s]%s +%s[/color]\n[color=%s]%s -%s[/color]"%[increase_colour, increase_stat, positive_stars, decrease_colour, decrease_stat, negative_stars]
 	rewards["rewards_text"] = rewards_text
 	
 	var type_text:String = ""
@@ -51,7 +72,13 @@ func _ready() -> void:
 		type_text = "%d-Way FFA"%[num_cpus+1]
 	var arena_name:String = Global.arena_names[arena_id]
 	
-	self.text = "%s\n%s\n%s"%[type_text, arena_name, rewards_text]
+	self.richtext.text = "[center][color=black]%s\n%s[/color]\n%s"%[type_text, arena_name, rewards_text]
+
+func calculate_stars_string(num_stars:int):
+	var top_stars:String = ""
+	for i in range(num_stars):
+		top_stars += "★"
+	return top_stars
 
 func _on_pressed() -> void:
 	# update Global.gamestate object

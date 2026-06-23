@@ -13,18 +13,18 @@ camera_spawn_point = NodePath("CameraSpawnPoint")
 center_point = NodePath("CenterPointAI")
 
 [node name="CameraSpawnPoint" type="Node3D" parent="." unique_id=1029488802]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 23)
 
 [node name="CenterPointAI" type="Node3D" parent="." unique_id=2132447941]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3981028, 0)
 
-[node name="arena3" parent="." unique_id=1673414889 instance=ExtResource("1_go4l7")]
-transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 0, 0, 0)
+[node name="arena3" parent="." unique_id=489693100 instance=ExtResource("1_go4l7")]
+transform = Transform3D(24, 0, 0, 0, 12, 0, 0, 0, 24, 0, 0, 0)
 
-[node name="arena3" parent="arena3" index="0" unique_id=1457623835]
+[node name="arena3" parent="arena3" index="0" unique_id=1656773270]
 material_override = SubResource("StandardMaterial3D_0q0s2")
 
-[node name="StaticBody3D" parent="arena3/arena3" index="0" unique_id=522504487]
+[node name="StaticBody3D" parent="arena3/arena3" index="0" unique_id=621942474]
 collision_layer = 3
 collision_mask = 3
 

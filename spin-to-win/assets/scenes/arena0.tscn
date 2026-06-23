@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://c6yd7dmfdf1gy"]
 
-[ext_resource type="PackedScene" uid="uid://2iwbnqm04227" path="res://assets/scenes/arena.tscn" id="1_780ow"]
 [ext_resource type="Script" uid="uid://b0a4cmkj07nhg" path="res://assets/scripts/arena.gd" id="1_cd22w"]
 [ext_resource type="Texture2D" uid="uid://w323igwjqxdr" path="res://assets/art/textures/256x256 Grid.png" id="2_or5rl"]
+[ext_resource type="PackedScene" uid="uid://bt7mr1i5be16g" path="res://assets/models/arena.blend" id="4_v4n68"]
+[ext_resource type="PackedScene" uid="uid://4w2pgoxnw2sf" path="res://assets/models/arena_littledish.blend" id="5_vr6nl"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cd22w"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fi5bf"]
 albedo_texture = ExtResource("2_or5rl")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4n68"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vr6nl"]
 albedo_texture = ExtResource("2_or5rl")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
@@ -16,23 +17,46 @@ camera_spawn_point = NodePath("CameraSpawnPoint")
 center_point = NodePath("CenterPointAI")
 
 [node name="CameraSpawnPoint" type="Node3D" parent="." unique_id=551213256]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 8)
 
 [node name="CenterPointAI" type="Node3D" parent="." unique_id=242580345]
 
-[node name="arena" parent="." unique_id=1948873252 instance=ExtResource("1_780ow")]
-transform = Transform3D(9, 0, 0, 0, 11.25, 0, 0, 0, 9, 0, 0, 0)
-
-[node name="arena" parent="arena" index="2" unique_id=1926282929]
-material_override = SubResource("StandardMaterial3D_cd22w")
-
-[node name="arena2" parent="." unique_id=1907027199 instance=ExtResource("1_780ow")]
-transform = Transform3D(2.12, 7.629394e-08, 0, -5.054473e-07, 0.32, 0, 0, 0, 2.12, 0, 0.10179615, 0)
+[node name="arena_littledish2" parent="." unique_id=268324079 instance=ExtResource("5_vr6nl")]
+transform = Transform3D(4, -1.1844631e-05, 0, -1.7053026e-13, 0.32, 0, 0, 0, 4, 2.2737368e-13, 0.4916191, 0)
+script = ExtResource("1_cd22w")
 spin = true
-rotation_speed = 2.0
 
-[node name="arena" parent="arena2" index="2" unique_id=1926282929]
-material_override = SubResource("StandardMaterial3D_v4n68")
+[node name="arena" parent="arena_littledish2" index="0" unique_id=1641694323]
+material_override = SubResource("StandardMaterial3D_fi5bf")
 
+[node name="StaticBody3D" parent="arena_littledish2/arena" index="0" unique_id=1321320833]
+collision_layer = 3
+collision_mask = 3
+
+[node name="arena_littledish" parent="." unique_id=536852618 instance=ExtResource("5_vr6nl")]
+transform = Transform3D(12, 2.1316282e-13, 0, -5.1159077e-13, 5, 0, 0, 0, 12, 2.2737368e-13, 4.9682784, 0)
+script = ExtResource("1_cd22w")
+
+[node name="arena" parent="arena_littledish" index="0" unique_id=1641694323]
+material_override = SubResource("StandardMaterial3D_fi5bf")
+
+[node name="StaticBody3D" parent="arena_littledish/arena" index="0" unique_id=1321320833]
+collision_layer = 3
+collision_mask = 3
+
+[node name="arena" parent="." unique_id=795733379 instance=ExtResource("4_v4n68")]
+transform = Transform3D(12.5, 0, 0, 0, 12, 0, 0, 0, 12.5, 0, 9.929357, 0)
+script = ExtResource("1_cd22w")
+spin = true
+rotation_speed = -0.5
+
+[node name="arena" parent="arena" index="0" unique_id=578762339]
+material_override = SubResource("StandardMaterial3D_vr6nl")
+
+[node name="StaticBody3D" parent="arena/arena" index="0" unique_id=238595367]
+collision_layer = 3
+collision_mask = 3
+
+[editable path="arena_littledish2"]
+[editable path="arena_littledish"]
 [editable path="arena"]
-[editable path="arena2"]

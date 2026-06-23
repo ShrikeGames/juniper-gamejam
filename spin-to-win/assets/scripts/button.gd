@@ -5,11 +5,18 @@ class_name RegularButton
 @export var objects_to_hide:Array[Container]
 @export var audio_stream_player:AudioStreamPlayer
 @export var wipe_save:bool = false
+@export var requires_save:bool = false
 
 func _ready() -> void:
 	var audio_stream_player_stream = preload("res://assets/sound/ui/ui_button_sounds.tres")
 	audio_stream_player.stream = audio_stream_player_stream
 	audio_stream_player.play()
+	Global.load_settings()
+	self.disabled = (Global.game_state["stats"]["wins"] <= 0 and requires_save) or (object_to_show and object_to_show.visible)
+
+func _process(_delta: float) -> void:
+	self.disabled = (Global.game_state["stats"]["wins"] <= 0 and requires_save) or (object_to_show and object_to_show.visible)
+
 
 func _on_pressed() -> void:
 	if wipe_save:
@@ -28,7 +35,7 @@ func _on_pressed() -> void:
 	var playback = self.audio_stream_player.get_stream_playback() as AudioStreamPlaybackInteractive
 	self.audio_stream_player.pitch_scale = randf_range(0.5, 1.5)
 	playback.switch_to_clip_by_name("Click")
-
+	
 func _on_mouse_entered() -> void:
 	var playback = self.audio_stream_player.get_stream_playback() as AudioStreamPlaybackInteractive
 	self.audio_stream_player.pitch_scale = randf_range(0.5, 1.5)

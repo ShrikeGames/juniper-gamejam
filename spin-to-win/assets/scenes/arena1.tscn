@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dtvae37fhdmrr" path="res://assets/textures/grey_wood.jpg" id="2_r8v1v"]
 [ext_resource type="PackedScene" uid="uid://ybl48lgmajs5" path="res://assets/models/arena1.blend" id="2_y1g8u"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1qow3"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r8v1v"]
 albedo_texture = ExtResource("2_r8v1v")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
@@ -13,18 +13,21 @@ camera_spawn_point = NodePath("CameraSpawnPoint")
 center_point = NodePath("CenterPointAI")
 
 [node name="CameraSpawnPoint" type="Node3D" parent="." unique_id=871357522]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 21)
 
 [node name="CenterPointAI" type="Node3D" parent="." unique_id=1190081126]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9524126, 0.008740425)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7797613, 0.008740425)
 
-[node name="arena1" parent="." unique_id=1283082803 instance=ExtResource("2_y1g8u")]
-transform = Transform3D(12, 0, 0, 0, 20, 0, 0, 0, 12, 0, 2.3183274, 0)
+[node name="arena1" parent="." unique_id=1102759024 node_paths=PackedStringArray("camera_spawn_point", "center_point") instance=ExtResource("2_y1g8u")]
+transform = Transform3D(24, 0, 0, 0, 20, 0, 0, 0, 24, 0, 2.3183274, 0)
+script = ExtResource("1_r8v1v")
+camera_spawn_point = NodePath("../CameraSpawnPoint")
+center_point = NodePath("../CenterPointAI")
 
-[node name="arena1" parent="arena1" index="0" unique_id=1343348479]
-material_override = SubResource("StandardMaterial3D_1qow3")
+[node name="arean1" parent="arena1" index="0" unique_id=1897035262]
+material_override = SubResource("StandardMaterial3D_r8v1v")
 
-[node name="StaticBody3D" parent="arena1/arena1" index="0" unique_id=50688891]
+[node name="StaticBody3D" parent="arena1/arean1" index="0" unique_id=1904380878]
 collision_layer = 3
 collision_mask = 3
 

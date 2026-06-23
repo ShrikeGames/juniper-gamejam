@@ -36,7 +36,7 @@ func get_circle_positions(radius: float, y_pos: float = 5.0, segments: int = 24)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# generate the computer players
-	var random_positions:Array[Vector3] = get_circle_positions(4.0)
+	var random_positions:Array[Vector3] = get_circle_positions(camera.global_position.z, camera.global_position.y)
 	var random_index:int = len(random_positions)-1
 	var num_cpus:int = Global.game_state["next_match"].get("num_cpus", 1)
 	var arena_id:int = Global.game_state["next_match"].get("arena_id", 0)
@@ -47,7 +47,7 @@ func _ready() -> void:
 	
 	player_launcher = launcher_resource.instantiate()
 	player_container.add_child(player_launcher)
-	var player_pos:Vector3 = Vector3(0,5,5)
+	var player_pos:Vector3 = Vector3(0,camera.global_position.y-3.0,camera.global_position.z-3.0)
 	player_launcher.global_position = player_pos
 	player_launcher.look_at(Vector3(0,5,0))
 	
@@ -96,14 +96,22 @@ func _ready() -> void:
 			"Special": 1, # +rocket dash, +force, +ult, +blue
 			"Ult": 0, # id for ultimate ability
 		}
-		for n in range(difficulty_modifier):
-			var possible_stats_to_increase:Array[String] = ["Dexterity", "Power", "Special"]
-			var increase_stat:String = possible_stats_to_increase.pick_random()
-			var index_to_remove:int = possible_stats_to_increase.find(increase_stat)
-			possible_stats_to_increase.remove_at(index_to_remove)
-			var decrease_stat:String = possible_stats_to_increase.pick_random()
-			cpu_stats[increase_stat] = min(5, max(1, cpu_stats[increase_stat]+2))
-			cpu_stats[decrease_stat] = min(5, max(1, cpu_stats[decrease_stat]-1))
+		if Global.game_state["stats"]["wins"] == 0:
+			if i == 0:
+				cpu_stats["Power"] = min(5, max(1, cpu_stats["Power"]+1))
+			elif i == 1:
+				cpu_stats["Dexterity"] = min(5, max(1, cpu_stats["Dexterity"]+1))
+			else:
+				cpu_stats["Special"] = min(5, max(1, cpu_stats["Special"]+1))
+		else:
+			for n in range(difficulty_modifier):
+				var possible_stats_to_increase:Array[String] = ["Dexterity", "Power", "Special"]
+				var increase_stat:String = possible_stats_to_increase.pick_random()
+				var index_to_remove:int = possible_stats_to_increase.find(increase_stat)
+				possible_stats_to_increase.remove_at(index_to_remove)
+				var decrease_stat:String = possible_stats_to_increase.pick_random()
+				cpu_stats[increase_stat] = min(5, max(1, cpu_stats[increase_stat]+2))
+				cpu_stats[decrease_stat] = min(5, max(1, cpu_stats[decrease_stat]-1))
 		
 		cpu_top.update_based_on_stats(cpu_stats)
 		cpu_top.ai_controlled = true
@@ -119,7 +127,11 @@ func _ready() -> void:
 		
 		cpu_top.global_position = launcher.crank_top_spot.global_position
 		tops.append(cpu_top)
-	
+	var tops_with_player:Array[Top] = [player_top]
+	tops_with_player.append_array(tops)
+	for top in tops:
+		top.tops = tops_with_player
+	player_top.tops = tops
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

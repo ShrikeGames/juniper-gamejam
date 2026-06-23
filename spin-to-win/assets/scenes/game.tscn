@@ -155,6 +155,7 @@ announcer_audio_stream_player = NodePath("AnnouncerStreamPlayer")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1127519061 node_paths=PackedStringArray("target_node", "crank_audio_stream_player", "cpu_container", "countdown_animation")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 8, 6)
 current = true
+fov = 40.0
 script = ExtResource("1_j62u1")
 target_node = NodePath("../Target")
 crank_audio_stream_player = NodePath("../CrankStreamPlayer")

@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d0gtj2ydoed43"]
+
+[ext_resource type="Texture2D" uid="uid://pnhgtyfoxxu6" path="res://assets/art/ui/reward_card_back.png" id="1_wwnt8"]
+[ext_resource type="Texture2D" uid="uid://w323igwjqxdr" path="res://assets/art/textures/256x256 Grid.png" id="2_fcw18"]
+[ext_resource type="Texture2D" uid="uid://dgc4dxujju0ww" path="res://assets/art/ui/reward_card_back_down.png" id="2_w1jbk"]
+[ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="3_2c2lt"]
+[ext_resource type="Texture2D" uid="uid://dlljdvr0cjsc3" path="res://assets/art/ui/reward_card_back_hover.png" id="3_rwdod"]
+[ext_resource type="Script" uid="uid://bpf4nvkfudfeo" path="res://assets/scripts/challenge_button.gd" id="4_2nwum"]
+[ext_resource type="AudioStream" uid="uid://b2r7rh54fmnq6" path="res://assets/sound/ui/ui_button_sounds.tres" id="7_rwdod"]
+
+[node name="RewardCardBack" type="TextureButton" unique_id=962532219 node_paths=PackedStringArray("audio_stream_player", "richtext")]
+texture_normal = ExtResource("1_wwnt8")
+texture_pressed = ExtResource("2_w1jbk")
+texture_hover = ExtResource("3_rwdod")
+script = ExtResource("4_2nwum")
+scene_to_change_to = "res://assets/scenes/game.tscn"
+audio_stream_player = NodePath("ButtonAudioStreamPlayer")
+richtext = NodePath("RichTextLabel")
+
+[node name="256x256Grid" type="Sprite2D" parent="." unique_id=1170119373]
+position = Vector2(200, 200)
+texture = ExtResource("2_fcw18")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1960636355]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 334.0
+offset_right = 327.0
+offset_bottom = 541.0
+mouse_filter = 2
+theme = ExtResource("3_2c2lt")
+bbcode_enabled = true
+text = "[center][color=black]4-Way FFA[/color]
+[color=green]+★★ DEX[/color]
+[color=red]-★ PWR[/color]"
+fit_content = true
+scroll_active = false
+
+[node name="ButtonAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1086880600]
+stream = ExtResource("7_rwdod")
+bus = &"Ambient"
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

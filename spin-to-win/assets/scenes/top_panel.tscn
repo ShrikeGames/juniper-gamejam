@@ -28,3 +28,6 @@ text = "Player 1
 [color=green]★☆☆☆☆ DEX[/color]
 [color=red]★☆☆☆☆ PWR[/color]
 [color=blue]★☆☆☆☆ SPE[/color]"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
