@@ -64,14 +64,14 @@ Day 3 TODOs:
 
 
 Day 4 TODOs:
-- Change how stats work (Just 3 human-readable stats Dexterity, Power, Special which affect the variables in different combinations)
-- Change CPU scaling
-- Change colours to be based on the new stats
-- Change challenge rewards to use new stats and scale with wins
-- Update physics
-- Fix camera issues
-- Fix issue with not being able to see tops behind stuff in the new arenas
+- [Done] Change how stats work (Just 3 human-readable stats Dexterity, Power, Special which affect the variables in different combinations)
+- [Done] Change CPU scaling
+- [Done] Change colours to be based on the new stats
+- [Done] Change challenge rewards to use new stats and scale with wins
+- [Done] Update physics
+- [Done] Fix camera issues
+- [Done] Fix issue with not being able to see tops behind stuff in the new arenas
 - Implement ults and add as rewards
-- Redesign the store/challenge screen (show 1-5 stars for each stat, your current stats, make it not hideous)
-- Add stats for each CPU and the player to the HUD in battle (Have icon of the top matching its colour + 3 stats shown with 1-5 stars)
-- Update damage calculations and use something other than spin speed as your "hp/stamina"
+- [Done] Redesign the store/challenge screen (show 1-5 stars for each stat, your current stats, make it not hideous)
+- [Done] Add stats for each CPU and the player to the HUD in battle (Have icon of the top matching its colour + 3 stats shown with 1-5 stars)
+- [Done] Update damage calculations and use something other than spin speed as your "hp/stamina"

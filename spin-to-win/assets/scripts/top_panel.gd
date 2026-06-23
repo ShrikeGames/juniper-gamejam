@@ -7,7 +7,7 @@ class_name TopPanelCard
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var top_color_hex:String = top.colour.to_html()
-	var top_name:String = top.top_name.substr(0, min(15, len(top.top_name)))
+	var top_name:String = top.top_name.substr(0, min(10, len(top.top_name)))
 	var top_dex_stars:String = calculate_stars_string("Dexterity")
 	var top_power_stars:String = calculate_stars_string("Power")
 	var top_special_stars:String = calculate_stars_string("Special")
