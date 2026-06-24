@@ -43,18 +43,20 @@ func _ready() -> void:
 	
 	var arena:Arena = Global.arena_resources[arena_id].instantiate()
 	arena_container.add_child(arena)
-	camera.global_position = arena.camera_spawn_point.global_position
+	
 	
 	player_launcher = launcher_resource.instantiate()
 	player_container.add_child(player_launcher)
-	var player_pos:Vector3 = Vector3(0,camera.global_position.y-3.0,camera.global_position.z-3.0)
+	var player_pos:Vector3 = random_positions[int(len(random_positions)*0.25)]
 	player_launcher.global_position = player_pos
 	player_launcher.look_at(Vector3(0,5,0))
+	camera.global_position = player_pos + Vector3(0, 4, 4)
 	
 	player_top = top_resource.instantiate()
 	player_top.target_node = target_node
 	player_top.target_above_node = target_above_node
 	player_top.look_at_node = look_at_node
+	player_top.center_point = arena.center_point.global_position
 	player_top.launcher = player_launcher
 	player_top.launched = false
 	player_top.top_name = "You"
@@ -87,6 +89,7 @@ func _ready() -> void:
 		cpu_top.look_at_node = look_at_node
 		cpu_top.top_name = Global.get_random_name()
 		cpu_top.launcher = launcher
+		cpu_top.last_top_hit = player_top
 		cpu_top.launched = false
 		cpu_top.center_point = arena.center_point.global_position
 		var difficulty_modifier:int = max(1, num_wins/3)
@@ -94,8 +97,9 @@ func _ready() -> void:
 			"Dexterity": 1, # +move speed, +spin speed, -weight, +green
 			"Power": 1, # +force, +weight, (+right speed), +red
 			"Special": 1, # +rocket dash, +force, +ult, +blue
-			"Ult": 0, # id for ultimate ability
+			"Ult": randi_range(0, len(Global.ult_names)-1), # id for ultimate ability
 		}
+		print(cpu_stats["Ult"])
 		if Global.game_state["stats"]["wins"] == 0:
 			if i == 0:
 				cpu_stats["Power"] = min(5, max(1, cpu_stats["Power"]+1))
@@ -190,8 +194,8 @@ func _on_youwin_sprite_animation_animation_finished() -> void:
 
 func _on_countdown_sprite_animation_animation_finished() -> void:
 	player_top.launched = true
-	player_top.impulse_to_target()
-	var distance_bonus:float = min(5.0, max(0.0, camera.mouse_distance_traveled * 0.001))
+	player_top.activate_ult()
+	var distance_bonus:float = min(3.0, max(0.0, camera.mouse_distance_traveled * 0.001))
 	player_top.linear_velocity += Vector3(0,0,-distance_bonus)
 	player_launcher.visible = false
 	camera.is_launched = true
@@ -207,20 +211,23 @@ func _on_countdown_sprite_animation_animation_finished() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if camera.is_launched and event.is_action_pressed("LMB"):
-			var cam := get_viewport().get_camera_3d()
-			if cam == null or target_node == null:
-				return
-			var mouse_pos: Vector2 = event.position
-			var from: Vector3 = cam.project_ray_origin(mouse_pos)
-			var dir: Vector3 = cam.project_ray_normal(mouse_pos)
-			var to: Vector3 = from + dir * camera.max_ray_distance
-			var space_state := get_world_3d().direct_space_state
-			var query := PhysicsRayQueryParameters3D.create(from, to)
-			query.collision_mask = camera.ground_mask
-			var hit := space_state.intersect_ray(query)
-			if hit and hit.has("position"):
-				camera.target_node.global_position = hit["position"]
-				self.player_top.impulse_to_target()
+			if player_top.ult == 0:
+				var cam := get_viewport().get_camera_3d()
+				if cam == null or target_node == null:
+					return
+				var mouse_pos: Vector2 = event.position
+				var from: Vector3 = cam.project_ray_origin(mouse_pos)
+				var dir: Vector3 = cam.project_ray_normal(mouse_pos)
+				var to: Vector3 = from + dir * camera.max_ray_distance
+				var space_state := get_world_3d().direct_space_state
+				var query := PhysicsRayQueryParameters3D.create(from, to)
+				query.collision_mask = camera.ground_mask
+				var hit := space_state.intersect_ray(query)
+				if hit and hit.has("position"):
+					camera.target_node.global_position = hit["position"]
+					self.player_top.activate_ult()
+			else:
+				self.player_top.activate_ult()
 		else:
 			# hold LMB and spin mouse to spin the crank
 			if event.is_action_pressed("LMB") and event.pressed:

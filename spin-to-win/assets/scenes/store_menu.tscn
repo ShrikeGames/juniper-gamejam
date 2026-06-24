@@ -1,66 +1,121 @@
 [gd_scene format=3 uid="uid://c2llyb0biwk2l"]
 
 [ext_resource type="Script" uid="uid://yryn8n3e22q1" path="res://assets/scripts/store_menu.gd" id="1_ysyes"]
-[ext_resource type="PackedScene" uid="uid://dhy724m8fj61r" path="res://assets/scenes/background.tscn" id="2_875kw"]
+[ext_resource type="PackedScene" uid="uid://dkw0mo1ulna1w" path="res://assets/scenes/top_panel.tscn" id="2_y1egy"]
 [ext_resource type="PackedScene" uid="uid://d2qmb5bxomcvb" path="res://assets/scenes/button.tscn" id="3_d1ubk"]
 [ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="4_vuf34"]
+[ext_resource type="AudioStream" uid="uid://dtp0clgkvj2d0" path="res://assets/sound/music/Midnight city_Aaron_Music_YT.mp3" id="5_875kw"]
 [ext_resource type="PackedScene" uid="uid://d0gtj2ydoed43" path="res://assets/scenes/reward_card.tscn" id="5_ysyes"]
-[ext_resource type="AudioStream" uid="uid://cfpf4bofydyoc" path="res://assets/sound/music/Dog Shop Aaron_music_YT.mp3" id="6_2lxdy"]
+[ext_resource type="PackedScene" uid="uid://ba88sbfy5r31c" path="res://assets/scenes/top.tscn" id="6_875kw"]
+[ext_resource type="PackedScene" uid="uid://cubi76y3kh4c8" path="res://assets/envs/world_environment.tscn" id="7_vuf34"]
+[ext_resource type="Script" uid="uid://cpdtld5kf3l7f" path="res://assets/scripts/Table.gd" id="8_y1egy"]
+[ext_resource type="Texture2D" uid="uid://fxj1eemmtdda" path="res://assets/textures/wood.jpg" id="9_2lxdy"]
 
-[node name="StoreMenu" type="Node2D" unique_id=459393673]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2t1h"]
+albedo_texture = ExtResource("9_2lxdy")
+
+[sub_resource type="BoxMesh" id="BoxMesh_c0s5w"]
+material = SubResource("StandardMaterial3D_k2t1h")
+size = Vector3(60, 5, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_27hhc"]
+size = Vector3(60, 5, 60)
+
+[node name="StoreMenu" type="Node3D" unique_id=423621645 node_paths=PackedStringArray("player_top")]
 script = ExtResource("1_ysyes")
+player_top = NodePath("Top")
 
-[node name="Background" parent="." unique_id=2052113114 instance=ExtResource("2_875kw")]
+[node name="Top" parent="." unique_id=24248696 instance=ExtResource("6_875kw")]
+disabled = true
+top_name = "You"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1403690871]
+[node name="WorldEnvironment" parent="." unique_id=677115686 instance=ExtResource("7_vuf34")]
+
+[node name="Table" type="StaticBody3D" parent="." unique_id=1898729910]
+collision_layer = 11
+collision_mask = 11
+script = ExtResource("8_y1egy")
+
+[node name="TableMesh" type="MeshInstance3D" parent="Table" unique_id=1921401986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+mesh = SubResource("BoxMesh_c0s5w")
+
+[node name="TableCollider" type="CollisionShape3D" parent="Table" unique_id=1166573611]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+shape = SubResource("BoxShape3D_27hhc")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=145825687]
+transform = Transform3D(-1, 0, 8.742278e-08, 4.371139e-08, 0.8660254, 0.5, -7.5710346e-08, 0.5, -0.8660254, -1.3343098, 1.0547173, -1.2289606)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=478966126]
+
+[node name="Panel" parent="CanvasLayer" unique_id=892757508 node_paths=PackedStringArray("top") instance=ExtResource("2_y1egy")]
+offset_right = 0.31999207
+offset_bottom = 99.68
+top = NodePath("../../Top")
+use_save = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1403690871]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 1.0
-offset_right = 1282.0
-offset_bottom = 222.0
+offset_left = -323.0
+offset_top = 6.0
+offset_right = 959.0
+offset_bottom = 227.0
 grow_horizontal = 2
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=306296609]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=306296609]
 layout_mode = 2
 theme = ExtResource("4_vuf34")
 text = "Choose Your Next Challenge:"
 
-[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=905420964]
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=905420964]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 3.0
-offset_top = 663.0
+offset_top = -59.0
 offset_right = 1277.0
-offset_bottom = 719.0
+offset_bottom = -3.0
 grow_vertical = 0
 
-[node name="MenuButton" parent="ButtonContainer" unique_id=993433727 instance=ExtResource("3_d1ubk")]
+[node name="MenuButton" parent="CanvasLayer/ButtonContainer" unique_id=993433727 instance=ExtResource("3_d1ubk")]
 layout_mode = 2
-text = "Back To Menu"
+text = "Save and return to Main Menu"
 scene_to_change_to = "res://assets/scenes/main_menu.tscn"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1138587312]
-stream = ExtResource("6_2lxdy")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer" unique_id=1138587312]
+stream = ExtResource("5_875kw")
+volume_db = -15.0
 autoplay = true
 bus = &"Music"
 parameters/looping = true
 
-[node name="RewardCardBack" parent="." unique_id=959874692 instance=ExtResource("5_ysyes")]
+[node name="Node3D" type="Node2D" parent="CanvasLayer" unique_id=258444882]
+position = Vector2(300, 30)
+scale = Vector2(0.7599999, 0.7599999)
+
+[node name="RewardCardBack" parent="CanvasLayer/Node3D" unique_id=959874692 node_paths=PackedStringArray("top", "panel_card") instance=ExtResource("5_ysyes")]
 offset_left = 20.0
 offset_top = 50.0
 offset_right = 420.0
 offset_bottom = 650.0
+top = NodePath("../../../Top")
+panel_card = NodePath("../../Panel")
 
-[node name="RewardCardBack2" parent="." unique_id=161639150 instance=ExtResource("5_ysyes")]
+[node name="RewardCardBack2" parent="CanvasLayer/Node3D" unique_id=161639150 node_paths=PackedStringArray("top", "panel_card") instance=ExtResource("5_ysyes")]
 offset_left = 440.0
 offset_top = 50.0
 offset_right = 840.0
 offset_bottom = 650.0
+top = NodePath("../../../Top")
+panel_card = NodePath("../../Panel")
 
-[node name="RewardCardBack3" parent="." unique_id=33635413 instance=ExtResource("5_ysyes")]
+[node name="RewardCardBack3" parent="CanvasLayer/Node3D" unique_id=33635413 node_paths=PackedStringArray("top", "panel_card") instance=ExtResource("5_ysyes")]
 offset_left = 860.0
 offset_top = 50.0
 offset_right = 1260.0
 offset_bottom = 650.0
+top = NodePath("../../../Top")
+panel_card = NodePath("../../Panel")

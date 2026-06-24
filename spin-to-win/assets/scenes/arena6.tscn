@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bnlemo4bl7233"]
+
+[ext_resource type="Script" uid="uid://b0a4cmkj07nhg" path="res://assets/scripts/arena.gd" id="1_xe5jq"]
+[ext_resource type="PackedScene" uid="uid://ppah1h6fx81x" path="res://assets/models/arena6.blend" id="2_xe5jq"]
+[ext_resource type="Texture2D" uid="uid://biffpewpr727q" path="res://assets/textures/arena_darkblue.jpg" id="3_xe5jq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghrww"]
+albedo_texture = ExtResource("3_xe5jq")
+
+[node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
+script = ExtResource("1_xe5jq")
+camera_spawn_point = NodePath("CameraSpawnPoint")
+center_point = NodePath("CenterPointAI")
+
+[node name="CameraSpawnPoint" type="Node3D" parent="." unique_id=906160517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.336945, 11)
+
+[node name="CenterPointAI" type="Node3D" parent="." unique_id=1994582626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2277741, 0)
+
+[node name="arena6" parent="." unique_id=1822135544 node_paths=PackedStringArray("camera_spawn_point", "center_point") instance=ExtResource("2_xe5jq")]
+transform = Transform3D(-3.8816578, 0, -11.354855, 0, 12, 0, 11.354855, 0, -3.8816578, 0, 0, 0)
+script = ExtResource("1_xe5jq")
+camera_spawn_point = NodePath("../CameraSpawnPoint")
+center_point = NodePath("../CenterPointAI")
+
+[node name="arena6" parent="arena6" index="0" unique_id=723345997]
+material_override = SubResource("StandardMaterial3D_ghrww")
+
+[node name="StaticBody3D" parent="arena6/arena6" index="0" unique_id=244033440]
+collision_layer = 3
+collision_mask = 3
+
+[editable path="arena6"]

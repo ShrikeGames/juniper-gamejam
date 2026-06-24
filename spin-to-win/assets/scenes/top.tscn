@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://bvo2e74gnwxr" path="res://assets/materials/outline_material.tres" id="5_4roix"]
 [ext_resource type="Texture2D" uid="uid://ckdx82w1k86nf" path="res://assets/art/tops/stamina_ring_empty.png" id="8_ew4y2"]
 [ext_resource type="Texture2D" uid="uid://d3nv8p2iflwj" path="res://assets/art/tops/stamina_ring_filled.png" id="9_lteu0"]
+[ext_resource type="Script" uid="uid://rfox0wlp1ikh" path="res://assets/scripts/shockwave.gd" id="10_a1krb"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wfsp4"]
 points = PackedVector3Array(0.5, 0.25, 0, 0.483, 0.25, 0.1294, 0.433, 0.25, 0.25, 0.3536, 0.25, 0.3536, 0.25, 0.25, 0.433, 0.1294, 0.25, 0.483, 0, 0.25, 0.5, -0.1294, 0.25, 0.483, -0.25, 0.25, 0.433, -0.3536, 0.25, 0.3536, -0.433, 0.25, 0.25, -0.483, 0.25, 0.1294, -0.5, 0.25, 0, -0.483, 0.25, -0.1294, -0.433, 0.25, -0.25, -0.3536, 0.25, -0.3536, -0.25, 0.25, -0.433, -0.1294, 0.25, -0.483, 0, 0.25, -0.5, 0.1294, 0.25, -0.483, 0.25, 0.25, -0.433, 0.3536, 0.25, -0.3536, 0.433, 0.25, -0.25, 0.483, 0.25, -0.1294, 0.5, 0.25, 0, 0, -0.25, 0)
@@ -16,7 +17,10 @@ points = PackedVector3Array(0.5, 0.25, 0, 0.483, 0.25, 0.1294, 0.433, 0.25, 0.25
 height = 0.1
 radius = 0.56347656
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lteu0"]
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_5gf0t"]
+material = SubResource("StandardMaterial3D_lteu0")
 bottom_radius = 0.0
 height = 0.5
 
@@ -90,6 +94,7 @@ disable_ambient_light = true
 disable_fog = true
 disable_specular_occlusion = true
 albedo_color = Color(0.7607843, 0.75686276, 0, 0.5254902)
+albedo_texture = ExtResource("9_lteu0")
 grow = true
 grow_amount = 0.05
 
@@ -112,7 +117,16 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ew4y2")
 size = Vector2(1, 1)
 
-[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "outline_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ed4lo"]
+transparency = 1
+albedo_color = Color(0.25882354, 0.3529412, 0.7764706, 0.34901962)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hqlfd"]
+material = SubResource("StandardMaterial3D_ed4lo")
+radius = 1.0
+height = 2.0
+
+[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "outline_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "shockwave_model")]
 mass = 1.25
 continuous_cd = true
 contact_monitor = true
@@ -127,6 +141,7 @@ outline_mesh = NodePath("OutlineMesh")
 collision_audio_player = NodePath("CollisionAudioPlayer")
 other_audio_player = NodePath("OtherSoundAudioPlayer")
 stamina_progress_bar = NodePath("StaminaViewPort/CanvasLayer/StaminaProgressBar")
+shockwave_model = NodePath("Shockwave")
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=1659996157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
@@ -149,7 +164,7 @@ transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0.331724, 0)
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.01558727, 0)
 material_override = SubResource("StandardMaterial3D_a1krb")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh/test_top2" unique_id=1035463731]
+[node name="core" type="MeshInstance3D" parent="Mesh/test_top2" unique_id=1035463731]
 transform = Transform3D(0.6666667, 0, 0, 0, 1, 0, 0, 0, 0.6666667, 0, 0.021910131, 0)
 mesh = SubResource("CylinderMesh_4roix")
 
@@ -211,5 +226,11 @@ value = 26.0
 fill_mode = 4
 texture_under = ExtResource("8_ew4y2")
 texture_progress = ExtResource("9_lteu0")
+
+[node name="Shockwave" type="MeshInstance3D" parent="." unique_id=302557199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29466614, 0)
+visible = false
+mesh = SubResource("SphereMesh_hqlfd")
+script = ExtResource("10_a1krb")
 
 [editable path="Mesh/test_top2"]

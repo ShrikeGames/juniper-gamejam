@@ -3,13 +3,14 @@
 [ext_resource type="Script" uid="uid://b0a4cmkj07nhg" path="res://assets/scripts/arena.gd" id="1_cd22w"]
 [ext_resource type="Texture2D" uid="uid://w323igwjqxdr" path="res://assets/art/textures/256x256 Grid.png" id="2_or5rl"]
 [ext_resource type="PackedScene" uid="uid://bt7mr1i5be16g" path="res://assets/models/arena.blend" id="4_v4n68"]
+[ext_resource type="Texture2D" uid="uid://dvjoth2qm5o78" path="res://assets/textures/arena_red.jpg" id="5_gmoyf"]
 [ext_resource type="PackedScene" uid="uid://4w2pgoxnw2sf" path="res://assets/models/arena_littledish.blend" id="5_vr6nl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fi5bf"]
 albedo_texture = ExtResource("2_or5rl")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vr6nl"]
-albedo_texture = ExtResource("2_or5rl")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46wr2"]
+albedo_texture = ExtResource("5_gmoyf")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
 script = ExtResource("1_cd22w")
@@ -17,14 +18,16 @@ camera_spawn_point = NodePath("CameraSpawnPoint")
 center_point = NodePath("CenterPointAI")
 
 [node name="CameraSpawnPoint" type="Node3D" parent="." unique_id=551213256]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.496025, 9.114797)
 
 [node name="CenterPointAI" type="Node3D" parent="." unique_id=242580345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1751866, 0)
 
 [node name="arena_littledish2" parent="." unique_id=268324079 instance=ExtResource("5_vr6nl")]
-transform = Transform3D(4, -1.1844631e-05, 0, -1.7053026e-13, 0.32, 0, 0, 0, 4, 2.2737368e-13, 0.4916191, 0)
+transform = Transform3D(4, -1.1844631e-05, 0, -1.7053026e-13, 0.32, 0, 0, 0, 4, 2.2737368e-13, 2.576853, 0)
 script = ExtResource("1_cd22w")
 spin = true
+rotation_speed = 5.0
 
 [node name="arena" parent="arena_littledish2" index="0" unique_id=1641694323]
 material_override = SubResource("StandardMaterial3D_fi5bf")
@@ -34,7 +37,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="arena_littledish" parent="." unique_id=536852618 instance=ExtResource("5_vr6nl")]
-transform = Transform3D(12, 2.1316282e-13, 0, -5.1159077e-13, 5, 0, 0, 0, 12, 2.2737368e-13, 4.9682784, 0)
+transform = Transform3D(12, 3.410605e-13, 0, -5.1159077e-13, 8, 0, 0, 0, 12, 2.2737368e-13, 9.860781, 0)
 script = ExtResource("1_cd22w")
 
 [node name="arena" parent="arena_littledish" index="0" unique_id=1641694323]
@@ -45,13 +48,13 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="arena" parent="." unique_id=795733379 instance=ExtResource("4_v4n68")]
-transform = Transform3D(12.5, 0, 0, 0, 12, 0, 0, 0, 12.5, 0, 9.929357, 0)
+transform = Transform3D(12.5, 0, 0, 0, 15, 0, 0, 0, 12.5, 0, 14.821858, 0)
 script = ExtResource("1_cd22w")
 spin = true
 rotation_speed = -0.5
 
 [node name="arena" parent="arena" index="0" unique_id=578762339]
-material_override = SubResource("StandardMaterial3D_vr6nl")
+material_override = SubResource("StandardMaterial3D_46wr2")
 
 [node name="StaticBody3D" parent="arena/arena" index="0" unique_id=238595367]
 collision_layer = 3

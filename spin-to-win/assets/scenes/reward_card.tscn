@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bpf4nvkfudfeo" path="res://assets/scripts/challenge_button.gd" id="4_2nwum"]
 [ext_resource type="AudioStream" uid="uid://b2r7rh54fmnq6" path="res://assets/sound/ui/ui_button_sounds.tres" id="7_rwdod"]
 
-[node name="RewardCardBack" type="TextureButton" unique_id=962532219 node_paths=PackedStringArray("audio_stream_player", "richtext")]
+[node name="RewardCardBack" type="TextureButton" unique_id=962532219 node_paths=PackedStringArray("audio_stream_player", "richtext", "preview_image")]
 texture_normal = ExtResource("1_wwnt8")
 texture_pressed = ExtResource("2_w1jbk")
 texture_hover = ExtResource("3_rwdod")
@@ -16,6 +16,7 @@ script = ExtResource("4_2nwum")
 scene_to_change_to = "res://assets/scenes/game.tscn"
 audio_stream_player = NodePath("ButtonAudioStreamPlayer")
 richtext = NodePath("RichTextLabel")
+preview_image = NodePath("256x256Grid")
 
 [node name="256x256Grid" type="Sprite2D" parent="." unique_id=1170119373]
 position = Vector2(200, 200)
@@ -40,4 +41,6 @@ scroll_active = false
 stream = ExtResource("7_rwdod")
 bus = &"Ambient"
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

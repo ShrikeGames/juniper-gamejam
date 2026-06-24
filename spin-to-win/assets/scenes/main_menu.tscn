@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://douwld03bbcaa" path="res://assets/logos/Shrike_878x878.png" id="4_57ux2"]
 [ext_resource type="Texture2D" uid="uid://bdg4w2rke7itm" path="res://assets/art/ui/logo.png" id="7_66en2"]
 [ext_resource type="Texture2D" uid="uid://bg1llyqfrbi73" path="res://assets/logos/Aaron_Music_logo_v1.png" id="7_xmmar"]
-[ext_resource type="AudioStream" uid="uid://bboh65jm17a23" path="res://assets/sound/music/Sundays Shadess Aaron_music_YT.mp3" id="8_66en2"]
+[ext_resource type="AudioStream" uid="uid://dtp0clgkvj2d0" path="res://assets/sound/music/Midnight city_Aaron_Music_YT.mp3" id="9_ej4af"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66en2"]
 content_margin_left = 4.0
@@ -288,7 +288,7 @@ scale = Vector2(0.28957394, 0.28957394)
 texture = ExtResource("7_xmmar")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1138587312]
-stream = ExtResource("8_66en2")
+stream = ExtResource("9_ej4af")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"

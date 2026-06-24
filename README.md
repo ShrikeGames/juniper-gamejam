@@ -64,6 +64,7 @@ Day 3 TODOs:
 
 
 Day 4 TODOs:
+
 - [Done] Change how stats work (Just 3 human-readable stats Dexterity, Power, Special which affect the variables in different combinations)
 - [Done] Change CPU scaling
 - [Done] Change colours to be based on the new stats
@@ -75,3 +76,35 @@ Day 4 TODOs:
 - [Done] Redesign the store/challenge screen (show 1-5 stars for each stat, your current stats, make it not hideous)
 - [Done] Add stats for each CPU and the player to the HUD in battle (Have icon of the top matching its colour + 3 stats shown with 1-5 stars)
 - [Done] Update damage calculations and use something other than spin speed as your "hp/stamina"
+
+Day 5 TODOs:
+
+- Instead of "ults" add more abilities that can replace the dash (rocket jump, temp enlarge+Weight increase, shockwave, etc)
+[Done] rocket jump
+[Done] shockwave
+[Done] increase mass temporarily and stamina damage reduced
+[pretty much covered by above]make the spin sticky to the "ground" 
+[OP] reset stamina bar
+[obsolete] TP the spin at the center of the arena
+samuari sword
+
+make the spin "ghost" no collision
+- [Done] Fix being able to climb up completely vertical walls
+- Replace rewards with top parts (base for stats, ring for style?, core for ability)
+- Parts can have specific stats and/or ability instead of just being +/- stat choices and you'd now be swapping out specific parts
+- [Done] Add your current top's stats to the challenge page
+- [Done] Add preview of your top to the challenge page
+- [Done] Add 5 more arenas (10 total)
+- [Done] Add new textures for all arenas
+- [Done] Add arena preview images to the challenge rewards screen
+- [Done] Fix issue where multiple tops stand nearly motionless beside each other due to not enough knockback
+- [Done] Rebalance Power
+- [Done] Rebalance human buffs, reduce it based on wins
+- [Done] Show total number of wins on player card
+- [Done] Hovering over the reward cards updates preview dynamically, and resets when you hover off
+
+Day 6 TODOs:
+
+- Tutorial
+- On main menu have small arena with 2 random tops fighting in the background
+- Add flashing to a top when iframes are active

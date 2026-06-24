@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://1n2ghhsloj85"]
 
 [ext_resource type="Script" uid="uid://b0a4cmkj07nhg" path="res://assets/scripts/arena.gd" id="1_0lj8p"]
-[ext_resource type="Texture2D" uid="uid://dtvae37fhdmrr" path="res://assets/textures/grey_wood.jpg" id="2_iwa5l"]
 [ext_resource type="PackedScene" uid="uid://i0lkbauitdab" path="res://assets/models/arena4.blend" id="3_0lj8p"]
+[ext_resource type="Texture2D" uid="uid://vw5omjeohpfb" path="res://assets/textures/arena_rust.jpg" id="3_xi5qj"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lj8p"]
-albedo_texture = ExtResource("2_iwa5l")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6nidg"]
+albedo_texture = ExtResource("3_xi5qj")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
 script = ExtResource("1_0lj8p")
@@ -25,7 +25,7 @@ camera_spawn_point = NodePath("../CameraSpawnPoint")
 center_point = NodePath("../CenterPointAI")
 
 [node name="arena4" parent="arena4" index="0" unique_id=1677427806]
-material_override = SubResource("StandardMaterial3D_0lj8p")
+material_override = SubResource("StandardMaterial3D_6nidg")
 
 [node name="StaticBody3D" parent="arena4/arena4" index="0" unique_id=1387506745]
 collision_layer = 3

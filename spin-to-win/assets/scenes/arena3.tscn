@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b0a4cmkj07nhg" path="res://assets/scripts/arena.gd" id="1_0q0s2"]
 [ext_resource type="PackedScene" uid="uid://cwf4wttxini4j" path="res://assets/models/arena3.blend" id="1_go4l7"]
-[ext_resource type="Texture2D" uid="uid://dtvae37fhdmrr" path="res://assets/textures/grey_wood.jpg" id="2_go4l7"]
+[ext_resource type="Texture2D" uid="uid://ba1g7nho2tdoj" path="res://assets/textures/arena_green.jpg" id="3_0q0s2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0q0s2"]
-albedo_texture = ExtResource("2_go4l7")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsu5l"]
+albedo_texture = ExtResource("3_0q0s2")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
 script = ExtResource("1_0q0s2")
@@ -18,13 +18,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 23)
 [node name="CenterPointAI" type="Node3D" parent="." unique_id=2132447941]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3981028, 0)
 
-[node name="arena3" parent="." unique_id=489693100 instance=ExtResource("1_go4l7")]
+[node name="arena3" parent="." unique_id=897012977 instance=ExtResource("1_go4l7")]
 transform = Transform3D(24, 0, 0, 0, 12, 0, 0, 0, 24, 0, 0, 0)
 
-[node name="arena3" parent="arena3" index="0" unique_id=1656773270]
-material_override = SubResource("StandardMaterial3D_0q0s2")
+[node name="arena3" parent="arena3" index="0" unique_id=565441455]
+material_override = SubResource("StandardMaterial3D_wsu5l")
 
-[node name="StaticBody3D" parent="arena3/arena3" index="0" unique_id=621942474]
+[node name="StaticBody3D" parent="arena3/arena3" index="0" unique_id=1244223250]
 collision_layer = 3
 collision_mask = 3
 

@@ -4,13 +4,16 @@ class_name GlobalState
 
 var settings_config_location: String = "user://user_settings_v1.json"
 var top_panel_card_resource:Resource = load("res://assets/scenes/top_panel.tscn")
-var arena_names:Array[String] = ["Very Serious Bowl Arena", "Underpass Arena", "Orange Squeezer Arena", "Halo Arena", "Hedge Slopes Arena"]
-var arena_resources:Array[Resource] = [load("res://assets/scenes/arena0.tscn"), load("res://assets/scenes/arena1.tscn"), load("res://assets/scenes/arena2.tscn"), load("res://assets/scenes/arena3.tscn"), load("res://assets/scenes/arena4.tscn")]
+var arena_names:Array[String] = ["Very Serious Bowl Arena", "Underpass Arena", "Orange Squeezer Arena", "Halo Arena", "Hedge Slopes Arena", "Mountain Arena", "Wave Arena", "Ridges Arena", "Da Eye Arena", "Bouldering Arena"]
+var arena_resources:Array[Resource] = [load("res://assets/scenes/arena0.tscn"), load("res://assets/scenes/arena1.tscn"), load("res://assets/scenes/arena2.tscn"), load("res://assets/scenes/arena3.tscn"), load("res://assets/scenes/arena4.tscn"), load("res://assets/scenes/arena5.tscn"), load("res://assets/scenes/arena6.tscn"), load("res://assets/scenes/arena7.tscn"), load("res://assets/scenes/arena8.tscn"), load("res://assets/scenes/arena9.tscn")]
+
+var ult_names:Array[String] = ["Dash", "Jump", "Shockwave", "Unstoppable"]
+
 var default_game_state: Dictionary = {
 	"settings": {
 		"volume": {
 			"master": 100.0,
-			"music": 10.0,
+			"music": 50.0,
 			"sfx": 100.0,
 			"voices": 100.0,
 			"ambient": 100.0
@@ -76,6 +79,8 @@ func save_settings():
 
 # Subscribers to ShrikeGames YT that don't have their subs hidden
 var top_names:Array[String] = [
+	"juniper",
+	"frenchferretsp1p335",
 "miru",
 "NoiR",
 "Haizumi",
@@ -676,7 +681,15 @@ var top_names:Array[String] = [
 "刘罡",
 "Kl Kl",
 "Jvvictor",
-"Sir Bananas"
+"Sir Bananas",
+"drac0-v6d",
+"wearablesnake",
+"Frostycog",
+"Genshuku",
+"LL",
+"emoduck:>",
+"shifty",
+"catsy"
 ]
 func get_random_name():
 	return top_names.pick_random()
