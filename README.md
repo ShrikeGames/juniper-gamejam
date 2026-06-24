@@ -108,3 +108,5 @@ Day 6 TODOs:
 - Tutorial
 - On main menu have small arena with 2 random tops fighting in the background
 - Add flashing to a top when iframes are active
+- Settings
+- Rotate the Halo map a little
