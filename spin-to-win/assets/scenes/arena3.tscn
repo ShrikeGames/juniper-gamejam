@@ -8,6 +8,7 @@
 albedo_texture = ExtResource("3_0q0s2")
 
 [node name="Arena1" type="Node3D" unique_id=1527995222 node_paths=PackedStringArray("camera_spawn_point", "center_point")]
+transform = Transform3D(-0.06266864, 0, -0.99803436, 0, 1, 0, 0.99803436, 0, -0.06266864, 0, 0, 0)
 script = ExtResource("1_0q0s2")
 camera_spawn_point = NodePath("CameraSpawnPoint")
 center_point = NodePath("CenterPointAI")

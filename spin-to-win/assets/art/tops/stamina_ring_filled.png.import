@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3nv8p2iflwj"
 path.s3tc="res://.godot/imported/stamina_ring_filled.png-9816a6d97869f22161d789ce63ac7404.s3tc.ctex"
+path.etc2="res://.godot/imported/stamina_ring_filled.png-9816a6d97869f22161d789ce63ac7404.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/tops/stamina_ring_filled.png"
-dest_files=["res://.godot/imported/stamina_ring_filled.png-9816a6d97869f22161d789ce63ac7404.s3tc.ctex"]
+dest_files=["res://.godot/imported/stamina_ring_filled.png-9816a6d97869f22161d789ce63ac7404.s3tc.ctex", "res://.godot/imported/stamina_ring_filled.png-9816a6d97869f22161d789ce63ac7404.etc2.ctex"]
 
 [params]
 

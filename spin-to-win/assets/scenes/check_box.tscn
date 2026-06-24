@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://qlhc2c4ju65l"]
+
+[ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="1_7q8vv"]
+[ext_resource type="Script" uid="uid://c5ydud2u8waho" path="res://assets/scripts/check_box.gd" id="2_y0qrq"]
+
+[node name="CheckBox" type="CheckBox" unique_id=893299731]
+theme = ExtResource("1_7q8vv")
+button_pressed = true
+text = "Enable Dynamic Camera"
+script = ExtResource("2_y0qrq")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

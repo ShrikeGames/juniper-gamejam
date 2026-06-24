@@ -2,22 +2,28 @@ extends Node
 
 class_name GlobalState
 
-var settings_config_location: String = "user://user_settings_v1.json"
+var settings_config_location: String = "user://user_settings_v3.json"
 var top_panel_card_resource:Resource = load("res://assets/scenes/top_panel.tscn")
 var arena_names:Array[String] = ["Very Serious Bowl Arena", "Underpass Arena", "Orange Squeezer Arena", "Halo Arena", "Hedge Slopes Arena", "Mountain Arena", "Wave Arena", "Ridges Arena", "Da Eye Arena", "Bouldering Arena"]
 var arena_resources:Array[Resource] = [load("res://assets/scenes/arena0.tscn"), load("res://assets/scenes/arena1.tscn"), load("res://assets/scenes/arena2.tscn"), load("res://assets/scenes/arena3.tscn"), load("res://assets/scenes/arena4.tscn"), load("res://assets/scenes/arena5.tscn"), load("res://assets/scenes/arena6.tscn"), load("res://assets/scenes/arena7.tscn"), load("res://assets/scenes/arena8.tscn"), load("res://assets/scenes/arena9.tscn")]
 
-var ult_names:Array[String] = ["Dash", "Jump", "Shockwave", "Unstoppable"]
-
+var ult_names:Array[String] = ["Dash", "Jump", "Shockwave", "Unstoppable", "None"]
+var ult_colours:Array[Color] = [Color.RED, Color.GREEN, Color.BLUE, Color.BLACK, Color.WHITE]
 var default_game_state: Dictionary = {
 	"settings": {
 		"volume": {
 			"master": 100.0,
 			"music": 50.0,
 			"sfx": 100.0,
-			"voices": 100.0,
+			"voices": 50.0,
 			"ambient": 100.0
-		}
+		},
+		"gameplay": {
+			"dynamic_camera": true,
+			"fullscreen": false,
+			"easymode": false
+		},
+		"tutorial_complete": false
 	},
 	"next_match": {
 		"num_cpus": 3,
@@ -60,7 +66,15 @@ func load_settings():
 	game_state["stats"]["Dexterity"] = clampi(game_state["stats"]["Dexterity"], 1, 5)
 	game_state["stats"]["Power"] = clampi(game_state["stats"]["Power"], 1, 5)
 	game_state["stats"]["Special"] = clampi(game_state["stats"]["Special"], 1, 5)
-	print("load stats: ", game_state["stats"])
+	
+	toggle_fullscreen()
+	
+func toggle_fullscreen():
+	if game_state["settings"]["gameplay"]["fullscreen"]:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	
 
 func save_settings():
 	# save the results
@@ -74,7 +88,7 @@ func save_settings():
 	file_access.store_line(json_string)
 	file_access.close()
 	
-	
+
 
 
 # Subscribers to ShrikeGames YT that don't have their subs hidden

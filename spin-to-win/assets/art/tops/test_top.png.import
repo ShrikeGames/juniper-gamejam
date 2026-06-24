@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b817agaqfqe2m"
 path.s3tc="res://.godot/imported/test_top.png-3462641fc78c641e74f5b7f149d6af03.s3tc.ctex"
+path.etc2="res://.godot/imported/test_top.png-3462641fc78c641e74f5b7f149d6af03.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/tops/test_top.png"
-dest_files=["res://.godot/imported/test_top.png-3462641fc78c641e74f5b7f149d6af03.s3tc.ctex"]
+dest_files=["res://.godot/imported/test_top.png-3462641fc78c641e74f5b7f149d6af03.s3tc.ctex", "res://.godot/imported/test_top.png-3462641fc78c641e74f5b7f149d6af03.etc2.ctex"]
 
 [params]
 

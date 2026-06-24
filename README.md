@@ -1,6 +1,8 @@
 # juniper-gamejam
 Game for the very serious juniper dev game jam https://itch.io/jam/theveryseriousjuniperdevgamejam
 
+Play the game here: https://shrikegames.itch.io/spinning-top-battles
+
 Live Game Dev Stream Playlist: https://www.youtube.com/playlist?list=PL1WRu1sntH9hZpimUcBGUtlens3eoKi7m
 
 Game Plan:
@@ -105,8 +107,14 @@ make the spin "ghost" no collision
 
 Day 6 TODOs:
 
-- Tutorial
-- On main menu have small arena with 2 random tops fighting in the background
+- [Done] Change the core of the blade based on ult
+- [Done] Don't allow the downside of rewards to go <1 and allow selling your Ult (if you have one) instead to be an option
+- [Done] Tutorial
+- Add indicator that ult is available to use or not
+- [Done] Add indicator pointing to mouse above player's spinning top to indicate it is going toward it
+- [Done] On main menu have small arena with 2 random tops fighting in the background
 - Add flashing to a top when iframes are active
-- Settings
-- Rotate the Halo map a little
+- [Done] Settings
+- [Done] Rotate the Halo map a little
+- [Done] Fix the launch spin bonus
+- [WIP] Balancing

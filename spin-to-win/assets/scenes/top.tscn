@@ -126,7 +126,15 @@ material = SubResource("StandardMaterial3D_ed4lo")
 radius = 1.0
 height = 2.0
 
-[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "outline_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "shockwave_model")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqlfd"]
+transparency = 1
+albedo_color = Color(1, 0.5764706, 1, 0.34901962)
+
+[sub_resource type="PrismMesh" id="PrismMesh_rnbtw"]
+material = SubResource("StandardMaterial3D_hqlfd")
+size = Vector3(0.5, 0.86, 0.25)
+
+[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "arrow", "outline_mesh", "core_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "shockwave_model")]
 mass = 1.25
 continuous_cd = true
 contact_monitor = true
@@ -136,8 +144,10 @@ script = ExtResource("2_k16d3")
 model = NodePath("Mesh")
 trail_particle_emitter = NodePath("TrailParticleEmitter")
 sparks_particle_emitter = NodePath("SparksParticleEmitter")
+arrow = NodePath("ArrowNode")
 colour = Color(0.5686275, 0, 0.54901963, 1)
 outline_mesh = NodePath("OutlineMesh")
+core_mesh = NodePath("Mesh/test_top2/core")
 collision_audio_player = NodePath("CollisionAudioPlayer")
 other_audio_player = NodePath("OtherSoundAudioPlayer")
 stamina_progress_bar = NodePath("StaminaViewPort/CanvasLayer/StaminaProgressBar")
@@ -232,5 +242,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29466614, 0)
 visible = false
 mesh = SubResource("SphereMesh_hqlfd")
 script = ExtResource("10_a1krb")
+
+[node name="ArrowNode" type="Node3D" parent="." unique_id=1145502271]
+
+[node name="Arrow" type="MeshInstance3D" parent="ArrowNode" unique_id=903898045]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.5138801, 0)
+mesh = SubResource("PrismMesh_rnbtw")
 
 [editable path="Mesh/test_top2"]

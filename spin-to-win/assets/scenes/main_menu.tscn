@@ -3,12 +3,43 @@
 [ext_resource type="PackedScene" uid="uid://d2qmb5bxomcvb" path="res://assets/scenes/button.tscn" id="1_uu6ob"]
 [ext_resource type="Script" uid="uid://swak82nb8jer" path="res://assets/scripts/main_menu.gd" id="1_v1ppo"]
 [ext_resource type="PackedScene" uid="uid://dhy724m8fj61r" path="res://assets/scenes/background.tscn" id="2_ej4af"]
+[ext_resource type="Script" uid="uid://dg46qx6n1qgui" path="res://assets/scripts/demo.gd" id="2_k5f6t"]
+[ext_resource type="PackedScene" uid="uid://c6yd7dmfdf1gy" path="res://assets/scenes/arena0.tscn" id="2_tp4c4"]
+[ext_resource type="Material" uid="uid://bdiu5u80o235u" path="res://assets/materials/default_placeholder.tres" id="3_0yqm6"]
+[ext_resource type="PackedScene" uid="uid://cubi76y3kh4c8" path="res://assets/envs/world_environment.tscn" id="3_4hf8p"]
 [ext_resource type="Script" uid="uid://dy2qmum68brx4" path="res://assets/scripts/logo.gd" id="3_66en2"]
 [ext_resource type="Theme" uid="uid://cswunihh2v2du" path="res://assets/themes/ui_theme.tres" id="3_obrqb"]
 [ext_resource type="Texture2D" uid="uid://douwld03bbcaa" path="res://assets/logos/Shrike_878x878.png" id="4_57ux2"]
+[ext_resource type="Script" uid="uid://cpdtld5kf3l7f" path="res://assets/scripts/Table.gd" id="4_k5f6t"]
+[ext_resource type="Texture2D" uid="uid://fxj1eemmtdda" path="res://assets/textures/wood.jpg" id="5_4ny72"]
 [ext_resource type="Texture2D" uid="uid://bdg4w2rke7itm" path="res://assets/art/ui/logo.png" id="7_66en2"]
+[ext_resource type="AudioStream" uid="uid://46rj31m234cm" path="res://assets/sound/voice/announcer_interactive_player.tres" id="7_xm627"]
 [ext_resource type="Texture2D" uid="uid://bg1llyqfrbi73" path="res://assets/logos/Aaron_Music_logo_v1.png" id="7_xmmar"]
+[ext_resource type="Texture2D" uid="uid://dnvdtyd6c0d33" path="res://assets/art/ui/countdown_text1.png" id="8_sumv1"]
 [ext_resource type="AudioStream" uid="uid://dtp0clgkvj2d0" path="res://assets/sound/music/Midnight city_Aaron_Music_YT.mp3" id="9_ej4af"]
+[ext_resource type="Texture2D" uid="uid://cdiukfyu50w1w" path="res://assets/art/ui/countdown_text2.png" id="9_xm627"]
+[ext_resource type="Texture2D" uid="uid://bs8w6sxmt1o0l" path="res://assets/art/ui/countdown_text3.png" id="10_0yqm6"]
+[ext_resource type="Script" uid="uid://be7vs2nfn1qa1" path="res://assets/scripts/wobble.gd" id="11_hn2he"]
+[ext_resource type="Texture2D" uid="uid://sj02br3jq7s6" path="res://assets/art/ui/knockout_text.png" id="12_ftxmo"]
+[ext_resource type="Texture2D" uid="uid://bo8otl43k8p5i" path="res://assets/art/ui/ringout_text.png" id="13_wn3jm"]
+[ext_resource type="PackedScene" uid="uid://qlhc2c4ju65l" path="res://assets/scenes/check_box.tscn" id="14_hn2he"]
+[ext_resource type="Texture2D" uid="uid://c0ikj22ipd1fm" path="res://assets/art/ui/game_over.png" id="14_qv5oh"]
+[ext_resource type="Texture2D" uid="uid://csx41yecfyn7t" path="res://assets/art/ui/you_win.png" id="15_7qf34"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hn2he"]
+material = ExtResource("3_0yqm6")
+radius = 0.25
+height = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqk1v"]
+albedo_texture = ExtResource("5_4ny72")
+
+[sub_resource type="BoxMesh" id="BoxMesh_hr71l"]
+material = SubResource("StandardMaterial3D_fqk1v")
+size = Vector3(60, 5, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0vdp6"]
+size = Vector3(60, 5, 60)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66en2"]
 content_margin_left = 4.0
@@ -82,54 +113,240 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="MainMenu" type="Node2D" unique_id=459393673 node_paths=PackedStringArray("master_volume_slider", "music_volume_slider", "sfx_volume_slider", "voices_volume_slider", "ambient_volume_slider")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_x4iny"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_sumv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_xm627")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_0yqm6")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_78pbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_ftxmo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ftxmo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ftxmo")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_go6gp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_wn3jm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_wn3jm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_wn3jm")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cwk1c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_qv5oh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_qv5oh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_qv5oh")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rnury"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_7qf34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_7qf34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_7qf34")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="MainMenu" type="Node3D" unique_id=1959366193 node_paths=PackedStringArray("master_volume_slider", "music_volume_slider", "sfx_volume_slider", "voices_volume_slider", "ambient_volume_slider")]
 script = ExtResource("1_v1ppo")
-master_volume_slider = NodePath("SettingsContainer/MasterVolumeContainer/MasterVolumeSlider")
-music_volume_slider = NodePath("SettingsContainer/MusicVolumeContainer/MusicVolumeSlider")
-sfx_volume_slider = NodePath("SettingsContainer/SFXVolumeContainer/SFXVolumeSlider")
-voices_volume_slider = NodePath("SettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider")
-ambient_volume_slider = NodePath("SettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider")
+master_volume_slider = NodePath("CanvasLayer/VolumeSettingsContainer/MasterVolumeContainer/MasterVolumeSlider")
+music_volume_slider = NodePath("CanvasLayer/VolumeSettingsContainer/MusicVolumeContainer/MusicVolumeSlider")
+sfx_volume_slider = NodePath("CanvasLayer/VolumeSettingsContainer/SFXVolumeContainer/SFXVolumeSlider")
+voices_volume_slider = NodePath("CanvasLayer/VolumeSettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider")
+ambient_volume_slider = NodePath("CanvasLayer/VolumeSettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider")
 
-[node name="Background" parent="." unique_id=2052113114 instance=ExtResource("2_ej4af")]
+[node name="Demo" type="Node3D" parent="." unique_id=1352294964 node_paths=PackedStringArray("target_node", "target_above_node", "look_at_node", "cpu_container", "top_panels_container", "knockout_sprite_animation", "ringout_sprite_animation", "gameover_sprite_animation", "youwin_sprite_animation", "announcer_audio_stream_player")]
+script = ExtResource("2_k5f6t")
+target_node = NodePath("Node3D/Target")
+target_above_node = NodePath("Node3D/Above")
+look_at_node = NodePath("Node3D/LookAtNode")
+cpu_container = NodePath("CPUs")
+top_panels_container = NodePath("../CanvasLayer/TopPanelCards")
+knockout_sprite_animation = NodePath("../CanvasLayer/AspectRatioContainer/knockout_sprite_animation")
+ringout_sprite_animation = NodePath("../CanvasLayer/AspectRatioContainer/ringout_sprite_animation")
+gameover_sprite_animation = NodePath("../CanvasLayer/AspectRatioContainer/gameover_sprite_animation")
+youwin_sprite_animation = NodePath("../CanvasLayer/AspectRatioContainer/youwin_sprite_animation")
+announcer_audio_stream_player = NodePath("AnnouncerStreamPlayer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1403690871]
+[node name="CPUs" type="Node3D" parent="Demo" unique_id=1144617154]
+
+[node name="Node3D" type="Node3D" parent="Demo" unique_id=1171956731]
+
+[node name="Target" type="Node3D" parent="Demo/Node3D" unique_id=59055574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1502302, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Demo/Node3D/Target" unique_id=372140545]
+visible = false
+mesh = SubResource("SphereMesh_hn2he")
+
+[node name="Above" type="Node3D" parent="Demo/Node3D" unique_id=335512179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.282448, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Demo/Node3D/Above" unique_id=221572328]
+visible = false
+mesh = SubResource("SphereMesh_hn2he")
+
+[node name="LookAtNode" type="Node3D" parent="Demo/Node3D" unique_id=1389139226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6024537, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Demo/Node3D/LookAtNode" unique_id=883100664]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_hn2he")
+
+[node name="Arena2" parent="Demo" unique_id=1527995222 instance=ExtResource("2_tp4c4")]
+
+[node name="Camera3D" type="Camera3D" parent="Demo" unique_id=1872291746]
+transform = Transform3D(-1, 8.444392e-08, -2.2626677e-08, 2.2791706e-08, 0.50169194, 0.8650464, 8.4399524e-08, 0.8650464, -0.50169194, -4.1577473, 12.038298, -10.161134)
+current = true
+
+[node name="WorldEnvironment" parent="Demo" unique_id=677115686 instance=ExtResource("3_4hf8p")]
+
+[node name="Table" type="StaticBody3D" parent="Demo" unique_id=913477680]
+collision_layer = 11
+collision_mask = 11
+script = ExtResource("4_k5f6t")
+
+[node name="TableMesh" type="MeshInstance3D" parent="Demo/Table" unique_id=1429266362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+mesh = SubResource("BoxMesh_hr71l")
+
+[node name="TableCollider" type="CollisionShape3D" parent="Demo/Table" unique_id=1855747423]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+shape = SubResource("BoxShape3D_0vdp6")
+
+[node name="AnnouncerStreamPlayer" type="AudioStreamPlayer" parent="Demo" unique_id=527416322]
+stream = ExtResource("7_xm627")
+autoplay = true
+bus = &"Voices"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=492407174]
+
+[node name="Background" parent="CanvasLayer" unique_id=2052113114 instance=ExtResource("2_ej4af")]
+offset_left = -14.0
+offset_top = 584.0
+offset_right = 1268.0
+offset_bottom = 584.0
+
+[node name="TopPanelCards" type="GridContainer" parent="CanvasLayer" unique_id=879228954]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1279.0
+offset_bottom = 158.0
+grow_horizontal = 0
+columns = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1403690871]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_right = 1282.0
-offset_bottom = 222.0
+offset_left = -144.0
+offset_top = 1.0
+offset_right = 646.0
+offset_bottom = 383.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Logo" type="Sprite2D" parent="VBoxContainer" unique_id=1462522927]
-position = Vector2(643, 135)
+[node name="Logo" type="Sprite2D" parent="CanvasLayer/VBoxContainer" unique_id=1462522927]
+scale = Vector2(0.5638889, 0.5638889)
 texture = ExtResource("7_66en2")
+centered = false
 script = ExtResource("3_66en2")
 
-[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=905420964]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 26.0
-offset_top = 469.0
-offset_right = 471.0
-offset_bottom = 719.0
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=905420964]
+anchors_preset = -1
+anchor_left = 0.020000001
+anchor_top = 1.651
+anchor_right = 0.020000001
+anchor_bottom = 1.651
+offset_left = -25.600002
+offset_top = -777.72
+offset_right = 419.4
+offset_bottom = -481.71997
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ContinueButton" parent="ButtonContainer" unique_id=993433727 instance=ExtResource("1_uu6ob")]
+[node name="ContinueButton" parent="CanvasLayer/ButtonContainer" unique_id=993433727 instance=ExtResource("1_uu6ob")]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_66en2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ej4af")
 theme_override_styles/hover = SubResource("StyleBoxFlat_tp4c4")
 disabled = true
 text = "Continue"
-scene_to_change_to = "res://assets/scenes/game.tscn"
+scene_to_change_to = "res://assets/scenes/store_menu.tscn"
 requires_save = true
 
-[node name="NewGameButton" parent="ButtonContainer" unique_id=2005046683 instance=ExtResource("1_uu6ob")]
+[node name="NewGameButton" parent="CanvasLayer/ButtonContainer" unique_id=2005046683 instance=ExtResource("1_uu6ob")]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_uek13")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fntub")
@@ -138,138 +355,178 @@ text = "New Game"
 scene_to_change_to = "res://assets/scenes/game.tscn"
 wipe_save = true
 
-[node name="SettingsButton" parent="ButtonContainer" unique_id=84627548 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
+[node name="VolumeSettingsButton" parent="CanvasLayer/ButtonContainer" unique_id=84627548 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
 layout_mode = 2
-text = "Settings"
-object_to_show = NodePath("../../SettingsContainer")
-objects_to_hide = [NodePath("../../CreditsContainer")]
+text = "Volume Settings"
+object_to_show = NodePath("../../VolumeSettingsContainer")
+objects_to_hide = [NodePath("../../CreditsContainer"), NodePath("../../GameplaySettingsContainer")]
 
-[node name="CreditsButton" parent="ButtonContainer" unique_id=1456066440 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
+[node name="GameplaySettingsButton" parent="CanvasLayer/ButtonContainer" unique_id=1278747691 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
+layout_mode = 2
+text = "General Settings"
+object_to_show = NodePath("../../GameplaySettingsContainer")
+objects_to_hide = [NodePath("../../CreditsContainer"), NodePath("../../VolumeSettingsContainer")]
+
+[node name="CreditsButton" parent="CanvasLayer/ButtonContainer" unique_id=1456066440 node_paths=PackedStringArray("object_to_show", "objects_to_hide") instance=ExtResource("1_uu6ob")]
 layout_mode = 2
 text = "Credits"
 object_to_show = NodePath("../../CreditsContainer")
-objects_to_hide = [NodePath("../../SettingsContainer")]
+objects_to_hide = [NodePath("../../VolumeSettingsContainer"), NodePath("../../GameplaySettingsContainer")]
 
-[node name="SettingsContainer" type="VBoxContainer" parent="." unique_id=1714699435]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 491.0
-offset_top = 406.0
-offset_right = 1261.0
-offset_bottom = 720.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("3_obrqb")
-
-[node name="VolumeLabel" type="Label" parent="SettingsContainer" unique_id=1018775799]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_obrqb")
-text = "Volume Controls"
-
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1823101033]
-layout_mode = 2
-theme = ExtResource("3_obrqb")
-
-[node name="MasterVolumeLabel" type="Label" parent="SettingsContainer/MasterVolumeContainer" unique_id=501990096]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Master Volume"
-
-[node name="MasterVolumeSlider" type="HSlider" parent="SettingsContainer/MasterVolumeContainer" unique_id=1424629946]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-value = 100.0
-
-[node name="MusicVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=859124886]
-layout_mode = 2
-theme = ExtResource("3_obrqb")
-
-[node name="MusicVolumeLabel" type="Label" parent="SettingsContainer/MusicVolumeContainer" unique_id=598525978]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Music Volume"
-
-[node name="MusicVolumeSlider" type="HSlider" parent="SettingsContainer/MusicVolumeContainer" unique_id=1335145822]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-value = 50.0
-
-[node name="SFXVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=2063232213]
-layout_mode = 2
-
-[node name="SFXVolumeLabel" type="Label" parent="SettingsContainer/SFXVolumeContainer" unique_id=692595568]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Sound Effects Volume"
-
-[node name="SFXVolumeSlider" type="HSlider" parent="SettingsContainer/SFXVolumeContainer" unique_id=1387687190]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-value = 50.0
-
-[node name="VoicesVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1148676554]
-layout_mode = 2
-
-[node name="VoicesVolumeLabel" type="Label" parent="SettingsContainer/VoicesVolumeContainer" unique_id=478295553]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Voices Volume"
-
-[node name="VoicesVolumeSlider" type="HSlider" parent="SettingsContainer/VoicesVolumeContainer" unique_id=402606401]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-value = 100.0
-
-[node name="AmbientVolumeContainer" type="HBoxContainer" parent="SettingsContainer" unique_id=1401794144]
-layout_mode = 2
-
-[node name="AmbientVolumeLabel" type="Label" parent="SettingsContainer/AmbientVolumeContainer" unique_id=1021549224]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "User Interface Volume"
-
-[node name="AmbientVolumeSlider" type="HSlider" parent="SettingsContainer/AmbientVolumeContainer" unique_id=294385612]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-value = 50.0
-
-[node name="CreditsContainer" type="VBoxContainer" parent="." unique_id=1843927791]
+[node name="VolumeSettingsContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1714699435]
 visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 628.0
-offset_top = 344.0
-offset_right = 1285.0
-offset_bottom = 722.0
+offset_left = -802.0
+offset_top = -314.0
+offset_right = -32.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_obrqb")
 
-[node name="VolumeLabel" type="Label" parent="CreditsContainer" unique_id=686280733]
+[node name="VolumeLabel" type="Label" parent="CanvasLayer/VolumeSettingsContainer" unique_id=1018775799]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Credits"
+theme = ExtResource("3_obrqb")
+text = "Volume Controls"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CreditsContainer" unique_id=165748532]
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="CanvasLayer/VolumeSettingsContainer" unique_id=1823101033]
+layout_mode = 2
+theme = ExtResource("3_obrqb")
+
+[node name="MasterVolumeLabel" type="Label" parent="CanvasLayer/VolumeSettingsContainer/MasterVolumeContainer" unique_id=501990096]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_obrqb")
+text = "Master Volume"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="CanvasLayer/VolumeSettingsContainer/MasterVolumeContainer" unique_id=1424629946]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="CanvasLayer/VolumeSettingsContainer" unique_id=859124886]
+layout_mode = 2
+theme = ExtResource("3_obrqb")
+
+[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer/VolumeSettingsContainer/MusicVolumeContainer" unique_id=598525978]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/VolumeSettingsContainer/MusicVolumeContainer" unique_id=1335145822]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="SFXVolumeContainer" type="HBoxContainer" parent="CanvasLayer/VolumeSettingsContainer" unique_id=2063232213]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="CanvasLayer/VolumeSettingsContainer/SFXVolumeContainer" unique_id=692595568]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sound Effects Volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="CanvasLayer/VolumeSettingsContainer/SFXVolumeContainer" unique_id=1387687190]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="VoicesVolumeContainer" type="HBoxContainer" parent="CanvasLayer/VolumeSettingsContainer" unique_id=1148676554]
+layout_mode = 2
+
+[node name="VoicesVolumeLabel" type="Label" parent="CanvasLayer/VolumeSettingsContainer/VoicesVolumeContainer" unique_id=478295553]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Voices Volume"
+
+[node name="VoicesVolumeSlider" type="HSlider" parent="CanvasLayer/VolumeSettingsContainer/VoicesVolumeContainer" unique_id=402606401]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="AmbientVolumeContainer" type="HBoxContainer" parent="CanvasLayer/VolumeSettingsContainer" unique_id=1401794144]
+layout_mode = 2
+
+[node name="AmbientVolumeLabel" type="Label" parent="CanvasLayer/VolumeSettingsContainer/AmbientVolumeContainer" unique_id=1021549224]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "User Interface Volume"
+
+[node name="AmbientVolumeSlider" type="HSlider" parent="CanvasLayer/VolumeSettingsContainer/AmbientVolumeContainer" unique_id=294385612]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="GameplaySettingsContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=2065311205]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -802.0
+offset_top = -314.0
+offset_right = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_obrqb")
+
+[node name="GameplayLabel" type="Label" parent="CanvasLayer/GameplaySettingsContainer" unique_id=156828410]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_obrqb")
+text = "General Settings"
+
+[node name="EnableDynamicCameraCheckBox" parent="CanvasLayer/GameplaySettingsContainer" unique_id=893299731 instance=ExtResource("14_hn2he")]
+layout_mode = 2
+settings_name = "dynamic_camera"
+
+[node name="FullScreenCheckBox" parent="CanvasLayer/GameplaySettingsContainer" unique_id=379083966 instance=ExtResource("14_hn2he")]
+layout_mode = 2
+button_pressed = false
+text = "Fullscreen"
+settings_name = "fullscreen"
+
+[node name="EasyModeCheckBox2" parent="CanvasLayer/GameplaySettingsContainer" unique_id=1187152844 instance=ExtResource("14_hn2he")]
+layout_mode = 2
+button_pressed = false
+text = "Easy Mode (Gives Player Larger Buffs)"
+settings_name = "easymode"
+
+[node name="CreditsContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1843927791]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_top = -314.0
+offset_right = -143.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_obrqb")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CreditsContainer" unique_id=165748532]
 layout_mode = 2
 bbcode_enabled = true
-text = "Programming/Design/Art: 
+text = "Programming/Design/Art/3D Models: 
 Shrike @ShrikeGames
 
 SFX: https://pixabay.com
@@ -277,15 +534,56 @@ SFX: https://pixabay.com
 Music: Aaron Music YT"
 fit_content = true
 
-[node name="Shrike878x878" type="Sprite2D" parent="CreditsContainer" unique_id=1286655632]
+[node name="Shrike878x878" type="Sprite2D" parent="CanvasLayer/CreditsContainer" unique_id=1286655632]
 position = Vector2(454, 104)
 scale = Vector2(0.12471523, 0.12471523)
 texture = ExtResource("4_57ux2")
 
-[node name="AaronMusicLogoV1" type="Sprite2D" parent="CreditsContainer" unique_id=1879212376]
-position = Vector2(408.00012, 307.00006)
+[node name="AaronMusicLogoV1" type="Sprite2D" parent="CanvasLayer/CreditsContainer" unique_id=1879212376]
+position = Vector2(447, 239)
 scale = Vector2(0.28957394, 0.28957394)
 texture = ExtResource("7_xmmar")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer" unique_id=736257734]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+offset_bottom = -322.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="countdown_sprite_animation" type="AnimatedSprite2D" parent="CanvasLayer/AspectRatioContainer" unique_id=1567744173]
+position = Vector2(640, 360)
+sprite_frames = SubResource("SpriteFrames_x4iny")
+script = ExtResource("11_hn2he")
+
+[node name="knockout_sprite_animation" type="AnimatedSprite2D" parent="CanvasLayer/AspectRatioContainer" unique_id=183559257]
+visible = false
+position = Vector2(320, 180)
+rotation = 0.0009474821
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_78pbd")
+script = ExtResource("11_hn2he")
+
+[node name="ringout_sprite_animation" type="AnimatedSprite2D" parent="CanvasLayer/AspectRatioContainer" unique_id=689179242]
+visible = false
+position = Vector2(320, 180)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_go6gp")
+script = ExtResource("11_hn2he")
+
+[node name="gameover_sprite_animation" type="AnimatedSprite2D" parent="CanvasLayer/AspectRatioContainer" unique_id=841433782]
+visible = false
+position = Vector2(640, 362)
+sprite_frames = SubResource("SpriteFrames_cwk1c")
+script = ExtResource("11_hn2he")
+
+[node name="youwin_sprite_animation" type="AnimatedSprite2D" parent="CanvasLayer/AspectRatioContainer" unique_id=1473479052]
+visible = false
+position = Vector2(645, 363)
+sprite_frames = SubResource("SpriteFrames_rnury")
+script = ExtResource("11_hn2he")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1138587312]
 stream = ExtResource("9_ej4af")
@@ -294,8 +592,8 @@ autoplay = true
 bus = &"Music"
 parameters/looping = true
 
-[connection signal="value_changed" from="SettingsContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
-[connection signal="value_changed" from="SettingsContainer/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
-[connection signal="value_changed" from="SettingsContainer/SFXVolumeContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
-[connection signal="value_changed" from="SettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider" to="." method="_on_voices_volume_slider_value_changed"]
-[connection signal="value_changed" from="SettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider" to="." method="_on_ambient_volume_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/VolumeSettingsContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/VolumeSettingsContainer/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/VolumeSettingsContainer/SFXVolumeContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/VolumeSettingsContainer/VoicesVolumeContainer/VoicesVolumeSlider" to="." method="_on_voices_volume_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/VolumeSettingsContainer/AmbientVolumeContainer/AmbientVolumeSlider" to="." method="_on_ambient_volume_slider_value_changed"]

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://vw5omjeohpfb"
 path.s3tc="res://.godot/imported/arena_rust.jpg-463da5c2c8efbfa614e7b656709910f7.s3tc.ctex"
+path.etc2="res://.godot/imported/arena_rust.jpg-463da5c2c8efbfa614e7b656709910f7.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/arena_rust.jpg"
-dest_files=["res://.godot/imported/arena_rust.jpg-463da5c2c8efbfa614e7b656709910f7.s3tc.ctex"]
+dest_files=["res://.godot/imported/arena_rust.jpg-463da5c2c8efbfa614e7b656709910f7.s3tc.ctex", "res://.godot/imported/arena_rust.jpg-463da5c2c8efbfa614e7b656709910f7.etc2.ctex"]
 
 [params]
 

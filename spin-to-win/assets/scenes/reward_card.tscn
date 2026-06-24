@@ -24,10 +24,10 @@ texture = ExtResource("2_fcw18")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1960636355]
 layout_mode = 0
-offset_left = 72.0
+offset_left = 24.0
 offset_top = 334.0
-offset_right = 327.0
-offset_bottom = 541.0
+offset_right = 373.0
+offset_bottom = 573.0
 mouse_filter = 2
 theme = ExtResource("3_2c2lt")
 bbcode_enabled = true

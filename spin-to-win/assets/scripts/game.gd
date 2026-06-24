@@ -1,27 +1,27 @@
 extends Node3D
 
-var tops:Array[Top] = []
-@export var camera:Camera3D
-@export var scene_to_change_to:String
-@export var gameover_scene_to_change_to:String
-@export var arena_container:Node3D
-@export var player_container:Node3D
-@export var cpu_container:Node3D
-@export var top_panels_container:GridContainer
-@export var target_node:Node3D
-@export var target_above_node:Node3D
-@export var look_at_node:Node3D
-@export var knockout_sprite_animation:AnimatedSprite2D
-@export var ringout_sprite_animation:AnimatedSprite2D
-@export var gameover_sprite_animation:AnimatedSprite2D
-@export var youwin_sprite_animation:AnimatedSprite2D
-@export var announcer_audio_stream_player:AudioStreamPlayer
+var tops: Array[Top] = []
+@export var camera: Camera3D
+@export var scene_to_change_to: String
+@export var gameover_scene_to_change_to: String
+@export var arena_container: Node3D
+@export var player_container: Node3D
+@export var cpu_container: Node3D
+@export var top_panels_container: GridContainer
+@export var target_node: Node3D
+@export var target_above_node: Node3D
+@export var look_at_node: Node3D
+@export var knockout_sprite_animation: AnimatedSprite2D
+@export var ringout_sprite_animation: AnimatedSprite2D
+@export var gameover_sprite_animation: AnimatedSprite2D
+@export var youwin_sprite_animation: AnimatedSprite2D
+@export var announcer_audio_stream_player: AudioStreamPlayer
 
-var player_launcher:Launcher
-var player_top:Top
+var player_launcher: Launcher
+var player_top: Top
 
-var launcher_resource:Resource = load("res://assets/scenes/launcher.tscn")
-var top_resource:Resource = load("res://assets/scenes/top.tscn")
+var launcher_resource: Resource = load("res://assets/scenes/launcher.tscn")
+var top_resource: Resource = load("res://assets/scenes/top.tscn")
 
 func get_circle_positions(radius: float, y_pos: float = 5.0, segments: int = 24) -> Array[Vector3]:
 	var positions: Array[Vector3] = []
@@ -36,21 +36,21 @@ func get_circle_positions(radius: float, y_pos: float = 5.0, segments: int = 24)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# generate the computer players
-	var random_positions:Array[Vector3] = get_circle_positions(camera.global_position.z, camera.global_position.y)
-	var random_index:int = len(random_positions)-1
-	var num_cpus:int = Global.game_state["next_match"].get("num_cpus", 1)
-	var arena_id:int = Global.game_state["next_match"].get("arena_id", 0)
+	var random_positions: Array[Vector3] = get_circle_positions(camera.global_position.z, camera.global_position.y)
+	var random_index: int = len(random_positions) - 1
+	var num_cpus: int = Global.game_state["next_match"].get("num_cpus", 1)
+	var arena_id: int = Global.game_state["next_match"].get("arena_id", 0)
 	
-	var arena:Arena = Global.arena_resources[arena_id].instantiate()
+	var arena: Arena = Global.arena_resources[arena_id].instantiate()
 	arena_container.add_child(arena)
 	
 	
 	player_launcher = launcher_resource.instantiate()
 	player_container.add_child(player_launcher)
-	var player_pos:Vector3 = random_positions[int(len(random_positions)*0.25)]
+	var player_pos: Vector3 = random_positions[int(len(random_positions) * 0.25)]
 	player_launcher.global_position = player_pos
-	player_launcher.look_at(Vector3(0,5,0))
-	camera.global_position = player_pos + Vector3(0, 4, 4)
+	player_launcher.look_at(Vector3(0, 5, 0))
+	camera.global_position = player_pos + Vector3(0, 6, 6)
 	
 	player_top = top_resource.instantiate()
 	player_top.target_node = target_node
@@ -67,23 +67,27 @@ func _ready() -> void:
 	player_top.announcer_audio_stream_player = self.announcer_audio_stream_player
 	
 	player_container.add_child(player_top)
+	if Global.game_state["settings"]["gameplay"]["dynamic_camera"]:
+		camera.fov = 65
+	else:
+		camera.fov = 85
 	camera.look_at(player_top.global_position)
 	
-	var player_panel_card:TopPanelCard = Global.top_panel_card_resource.instantiate()
+	var player_panel_card: TopPanelCard = Global.top_panel_card_resource.instantiate()
 	player_panel_card.top = player_top
 	top_panels_container.add_child(player_panel_card)
 	
 	player_top.global_position = player_launcher.crank_top_spot.global_position
 	var num_wins = Global.game_state["stats"]["wins"]
 	for i in range(num_cpus):
-		var launcher:Launcher = launcher_resource.instantiate()
+		var launcher: Launcher = launcher_resource.instantiate()
 		cpu_container.add_child(launcher)
-		var cpu_pos:Vector3 = random_positions[random_index]
+		var cpu_pos: Vector3 = random_positions[random_index]
 		launcher.global_position = cpu_pos
 		random_index -= randi_range(5, 7)
-		launcher.look_at(Vector3(0,5,0))
+		launcher.look_at(Vector3(0, 5, 0))
 		
-		var cpu_top:Top = top_resource.instantiate()
+		var cpu_top: Top = top_resource.instantiate()
 		cpu_top.target_node = target_node
 		cpu_top.target_above_node = target_above_node
 		cpu_top.look_at_node = look_at_node
@@ -92,65 +96,69 @@ func _ready() -> void:
 		cpu_top.last_top_hit = player_top
 		cpu_top.launched = false
 		cpu_top.center_point = arena.center_point.global_position
-		var difficulty_modifier:int = max(1, num_wins/3)
-		var cpu_stats:Dictionary = {
+		var difficulty_modifier: int = max(1, num_wins / 3)
+		var cpu_stats: Dictionary = {
 			"Dexterity": 1, # +move speed, +spin speed, -weight, +green
 			"Power": 1, # +force, +weight, (+right speed), +red
 			"Special": 1, # +rocket dash, +force, +ult, +blue
-			"Ult": randi_range(0, len(Global.ult_names)-1), # id for ultimate ability
+			"Ult": randi_range(0, len(Global.ult_names) - 2), # id for ultimate ability
 		}
-		print(cpu_stats["Ult"])
 		if Global.game_state["stats"]["wins"] == 0:
 			if i == 0:
-				cpu_stats["Power"] = min(5, max(1, cpu_stats["Power"]+1))
+				cpu_stats["Power"] = min(5, max(1, cpu_stats["Power"] + 1))
+				cpu_stats["Ult"] = 0
 			elif i == 1:
-				cpu_stats["Dexterity"] = min(5, max(1, cpu_stats["Dexterity"]+1))
+				cpu_stats["Dexterity"] = min(5, max(1, cpu_stats["Dexterity"] + 1))
+				cpu_stats["Ult"] = 1
 			else:
-				cpu_stats["Special"] = min(5, max(1, cpu_stats["Special"]+1))
+				cpu_stats["Special"] = min(5, max(1, cpu_stats["Special"] + 1))
+				cpu_stats["Ult"] = 2
 		else:
 			for n in range(difficulty_modifier):
-				var possible_stats_to_increase:Array[String] = ["Dexterity", "Power", "Special"]
-				var increase_stat:String = possible_stats_to_increase.pick_random()
-				var index_to_remove:int = possible_stats_to_increase.find(increase_stat)
+				var possible_stats_to_increase: Array[String] = ["Dexterity", "Power", "Special"]
+				var increase_stat: String = possible_stats_to_increase.pick_random()
+				var index_to_remove: int = possible_stats_to_increase.find(increase_stat)
 				possible_stats_to_increase.remove_at(index_to_remove)
-				var decrease_stat:String = possible_stats_to_increase.pick_random()
-				cpu_stats[increase_stat] = min(5, max(1, cpu_stats[increase_stat]+2))
-				cpu_stats[decrease_stat] = min(5, max(1, cpu_stats[decrease_stat]-1))
+				var decrease_stat: String = possible_stats_to_increase.pick_random()
+				cpu_stats[increase_stat] = min(5, max(1, cpu_stats[increase_stat] + 2))
+				cpu_stats[decrease_stat] = min(5, max(1, cpu_stats[decrease_stat] - 1))
 		
-		cpu_top.update_based_on_stats(cpu_stats)
 		cpu_top.ai_controlled = true
+		cpu_top.update_based_on_stats(cpu_stats)
+		
 		cpu_top.knockout_sprite_animation = self.knockout_sprite_animation
 		cpu_top.ringout_sprite_animation = self.ringout_sprite_animation
 		cpu_top.announcer_audio_stream_player = self.announcer_audio_stream_player
 		
 		cpu_container.add_child(cpu_top)
 		
-		var cpu_panel_card:TopPanelCard = Global.top_panel_card_resource.instantiate()
+		var cpu_panel_card: TopPanelCard = Global.top_panel_card_resource.instantiate()
 		cpu_panel_card.top = cpu_top
 		top_panels_container.add_child(cpu_panel_card)
 		
 		cpu_top.global_position = launcher.crank_top_spot.global_position
 		tops.append(cpu_top)
-	var tops_with_player:Array[Top] = [player_top]
+	var tops_with_player: Array[Top] = [player_top]
 	tops_with_player.append_array(tops)
 	for top in tops:
 		top.tops = tops_with_player
 	player_top.tops = tops
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if youwin_sprite_animation.visible or gameover_sprite_animation.visible:
 		return
-	if player_top and not player_top.is_dead() and player_top.launched:
+	if player_top and not player_top.is_dead() and player_top.launched and Global.game_state["settings"]["gameplay"]["dynamic_camera"]:
 		camera.look_at(player_top.global_position)
 	if camera.rotate_crank:
-		var distance_bonus:float = min(5.0, max(0.0, camera.mouse_distance_traveled * 0.001))
-		player_launcher.crank.rotate(Vector3.UP, -distance_bonus*0.1)
+		var distance_bonus: float = min(5.0, max(0.0, camera.mouse_distance_traveled * 0.001))
+		player_launcher.crank.rotate(Vector3.UP, -distance_bonus * 0.1)
 	
-	var dead_tops:int = 0
+	var dead_tops: int = 0
 	for top in tops:
 		if top.is_dead():
-			dead_tops +=1
+			dead_tops += 1
 	
 	if dead_tops >= len(tops) and not player_top.is_dead() and not youwin_sprite_animation.visible:
 		# win
@@ -194,9 +202,7 @@ func _on_youwin_sprite_animation_animation_finished() -> void:
 
 func _on_countdown_sprite_animation_animation_finished() -> void:
 	player_top.launched = true
-	player_top.activate_ult()
-	var distance_bonus:float = min(3.0, max(0.0, camera.mouse_distance_traveled * 0.001))
-	player_top.linear_velocity += Vector3(0,0,-distance_bonus)
+	var distance_bonus: float = camera.mouse_distance_traveled * 0.005
 	player_launcher.visible = false
 	camera.is_launched = true
 	camera.mouse_distance_traveled = 0.0
@@ -207,6 +213,7 @@ func _on_countdown_sprite_animation_animation_finished() -> void:
 			cpu.visible = false
 	camera.countdown_animation.visible = false
 	camera.countdown_animation.stop()
+	player_top.apply_central_impulse(Vector3(0, 0, -distance_bonus))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

@@ -10,6 +10,7 @@ class_name Top
 @export var center_point:Vector3 = Vector3.ZERO
 @export var target_above_node:Node3D
 @export var look_at_node:Node3D
+@export var arrow:Node3D
 var time:float = 0.0
 
 @export var spin_speed:float = 10.0
@@ -22,6 +23,7 @@ var time:float = 0.0
 @export var colour:Color = Color(0,0,0)
 @export var launcher:Node3D
 @export var outline_mesh:MeshInstance3D
+@export var core_mesh:MeshInstance3D
 var announcer_audio_stream_player:AudioStreamPlayer
 
 @export var collision_audio_player:AudioStreamPlayer3D
@@ -47,7 +49,7 @@ var max_stamina:float = 3.0
 var on_ground:bool = false
 
 var iframe_timer_sec:float = 0
-var max_iframes_sec:float = 0.15
+var max_iframes_sec:float = 0.25
 var ult_available:bool = false
 var stored_colour:Color
 var stored_mass:float
@@ -56,6 +58,7 @@ var stored_mass:float
 func _ready() -> void:
 	if disabled:
 		return
+	self.arrow.visible = not ai_controlled
 	personal_above_point = self.target_above_node.global_position
 	reset_dash_timer = 0
 	on_ground = false
@@ -75,13 +78,19 @@ func update_appearance():
 	self.model.material_override = material
 	for child in self.model.find_children("test_top", "MeshInstance3D"):
 		child.material_override = material
-		
+	var core_material = StandardMaterial3D.new()
+	core_material.albedo_color = Global.ult_colours[self.ult]
+	self.core_mesh.material_override = core_material
 	
 func update_based_on_stats(stats:Dictionary):
 	self.current_stats = stats
-	var human_bonus:float = 1.5 - max(0.6, stats.get("wins", 0)* 0.05)
+	var human_bonus:float = 1.5 - min(0.6, stats.get("wins", 0)* 0.05)
+	if Global.game_state["settings"]["gameplay"]["easymode"]:
+		human_bonus += 0.5
 	if ai_controlled:
 		human_bonus = 1.0
+		if Global.game_state["settings"]["gameplay"]["easymode"]:
+			human_bonus = 0.5
 	# "Dexterity": 2, # +move speed, +spin speed, -weight, +green
 	# "Power": 2, # +force, +weight, (+right speed), +red
 	# "Special": 2, # +rocket dash, +force, +ult, +blue
@@ -139,6 +148,9 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		elif is_instance_of(collider_object, StaticBody3D):
 			self.on_ground = true
 			self.ult_available = true
+			var random_clank_id:int = randi_range(1,2)
+			var clip_name:String = "On Ground %d"%random_clank_id
+			play_other_audio_clip(clip_name)
 		
 		if is_instance_of(collider_object, Top):
 			var speed_force:Vector3 = self.linear_velocity.normalized()
@@ -165,19 +177,31 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			last_top_hit = collider_object
 			collider_object.iframe_timer_sec = collider_object.max_iframes_sec
 			
-		if contact_pos.y <= self.global_position.y - 0.25:
-			var random_clank_id:int = randi_range(1,2)
-			var clip_name:String = "On Ground %d"%random_clank_id
-			play_other_audio_clip(clip_name)
-			var stamina_drain:float = 0.1
-			self.reduce_stamina(stamina_drain)
-			on_ground = true
-		else:
-			var stamina_drain:float = 0.01
-			self.reduce_stamina(stamina_drain)
+		elif contact_pos.y <= self.global_position.y - 0.1:
+			if ai_controlled:
+				last_top_hit = null
+			
+			var speed_force:Vector3 = self.linear_velocity.normalized()
+			var angular_force:Vector3 = self.angular_velocity.normalized()
+			
+			var total_force:Vector3 = (speed_force + angular_force).normalized() * self.force_multiplier * 2.0
+			#total_force.y = 0
+			if abs(self.linear_velocity.length()) <= 5.0:
+				var new_force:Vector3 = self.basis.z.normalized() * move_speed
+				total_force += new_force
+			
+			var opposite_force:Vector3 = -total_force
+			opposite_force.y = 0
+			self.apply_central_impulse(opposite_force)
+			
 			var random_clank_id:int = randi_range(1,9)
 			var clip_name:String = "Clang %d"%random_clank_id
 			play_collision_audio_clip(clip_name)
+			var stamina_drain:float = 0.1
+			self.reduce_stamina(stamina_drain)
+		else:
+			var stamina_drain:float = 0.01
+			self.reduce_stamina(stamina_drain)
 			on_ground = true
 
 func play_collision_audio_clip(clip_name:String):
@@ -226,10 +250,13 @@ func is_dead():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	if disabled:
 		return
 	if is_dead():
 		return
+		
+	
 	self._last_delta = delta
 	if not launched:
 		self.global_position = launcher.crank_top_spot.global_position
@@ -294,7 +321,7 @@ func force_lookat_top(_delta: float):
 		#self.look_at_node.look_at_from_position(self.global_position, self.personal_above_point, up_direction)
 		#self.look_at_node.rotate_object_local(Vector3(1, 0, 0), -PI / 2.0)
 	#
-	if self.global_position.y + 0.25 < self.personal_above_point.y:
+	if self.global_position.y + 0.5 < self.personal_above_point.y:
 		self.look_at_node.look_at_from_position(self.global_position, self.personal_above_point)
 		self.look_at_node.rotate_object_local(Vector3(1, 0, 0), -PI / 2.0)
 		var correction:Vector3 = self.global_basis.y.cross(look_at_node.basis.y).normalized()
@@ -326,7 +353,7 @@ func katana():
 func defend():
 	if self.mass > self.current_stats.get("mass", self.mass):
 		return
-	print("defend")
+	#print("defend")
 	self.stored_mass = self.mass
 	self.stored_colour = self.colour
 	self.mass += 0.5 + (self.current_stats["Special"] * 1.2)
@@ -337,22 +364,24 @@ func defend():
 
 func shockwave():
 	var hit_top:bool = false
+	var distance:float = self.current_stats["Special"] * 1.2
+	if not shockwave_model.visible:
+		shockwave_model.scale = Vector3.ZERO
+		shockwave_model.max_size = distance
+		shockwave_model.expansion_speed = self.force_multiplier*5.0
+		shockwave_model.visible = true
+		hit_top = true
 	for top in tops:
 		if top == self:
 			continue
 		var diff:Vector3 = top.global_position - self.global_position
-		var distance:float = self.current_stats["Special"] * 1.2
+		
 		if abs(diff.length()) <= distance:
 			diff.y = 0
 			top.apply_central_impulse(diff.normalized()*self.force_multiplier*5.0)
-			if not shockwave_model.visible:
-				shockwave_model.scale = Vector3.ZERO
-				shockwave_model.max_size = distance
-				shockwave_model.expansion_speed = self.force_multiplier*5.0
-				shockwave_model.visible = true
-				hit_top = true
+			
 	if hit_top:
-		self.apply_central_impulse(Vector3.UP * self.force_multiplier)
+		self.apply_central_impulse(Vector3.UP * self.force_multiplier * 2.0)
 	
 
 func rocket_jump():
@@ -360,9 +389,9 @@ func rocket_jump():
 		return
 	var move_direction:Vector3 = (self.center_point - self.global_position).normalized()
 	move_direction.y = 1
-	print("rocket jump", move_direction * impulse_speed)
+	#print("rocket jump", move_direction * impulse_speed)
 	self.linear_velocity = Vector3.ZERO
-	self.apply_central_impulse(move_direction * impulse_speed * 0.5)
+	self.apply_central_impulse(move_direction * impulse_speed * 0.75)
 
 
 func rocket_dash():
@@ -374,19 +403,19 @@ func rocket_dash():
 	
 	#move_direction.y = 0
 	#self.apply_central_force(move_direction * center_speed)
-	self.apply_central_impulse(move_direction * impulse_speed)
+	self.apply_central_impulse(move_direction * impulse_speed * 1.25)
 	
 func impulse_to_target():
 	if disabled:
 		return
 	if is_dead():
 		return
-	print("impulse to target")
+	#print("impulse to target")
 	var move_direction:Vector3 = (self.target_node.global_position - self.global_position).normalized()
 	move_direction.y = 0
 	self.linear_velocity = Vector3.ZERO
 	
-	self.apply_central_impulse(move_direction * impulse_speed)
+	self.apply_central_impulse(move_direction * impulse_speed * 1.25)
 	
 	
 func move_in_current_direction(delta):
@@ -394,12 +423,22 @@ func move_in_current_direction(delta):
 		return
 	
 	var move_direction:Vector3 = self.linear_velocity.normalized()
-	if self.ai_controlled and last_top_hit and not last_top_hit.is_dead():
-		move_direction = (self.last_top_hit.global_position - self.global_position).normalized()
-	if not self.ai_controlled and not self.is_dead():
-		move_direction = (self.target_node.global_position - self.global_position).normalized()
-	
-	move_direction.y = 0
+	if ai_controlled and (self.global_position.length() > 6) and last_top_hit == null:
+		move_direction = (self.center_point - self.global_position).normalized()
+		if ult in [1,2]:
+			activate_ult()
+	elif ai_controlled and (self.global_position.length() > 12) and last_top_hit != null:
+		move_direction = (self.center_point - self.global_position).normalized()
+		if ult in [1,2]:
+			activate_ult()
+	else:
+		if self.ai_controlled and last_top_hit and not last_top_hit.is_dead():
+			move_direction = (self.last_top_hit.global_position - self.global_position).normalized()
+		if not self.ai_controlled and not self.is_dead():
+			move_direction = (self.target_node.global_position - self.global_position).normalized()
+	if not ai_controlled:
+		self.arrow.look_at(self.global_position + (move_direction * move_speed))
+		
 	self.apply_central_force(move_direction * move_speed * 60.0 * delta)
 	
 

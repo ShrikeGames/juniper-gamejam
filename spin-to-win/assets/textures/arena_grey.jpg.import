@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5uukybfps12e"
 path.s3tc="res://.godot/imported/arena_grey.jpg-15fd96e2a29afc4a779d69583cb726b3.s3tc.ctex"
+path.etc2="res://.godot/imported/arena_grey.jpg-15fd96e2a29afc4a779d69583cb726b3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/arena_grey.jpg"
-dest_files=["res://.godot/imported/arena_grey.jpg-15fd96e2a29afc4a779d69583cb726b3.s3tc.ctex"]
+dest_files=["res://.godot/imported/arena_grey.jpg-15fd96e2a29afc4a779d69583cb726b3.s3tc.ctex", "res://.godot/imported/arena_grey.jpg-15fd96e2a29afc4a779d69583cb726b3.etc2.ctex"]
 
 [params]
 

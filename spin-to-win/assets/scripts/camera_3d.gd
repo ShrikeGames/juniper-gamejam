@@ -17,7 +17,7 @@ var last_mouse_position:Vector2
 var mouse_distance_traveled:float = 0.0
 var last_mouse_circle_state:int = -1
 var mouse_states_visited:Array = []
-var cpu_crank_speed:float = 0.1
+var cpu_crank_speed:float = 0.5
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	rotate_crank = false

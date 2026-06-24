@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cj7cxyjcd8lk3"
 path.s3tc="res://.godot/imported/arena_teal.jpg-5bba27044dc5ddf30bc7a6a42d813fc1.s3tc.ctex"
+path.etc2="res://.godot/imported/arena_teal.jpg-5bba27044dc5ddf30bc7a6a42d813fc1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/arena_teal.jpg"
-dest_files=["res://.godot/imported/arena_teal.jpg-5bba27044dc5ddf30bc7a6a42d813fc1.s3tc.ctex"]
+dest_files=["res://.godot/imported/arena_teal.jpg-5bba27044dc5ddf30bc7a6a42d813fc1.s3tc.ctex", "res://.godot/imported/arena_teal.jpg-5bba27044dc5ddf30bc7a6a42d813fc1.etc2.ctex"]
 
 [params]
 

@@ -4,12 +4,12 @@
 [ext_resource type="Script" uid="uid://dtujb4jnwoqdh" path="res://assets/scripts/top_panel.gd" id="2_7yhqf"]
 
 [node name="Panel" type="Panel" unique_id=892757508 node_paths=PackedStringArray("textbox")]
-custom_minimum_size = Vector2(200, 140)
+custom_minimum_size = Vector2(200, 180)
 anchors_preset = -1
 anchor_right = 0.156
 anchor_bottom = 0.056
-offset_right = -199.68001
-offset_bottom = -40.32
+offset_right = 0.31999207
+offset_bottom = 162.68
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_1535y")
@@ -20,7 +20,7 @@ textbox = NodePath("RichTextLabel")
 layout_mode = 0
 offset_left = 7.0
 offset_right = 199.0
-offset_bottom = 143.0
+offset_bottom = 190.0
 theme = ExtResource("1_1535y")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
