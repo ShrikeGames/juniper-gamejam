@@ -63,9 +63,9 @@ func _ready() -> void:
 		positive_diff = randi_range(0, len(Global.ult_names) - 2)
 		if positive_diff == Global.game_state["stats"]["Ult"]:
 			positive_diff = wrapi(positive_diff + 1, 0, len(Global.ult_names) - 2)
-		negative_diff = -1
+		negative_diff = Global.game_state["stats"]["Ult"]
 	elif decrease_stat == "Ult":
-		negative_diff = -1
+		negative_diff = Global.game_state["stats"]["Ult"]
 	rewards["increase"] = {
 		"name": increase_stat,
 		"value": positive_diff

@@ -134,7 +134,7 @@ albedo_color = Color(1, 0.5764706, 1, 0.34901962)
 material = SubResource("StandardMaterial3D_hqlfd")
 size = Vector3(0.5, 0.86, 0.25)
 
-[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "arrow", "outline_mesh", "core_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "shockwave_model")]
+[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "arrow", "outline_mesh", "core_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "stamina_mesh", "shockwave_model")]
 mass = 1.25
 continuous_cd = true
 contact_monitor = true
@@ -151,6 +151,7 @@ core_mesh = NodePath("Mesh/test_top2/core")
 collision_audio_player = NodePath("CollisionAudioPlayer")
 other_audio_player = NodePath("OtherSoundAudioPlayer")
 stamina_progress_bar = NodePath("StaminaViewPort/CanvasLayer/StaminaProgressBar")
+stamina_mesh = NodePath("StaminaMesh")
 shockwave_model = NodePath("Shockwave")
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=1659996157]

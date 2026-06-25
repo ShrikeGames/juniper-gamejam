@@ -108,15 +108,15 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "During the countdown (READY? SET! SPIN TO WIN!) hold Left Mouse Button and spin your mouse clockwise to give a speed boost at the start of the battle.
 
-Aim your spinng top with your mouse to guide it in the rena.
+Aim your spinning top with your mouse to guide it in the arena.
 Left click during the battle to use your Ultimate ability (dash by default) toward where you click. 
-It scales with the [color=blue]SPECIAL[/color] stat depending on the ability. 
+Ultimate abilities get better with a higher [color=blue]SPECIAL[/color] stat. 
 More [color=green]Dexterity[/color] will give you more speed and stamina. 
 More [color=red]Power[/color] will make you heavier and hit harder.
 
 Eliminate all the other spinning tops to win the round.
-This can be by exhausting their stamina (the yellow circle) to get a [color=red]knockout[/color]
-Or removing them from the arena for a [color=pink]ringout[/color]"
+This can be by exhausting their stamina (the yellow circle) to get a [color=red]knockout[/color].
+You can also remove them from the arena for a [color=pink]ringout[/color]."
 fit_content = true
 scroll_active = false
 

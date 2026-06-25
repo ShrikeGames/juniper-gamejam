@@ -30,6 +30,7 @@ var announcer_audio_stream_player:AudioStreamPlayer
 @export var other_audio_player:AudioStreamPlayer3D
 @export var ai_controlled:bool = false
 @export var stamina_progress_bar:TextureProgressBar
+@export var stamina_mesh:MeshInstance3D
 @export var tops:Array[Top] = []
 @export var shockwave_model:MeshInstance3D
 
@@ -256,7 +257,8 @@ func _process(delta: float) -> void:
 	if is_dead():
 		return
 		
-	
+	self.stamina_mesh.look_at(self.global_position + Vector3.FORWARD)
+	self.stamina_mesh.global_rotation.y = deg_to_rad(-180)
 	self._last_delta = delta
 	if not launched:
 		self.global_position = launcher.crank_top_spot.global_position
