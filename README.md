@@ -118,3 +118,8 @@ Day 6 TODOs:
 - [Done] Rotate the Halo map a little
 - [Done] Fix the launch spin bonus
 - [WIP] Balancing
+
+Day 7 TODOs:
+
+- Unbreakable needs a huge buff
+- In later waves 12+ rewards can give way more than 5 stars which makes no sense
