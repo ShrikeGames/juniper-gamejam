@@ -119,7 +119,9 @@ Day 6 TODOs:
 - [Done] Fix the launch spin bonus
 - [WIP] Balancing
 
+Demo Reel: https://youtu.be/rv5HbU2PAzU
+
 Day 7 TODOs:
 
-- Unbreakable needs a huge buff
-- In later waves 12+ rewards can give way more than 5 stars which makes no sense
+- [Done] Unbreakable needs a huge buff
+- [Done] In later waves 12+ rewards can give way more than 5 stars which makes no sense
