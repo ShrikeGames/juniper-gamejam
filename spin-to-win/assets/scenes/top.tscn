@@ -4,8 +4,12 @@
 [ext_resource type="Script" uid="uid://bapvjavrybfo8" path="res://assets/scripts/top.gd" id="2_k16d3"]
 [ext_resource type="PackedScene" uid="uid://bpx0veg5tykmj" path="res://assets/scenes/test_top.tscn" id="3_k16d3"]
 [ext_resource type="AudioStream" uid="uid://c34rjxeikai6m" path="res://assets/sound/top_collision_audio.tres" id="4_6a44c"]
+[ext_resource type="PackedScene" uid="uid://ba5fvwm5e4me8" path="res://assets/models/top1.blend" id="4_rnbtw"]
 [ext_resource type="AudioStream" uid="uid://c6wggfi3pcupp" path="res://assets/sound/top_other_audio.tres" id="5_0yua5"]
 [ext_resource type="Material" uid="uid://bvo2e74gnwxr" path="res://assets/materials/outline_material.tres" id="5_4roix"]
+[ext_resource type="PackedScene" uid="uid://pmy5nvun4572" path="res://assets/models/top2.blend" id="5_o3e1u"]
+[ext_resource type="PackedScene" uid="uid://cp2jvcxh700dn" path="res://assets/models/top3.blend" id="6_g5g41"]
+[ext_resource type="PackedScene" uid="uid://r1bp0lg7sbbo" path="res://assets/models/top4.blend" id="7_rqpsw"]
 [ext_resource type="Texture2D" uid="uid://ckdx82w1k86nf" path="res://assets/art/tops/stamina_ring_empty.png" id="8_ew4y2"]
 [ext_resource type="Texture2D" uid="uid://d3nv8p2iflwj" path="res://assets/art/tops/stamina_ring_filled.png" id="9_lteu0"]
 [ext_resource type="Script" uid="uid://rfox0wlp1ikh" path="res://assets/scripts/shockwave.gd" id="10_a1krb"]
@@ -134,7 +138,7 @@ albedo_color = Color(1, 0.5764706, 1, 0.34901962)
 material = SubResource("StandardMaterial3D_hqlfd")
 size = Vector3(0.5, 0.86, 0.25)
 
-[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "arrow", "outline_mesh", "core_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "stamina_mesh", "shockwave_model")]
+[node name="Top" type="RigidBody3D" unique_id=24248696 node_paths=PackedStringArray("model", "trail_particle_emitter", "sparks_particle_emitter", "arrow", "outline_mesh", "core_mesh", "collision_audio_player", "other_audio_player", "stamina_progress_bar", "stamina_mesh", "shockwave_model", "top_shapes")]
 mass = 1.25
 continuous_cd = true
 contact_monitor = true
@@ -153,6 +157,7 @@ other_audio_player = NodePath("OtherSoundAudioPlayer")
 stamina_progress_bar = NodePath("StaminaViewPort/CanvasLayer/StaminaProgressBar")
 stamina_mesh = NodePath("StaminaMesh")
 shockwave_model = NodePath("Shockwave")
+top_shapes = [NodePath("Mesh/test_top2/nodetop1"), NodePath("Mesh/test_top2/nodetop2"), NodePath("Mesh/test_top2/nodetop3"), NodePath("Mesh/test_top2/nodetop4")]
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=1659996157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
@@ -173,7 +178,35 @@ transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0.331724, 0)
 
 [node name="test_top" parent="Mesh/test_top2" index="0" unique_id=740292163]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.01558727, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_a1krb")
+
+[node name="nodetop1" parent="Mesh/test_top2" unique_id=881227850 instance=ExtResource("4_rnbtw")]
+transform = Transform3D(0.37, 0, 0, 0, 0.462, 0, 0, 0, 0.37, 0, -0.08, 0)
+
+[node name="CollisionShape3D" parent="Mesh/test_top2/nodetop1/top1/StaticBody3D" parent_id_path=PackedInt32Array(881227850, 228454745) index="0" unique_id=1130573735]
+disabled = true
+
+[node name="nodetop2" parent="Mesh/test_top2" unique_id=820618789 instance=ExtResource("5_o3e1u")]
+transform = Transform3D(0.37, 0, 0, 0, 0.462, 0, 0, 0, 0.37, 0, -0.08, 0)
+visible = false
+
+[node name="CollisionShape3D" parent="Mesh/test_top2/nodetop2/top2/StaticBody3D" parent_id_path=PackedInt32Array(820618789, 1373616274) index="0" unique_id=794013369]
+disabled = true
+
+[node name="nodetop3" parent="Mesh/test_top2" unique_id=1166974000 instance=ExtResource("6_g5g41")]
+transform = Transform3D(0.37, 0, 0, 0, 0.462, 0, 0, 0, 0.37, 0, -0.08, 0)
+visible = false
+
+[node name="CollisionShape3D" parent="Mesh/test_top2/nodetop3/top3/StaticBody3D" parent_id_path=PackedInt32Array(1166974000, 1398669182) index="0" unique_id=2018864272]
+disabled = true
+
+[node name="nodetop4" parent="Mesh/test_top2" unique_id=251538943 instance=ExtResource("7_rqpsw")]
+transform = Transform3D(0.435, 0, 0, 0, 0.462, 0, 0, 0, 0.435, 0, -0.08, 0)
+visible = false
+
+[node name="CollisionShape3D" parent="Mesh/test_top2/nodetop4/top4/StaticBody3D" parent_id_path=PackedInt32Array(251538943, 1540035743) index="0" unique_id=618676394]
+disabled = true
 
 [node name="core" type="MeshInstance3D" parent="Mesh/test_top2" unique_id=1035463731]
 transform = Transform3D(0.6666667, 0, 0, 0, 1, 0, 0, 0, 0.6666667, 0, 0.021910131, 0)
@@ -251,3 +284,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1
 mesh = SubResource("PrismMesh_rnbtw")
 
 [editable path="Mesh/test_top2"]
+[editable path="Mesh/test_top2/nodetop1"]
+[editable path="Mesh/test_top2/nodetop2"]
+[editable path="Mesh/test_top2/nodetop3"]
+[editable path="Mesh/test_top2/nodetop4"]

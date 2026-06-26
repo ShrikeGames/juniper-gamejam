@@ -15,7 +15,7 @@ var time:float = 0.0
 
 @export var spin_speed:float = 10.0
 @export var right_speed:float = 15.0
-@export var move_speed: float = 20.0
+@export var move_speed: float = 23.0
 @export var center_speed: float = 10.0
 @export var impulse_speed: float = 10.0
 @export var launched:bool = false
@@ -33,6 +33,7 @@ var announcer_audio_stream_player:AudioStreamPlayer
 @export var stamina_mesh:MeshInstance3D
 @export var tops:Array[Top] = []
 @export var shockwave_model:MeshInstance3D
+@export var top_shapes:Array[Node3D]
 
 var ult:int = 0
 var knockout_sprite_animation:AnimatedSprite2D
@@ -77,11 +78,24 @@ func update_appearance():
 	var material = StandardMaterial3D.new()
 	material.albedo_color = colour
 	self.model.material_override = material
-	for child in self.model.find_children("test_top", "MeshInstance3D"):
+	for child in self.model.find_children("top*", "MeshInstance3D", true):
 		child.material_override = material
 	var core_material = StandardMaterial3D.new()
 	core_material.albedo_color = Global.ult_colours[self.ult]
 	self.core_mesh.material_override = core_material
+	
+	for top_shape in top_shapes:
+		top_shape.visible = false
+		
+	if self.current_stats["Power"] > self.current_stats["Dexterity"] and self.current_stats["Power"] > self.current_stats["Special"]:
+		top_shapes[0].visible = true
+	elif self.current_stats["Dexterity"] > self.current_stats["Power"] and self.current_stats["Dexterity"] > self.current_stats["Special"]:
+		top_shapes[3].visible = true
+	elif self.current_stats["Special"] > self.current_stats["Power"] and self.current_stats["Special"] > self.current_stats["Dexterity"]:
+		top_shapes[2].visible = true
+	else:
+		top_shapes[1].visible = true
+	
 	
 func update_based_on_stats(stats:Dictionary):
 	self.current_stats = stats
@@ -118,6 +132,7 @@ func update_based_on_stats(stats:Dictionary):
 	self.stamina_progress_bar.value = self.stamina
 	
 	self.ult = stats["Ult"]
+	
 	# print(stats, ": ", self.colour)
 	update_appearance()
 
@@ -380,10 +395,10 @@ func shockwave():
 		
 		if abs(diff.length()) <= distance:
 			diff.y = 0
-			top.apply_central_impulse(diff.normalized()*self.force_multiplier*5.0)
+			top.apply_central_impulse(diff.normalized()*self.force_multiplier*3.0)
 			
 	if hit_top:
-		self.apply_central_impulse(Vector3.UP * self.force_multiplier * 2.0)
+		self.apply_central_impulse(Vector3.UP * self.force_multiplier)
 	
 
 func rocket_jump():
@@ -434,13 +449,15 @@ func move_in_current_direction(delta):
 		if ult in [1,2]:
 			activate_ult()
 	else:
-		if self.ai_controlled and last_top_hit and not last_top_hit.is_dead():
+		if self.ai_controlled and last_top_hit and not last_top_hit.is_dead() and (self.last_top_hit.global_position.length() < 6):
 			move_direction = (self.last_top_hit.global_position - self.global_position).normalized()
-		if not self.ai_controlled and not self.is_dead():
+		elif not self.ai_controlled and not self.is_dead():
 			move_direction = (self.target_node.global_position - self.global_position).normalized()
+		else:
+			move_direction = (self.center_point - self.global_position).normalized()
 	if not ai_controlled:
 		self.arrow.look_at(self.global_position + (move_direction * move_speed))
-		
+	
 	self.apply_central_force(move_direction * move_speed * 60.0 * delta)
 	
 

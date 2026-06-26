@@ -78,6 +78,8 @@ func spawn_random_cpu(cpu_top:Top, add_to_scene:bool = false):
 		cpu_container.add_child(cpu_top)
 	cpu_top.global_position = cpu_pos
 	cpu_top.launched = true
+	cpu_top.linear_velocity = Vector3.ZERO
+	cpu_top.angular_velocity = Vector3.ZERO
 	return cpu_top
 
 func _process(_delta: float) -> void:

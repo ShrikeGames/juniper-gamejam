@@ -175,7 +175,7 @@ func _on_mouse_entered() -> void:
 	playback.switch_to_clip_by_name("Hover")
 	var new_stats: Dictionary = calculate_new_stats()
 	top.update_based_on_stats(new_stats)
-	panel_card.update(Global.game_state["stats"])
+	panel_card.update(new_stats)
 	
 
 func _on_mouse_exited() -> void:
