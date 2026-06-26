@@ -26,7 +26,7 @@ func _on_pressed() -> void:
 	Global.save_settings()
 	
 	if scene_to_change_to:
-		if wipe_save and not Global.game_state["settings"]["tutorial_complete"]:
+		if wipe_save and not Global.game_state["settings"]["gameplay"]["tutorial_complete"]:
 			get_tree().change_scene_to_file("res://assets/scenes/tutorial.tscn")
 			return
 		get_tree().change_scene_to_file(scene_to_change_to)

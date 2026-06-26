@@ -2,7 +2,7 @@ extends Node
 
 class_name GlobalState
 
-var settings_config_location: String = "user://user_settings_v3.json"
+var settings_config_location: String = "user://user_settings_v4.json"
 var top_panel_card_resource:Resource = load("res://assets/scenes/top_panel.tscn")
 var arena_names:Array[String] = ["Very Serious Bowl Arena", "Underpass Arena", "Orange Squeezer Arena", "Halo Arena", "Hedge Slopes Arena", "Mountain Arena", "Wave Arena", "Ridges Arena", "Da Eye Arena", "Bouldering Arena"]
 var arena_resources:Array[Resource] = [load("res://assets/scenes/arena0.tscn"), load("res://assets/scenes/arena1.tscn"), load("res://assets/scenes/arena2.tscn"), load("res://assets/scenes/arena3.tscn"), load("res://assets/scenes/arena4.tscn"), load("res://assets/scenes/arena5.tscn"), load("res://assets/scenes/arena6.tscn"), load("res://assets/scenes/arena7.tscn"), load("res://assets/scenes/arena8.tscn"), load("res://assets/scenes/arena9.tscn")]
@@ -21,9 +21,9 @@ var default_game_state: Dictionary = {
 		"gameplay": {
 			"dynamic_camera": true,
 			"fullscreen": false,
-			"easymode": false
-		},
-		"tutorial_complete": false
+			"easymode": false,
+			"tutorial_complete": false
+		}
 	},
 	"next_match": {
 		"num_cpus": 3,

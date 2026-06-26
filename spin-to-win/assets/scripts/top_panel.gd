@@ -29,8 +29,8 @@ func calculate_stars_string(stat_name:String, stats:Dictionary):
 	if self.top and not self.top.ai_controlled and not self.top.current_stats.get(stat_name):
 		self.top.update_based_on_stats(stats)
 	
-	for i in range(self.top.current_stats[stat_name]):
+	for i in range(min(5, self.top.current_stats[stat_name])):
 		top_stars += "★"
-	for i in range(5-self.top.current_stats[stat_name]):
+	for i in range(5-min(5, self.top.current_stats[stat_name])):
 		top_stars += "☆"
 	return top_stars

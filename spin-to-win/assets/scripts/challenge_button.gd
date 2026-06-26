@@ -113,7 +113,7 @@ func calculate_stars_string(stat_name: String, num_stars: int):
 	if stat_name == "Ult":
 		return Global.ult_names[clampf(num_stars, 0, len(Global.ult_names) - 2)]
 	var top_stars: String = ""
-	for i in range(num_stars):
+	for i in range(min(5, num_stars)):
 		top_stars += "★"
 	return top_stars
 

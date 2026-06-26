@@ -506,6 +506,12 @@ button_pressed = false
 text = "Easy Mode (Gives Player Larger Buffs)"
 settings_name = "easymode"
 
+[node name="SkipTutorialCheckbox" parent="CanvasLayer/GameplaySettingsContainer" unique_id=1400097900 instance=ExtResource("14_hn2he")]
+layout_mode = 2
+button_pressed = false
+text = "Skip Tutorial"
+settings_name = "tutorial_complete"
+
 [node name="CreditsContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1843927791]
 visible = false
 anchors_preset = 3

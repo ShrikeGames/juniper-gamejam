@@ -125,3 +125,4 @@ Day 7 TODOs:
 
 - [Done] Unbreakable needs a huge buff
 - [Done] In later waves 12+ rewards can give way more than 5 stars which makes no sense
+- [Done] Add toggle to setting to allow seeing the tutorial again, or to skip it

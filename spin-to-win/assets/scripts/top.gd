@@ -225,8 +225,8 @@ func reduce_stamina(drain_amount:float = 0.1):
 	if disabled:
 		return
 	var total_drain_amount:float = drain_amount
-	if self.mass > self.current_stats.get("mass", self.mass) * 1.25:
-		total_drain_amount *= 0.5
+	if self.mass > self.current_stats.get("mass", self.mass):
+		total_drain_amount *= 0.25
 	
 	self.stamina = max(0.0, self.stamina-total_drain_amount)
 	self.stamina_progress_bar.value = self.stamina
@@ -272,7 +272,7 @@ func _process(delta: float) -> void:
 	
 	reduce_stamina(0.1*delta)
 	if self.stored_mass and self.mass > self.stored_mass:
-		var decrease_amount:float = delta*0.5
+		var decrease_amount:float = delta*0.25
 		self.mass = clampf(self.mass - (decrease_amount), self.stored_mass, self.mass)
 		if self.mass <= self.stored_mass:
 			self.colour = self.stored_colour
@@ -358,7 +358,7 @@ func defend():
 	#print("defend")
 	self.stored_mass = self.mass
 	self.stored_colour = self.colour
-	self.mass += 0.5 + (self.current_stats["Special"] * 1.2)
+	self.mass += 0.25 + (self.current_stats["Special"] * 0.5)
 	self.colour.r = 0.0
 	self.colour.b = 0.0
 	self.colour.g = 0.0
