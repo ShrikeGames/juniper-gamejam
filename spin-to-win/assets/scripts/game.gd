@@ -196,6 +196,10 @@ func _on_gameover_sprite_animation_animation_finished() -> void:
 
 func _on_youwin_sprite_animation_animation_finished() -> void:
 	Global.game_state["stats"]["wins"] += 1
+	if Global.game_state["stats"]["wins"] >= 10 and not Global.game_state.get("meta", false):
+		Global.meta_game_complete("shrikegames-spinning-top-battles")
+		Global.game_state["meta"] = true
+		print("Meta game complete!")
 	Global.save_settings()
 	get_tree().change_scene_to_file(scene_to_change_to)
 

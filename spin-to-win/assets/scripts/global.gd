@@ -89,7 +89,9 @@ func save_settings():
 	file_access.close()
 	
 
-
+func meta_game_complete(gameId: String) -> void:
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("localStorage.setItem(\"%s\", new Date().toJSON());" % gameId)
 
 # Subscribers to ShrikeGames YT that don't have their subs hidden
 var top_names:Array[String] = [
